@@ -15,11 +15,17 @@ class Router {
         $uri = $_SERVER['REQUEST_URI'];
         $method = $_SERVER['REQUEST_METHOD'];
         
+        // Depuración - Descomentar para ver la URI original
+        // echo "URI original: " . $uri; exit;
+        
         // Eliminar la base de la URL si existe
-        $baseFolder = '/spa-ibaiondo';
+        $baseFolder = '/spa-ibaiondo/public';
         if (strpos($uri, $baseFolder) === 0) {
             $uri = substr($uri, strlen($baseFolder));
         }
+        
+        // Eliminar index.php de la URI si existe
+        $uri = str_replace('/index.php', '', $uri);
         
         // Eliminar parámetros de consulta
         $uri = explode('?', $uri)[0];
@@ -28,6 +34,9 @@ class Router {
         if (empty($uri)) {
             $uri = '/';
         }
+        
+        // Depuración - Descomentar para ver la URI procesada
+        // echo "URI procesada: " . $uri; exit;
         
         foreach ($this->routes as $route) {
             // Convertir ruta con parámetros a expresión regular
@@ -40,10 +49,37 @@ class Router {
                 $action = $route['action'];
                 
                 // Cargar el controlador
-                require_once BASE_PATH . '/app/controllers/' . $controller . '.php';
+                $controllerFile = BASE_PATH . '/app/controllers/' . $controller . '.php';
+                
+                if (!file_exists($controllerFile)) {
+                    // Depuración - Descomentar para ver el archivo que no se encuentra
+                    // echo "No se encuentra el controlador: " . $controllerFile; exit;
+                    header("HTTP/1.0 404 Not Found");
+                    include BASE_PATH . '/app/views/errors/404.php';
+                    return;
+                }
+                
+                require_once $controllerFile;
+                
+                if (!class_exists($controller)) {
+                    // Depuración - Descomentar para ver la clase que no existe
+                    // echo "La clase no existe: " . $controller; exit;
+                    header("HTTP/1.0 404 Not Found");
+                    include BASE_PATH . '/app/views/errors/404.php';
+                    return;
+                }
                 
                 // Instanciar el controlador y llamar a la acción con los parámetros
                 $controllerInstance = new $controller();
+                
+                if (!method_exists($controllerInstance, $action)) {
+                    // Depuración - Descomentar para ver el método que no existe
+                    // echo "El método no existe: " . $action; exit;
+                    header("HTTP/1.0 404 Not Found");
+                    include BASE_PATH . '/app/views/errors/404.php';
+                    return;
+                }
+                
                 call_user_func_array([$controllerInstance, $action], $matches);
                 return;
             }

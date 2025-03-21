@@ -1,9 +1,11 @@
 <?php
+// Mostrar todos los errores
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
 // Definir la ruta base
 define('BASE_PATH', dirname(__DIR__));
-
-// Iniciar sesión
-session_start();
 
 // Cargar configuraciones
 require_once BASE_PATH . '/config/app.php';
@@ -13,6 +15,9 @@ require_once BASE_PATH . '/config/database.php';
 require_once BASE_PATH . '/core/Router.php';
 require_once BASE_PATH . '/core/Auth.php';
 require_once BASE_PATH . '/core/Helper.php';
+
+// Iniciar sesión (MOVIDO AQUÍ, DESPUÉS DE CARGAR app.php)
+session_start();
 
 // Inicializar el router
 $router = new Router();

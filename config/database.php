@@ -5,8 +5,8 @@ class Database {
     
     private $host = 'localhost';
     private $user = 'root';
-    private $pass = '';
-    private $name = 'spa';
+    private $pass = '';  // Cambia esto si has configurado una contraseña
+    private $name = 'spa';  // Asegúrate de que este es el nombre correcto de tu base de datos
     
     private function __construct() {
         try {

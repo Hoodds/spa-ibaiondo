@@ -1,7 +1,7 @@
 <?php
 // Configuración de la aplicación
 define('APP_NAME', 'Spa Ibaiondo');
-define('APP_URL', 'http://localhost/spa-ibaiondo');
+define('APP_URL', 'http://localhost/spa-ibaiondo/public');
 define('APP_VERSION', '1.0.0');
 
 // Configuración de errores
