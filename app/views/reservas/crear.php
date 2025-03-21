@@ -8,10 +8,10 @@
                 <div class="card-body">
                     <div class="row mb-4">
                         <div class="col-md-4">
-                            <img src="<?= Helper::url('assets/images/servicios/' . $servicio['id'] . '.jpg') ?>" 
+                            <img src="<?= Helper::asset('images/servicios/' . $servicio['id'] . '.jpg') ?>" 
                                  alt="<?= Helper::e($servicio['nombre']) ?>" 
                                  class="img-fluid rounded" 
-                                 onerror="this.src='<?= Helper::url('assets/images/servicio-default.jpg') ?>'">
+                                 onerror="this.src='<?= Helper::asset('images/servicio-default.jpg') ?>'">
                         </div>
                         <div class="col-md-8">
                             <h4><?= Helper::e($servicio['nombre']) ?></h4>

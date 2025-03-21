@@ -18,6 +18,20 @@ class Helper {
         return $base . '/' . ltrim($path, '/');
     }
     
+    // Nueva función para archivos estáticos
+    public static function asset($path = '') {
+        // Para archivos estáticos, NO incluir index.php
+        $base = APP_URL;
+        
+        // Si la ruta está vacía, devolver la URL base
+        if (empty($path)) {
+            return rtrim($base, '/');
+        }
+        
+        // Añadir la ruta a la URL base
+        return $base . '/assets/' . ltrim($path, '/');
+    }
+    
     public static function redirect($path) {
         header('Location: ' . self::url($path));
         exit;

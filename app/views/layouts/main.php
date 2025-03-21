@@ -9,7 +9,7 @@
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <!-- Estilos personalizados -->
-    <link rel="stylesheet" href="<?= Helper::url('assets/css/styles.css') ?>">
+    <link rel="stylesheet" href="<?= Helper::asset('css/styles.css') ?>">
 </head>
 <body>
     <!-- Barra de navegación -->

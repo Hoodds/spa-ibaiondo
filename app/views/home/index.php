@@ -8,7 +8,7 @@
                 <a href="<?= Helper::url('servicios') ?>" class="btn btn-light btn-lg">Ver Servicios</a>
             </div>
             <div class="col-md-6">
-                <img src="<?= Helper::url('assets/images/spa-hero.jpg') ?>" alt="Spa Ibaiondo" class="img-fluid rounded">
+                <img src="<?= Helper::asset('images/spa-hero.jpg') ?>" alt="Spa Ibaiondo" class="img-fluid rounded">
             </div>
         </div>
     </div>
@@ -21,10 +21,10 @@
         <?php foreach (array_slice($serviciosDestacados, 0, 3) as $servicio): ?>
             <div class="col-md-4 mb-4">
                 <div class="card h-100">
-                    <img src="<?= Helper::url('assets/images/servicios/' . $servicio['id'] . '.jpg') ?>" 
+                    <img src="<?= Helper::asset('images/servicios/' . $servicio['id'] . '.jpg') ?>" 
                          alt="<?= Helper::e($servicio['nombre']) ?>" 
                          class="card-img-top" 
-                         onerror="this.src='<?= Helper::url('assets/images/servicio-default.jpg') ?>'">
+                         onerror="this.src='<?= Helper::asset('images/servicio-default.jpg') ?>'">
                     <div class="card-body">
                         <h5 class="card-title"><?= Helper::e($servicio['nombre']) ?></h5>
                         <p class="card-text"><?= substr(Helper::e($servicio['descripcion']), 0, 100) ?>...</p>
@@ -52,7 +52,7 @@
     <div class="container">
         <div class="row align-items-center">
             <div class="col-md-6">
-                <img src="<?= Helper::url('assets/images/about-spa.jpg') ?>" alt="Sobre Nosotros" class="img-fluid rounded">
+                <img src="<?= Helper::asset('images/about-spa.jpg') ?>" alt="Sobre Nosotros" class="img-fluid rounded">
             </div>
             <div class="col-md-6">
                 <h2>Sobre Spa Ibaiondo</h2>

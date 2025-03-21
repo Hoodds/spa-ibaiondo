@@ -4,7 +4,7 @@
             <div class="card shadow-sm">
                 <div class="card-body text-center">
                     <div class="mb-3">
-                        <img src="https://via.placeholder.com/150" alt="Foto de perfil" class="rounded-circle img-thumbnail">
+                        <img src="<?= Helper::asset('images/avatar-default.jpg') ?>" alt="Foto de perfil" class="rounded-circle img-thumbnail" onerror="this.src='https://via.placeholder.com/150'">
                     </div>
                     <h4><?= Helper::e($usuario['nombre']) ?></h4>
                     <p class="text-muted"><?= Helper::e($usuario['email']) ?></p>
