@@ -1,0 +1,68 @@
+📂 public
+    index.php
+    📂 assets
+        📂 css
+            styles.css
+            bootstrap.min.css
+        📂 js
+            main.js
+            jquery.min.js
+        📂 images
+            logo.png
+            servicios/
+    .htaccess
+📂 app
+    📂 controllers
+        UsuarioController.php
+        TrabajadorController.php
+        ServicioController.php
+        ReservaController.php
+        HomeController.php
+    📂 models
+        Usuario.php
+        Trabajador.php
+        Servicio.php
+        Reserva.php
+        Database.php
+    📂 views
+        📂 layouts
+            main.php
+            admin.php
+        📂 usuarios
+            login.php
+            registro.php
+            perfil.php
+            reservas.php
+        📂 admin
+            dashboard.php
+            usuarios.php
+            trabajadores.php
+            servicios.php
+            reservas.php
+        📂 servicios
+            lista.php
+            detalle.php
+        📂 reservas
+            crear.php
+            confirmar.php
+        📂 components
+            header.php
+            footer.php
+            sidebar.php
+            alerts.php
+📂 config
+    database.php
+    app.php
+    routes.php
+📂 core
+    Router.php
+    Auth.php
+    Validator.php
+    Session.php
+    Helper.php
+📂 logs
+    error.log
+    access.log
+.htaccess
+composer.json
+README.md
