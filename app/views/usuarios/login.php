@@ -23,9 +23,11 @@
                     
                     <div class="text-center">
                         <p>¿No tienes una cuenta? <a href="<?= Helper::url('registro') ?>">Regístrate</a></p>
+                        <p>¿Eres trabajador? <a href="<?= Helper::url('trabajador/login') ?>">Acceso para trabajadores</a></p>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
