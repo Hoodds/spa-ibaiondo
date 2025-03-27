@@ -8,6 +8,7 @@ $router->add('GET', '/login', 'UsuarioController', 'showLogin');
 $router->add('POST', '/login', 'UsuarioController', 'login');
 $router->add('GET', '/registro', 'UsuarioController', 'showRegistro');
 $router->add('POST', '/registro', 'UsuarioController', 'registro');
+$router->add('POST', '/contacto/enviar', 'ContactoController', 'enviar');
 
 // Rutas para usuarios autenticados
 $router->add('GET', '/perfil', 'UsuarioController', 'perfil');
@@ -15,6 +16,8 @@ $router->add('GET', '/reservas', 'ReservaController', 'misReservas');
 $router->add('GET', '/reservas/crear/{id}', 'ReservaController', 'showCrear');
 $router->add('POST', '/reservas/crear', 'ReservaController', 'crear');
 $router->add('GET', '/reservas/{id}/cancelar', 'ReservaController', 'cancelar');
+$router->add('GET', '/logout', 'UsuarioController', 'logout');
+$router->add('GET', '/reservas/disponibilidad', 'ReservaController', 'getDisponibilidad');
 
 // Rutas para trabajadores
 $router->add('GET', '/admin', 'AdminController', 'dashboard');

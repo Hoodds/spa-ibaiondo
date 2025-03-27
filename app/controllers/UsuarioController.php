@@ -104,6 +104,8 @@ class UsuarioController {
     
     public function logout() {
         Auth::logout();
+        session_start();
+        $_SESSION['success'] = 'Has cerrado sesión correctamente.';
         Helper::redirect('');
     }
 }

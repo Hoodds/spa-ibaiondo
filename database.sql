@@ -42,6 +42,16 @@ CREATE TABLE reservas (
 	FOREIGN KEY (id_trabajador) REFERENCES trabajadores(id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 
+-- Tabla de mensajes
+CREATE TABLE mensajes_contacto (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL,
+    asunto VARCHAR(255) NOT NULL,
+    mensaje TEXT NOT NULL,
+    fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
+
 -- Insertar datos en usuarios
 INSERT INTO usuarios (nombre, email, contrasena) VALUES
 ('Juan Pérez', 'juan@example.com', '123456'),
