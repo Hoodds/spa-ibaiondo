@@ -19,9 +19,29 @@ $router->add('GET', '/reservas/{id}/cancelar', 'ReservaController', 'cancelar');
 $router->add('GET', '/logout', 'UsuarioController', 'logout');
 $router->add('GET', '/reservas/disponibilidad', 'ReservaController', 'getDisponibilidad');
 
+// Rutas para valoraciones
+$router->add('GET', '/servicios/mis-valoraciones', 'ServicioController', 'misValoraciones');
+$router->add('POST', '/servicios/{id}/valorar', 'ServicioController', 'valorar');
+$router->add('GET', '/servicios/{id}/valorar', 'ServicioController', 'valorar');
+$router->add('GET', '/servicios/valoracion/{id}/eliminar', 'ServicioController', 'eliminarValoracion');
+
 // Rutas para trabajadores
+$router->add('GET', '/trabajador/login', 'TrabajadorController', 'login');
+$router->add('POST', '/trabajador/login', 'TrabajadorController', 'login');
+$router->add('GET', '/trabajador/dashboard', 'TrabajadorController', 'dashboard');
+$router->add('GET', '/trabajador/reservas', 'TrabajadorController', 'misReservas');
+$router->add('GET', '/trabajador/valoraciones', 'TrabajadorController', 'misValoraciones');
+$router->add('GET', '/trabajador/logout', 'TrabajadorController', 'logout');
+
+// Rutas para administradores
 $router->add('GET', '/admin', 'AdminController', 'dashboard');
 $router->add('GET', '/admin/reservas', 'AdminController', 'listarReservas');
 $router->add('GET', '/admin/servicios', 'AdminController', 'listarServicios');
 $router->add('GET', '/admin/usuarios', 'AdminController', 'listarUsuarios');
 $router->add('GET', '/admin/trabajadores', 'AdminController', 'listarTrabajadores');
+$router->add('GET', '/admin/valoraciones', 'AdminController', 'listarValoraciones');
+$router->add('GET', '/admin/valoraciones/pendientes', 'AdminController', 'valoracionesPendientes');
+$router->add('GET', '/admin/valoraciones/{id}/aprobar', 'AdminController', 'aprobarValoracion');
+$router->add('GET', '/admin/valoraciones/{id}/rechazar', 'AdminController', 'rechazarValoracion');
+$router->add('GET', '/admin/valoraciones/{id}/eliminar', 'AdminController', 'eliminarValoracion');
+
