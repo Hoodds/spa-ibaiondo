@@ -11,6 +11,23 @@
                          onerror="this.src='<?= Helper::asset('images/servicio-default.jpg') ?>'">
                     <div class="card-body">
                         <h5 class="card-title"><?= Helper::e($servicio['nombre']) ?></h5>
+                        
+                        <!-- Mostrar puntuación media -->
+                        <div class="mb-2">
+                            <div class="d-flex align-items-center">
+                                <?php for ($i = 1; $i <= 5; $i++): ?>
+                                    <?php if ($i <= round($servicio['puntuacion_media'])): ?>
+                                        <i class="fas fa-star text-warning"></i>
+                                    <?php else: ?>
+                                        <i class="far fa-star text-warning"></i>
+                                    <?php endif; ?>
+                                <?php endfor; ?>
+                                <span class="ms-2 text-muted">
+                                    (<?= $servicio['total_valoraciones'] ?> valoraciones)
+                                </span>
+                            </div>
+                        </div>
+                        
                         <p class="card-text"><?= substr(Helper::e($servicio['descripcion']), 0, 100) ?>...</p>
                         <p class="card-text">
                             <small class="text-muted">
@@ -34,3 +51,4 @@
         <?php endforeach; ?>
     </div>
 </div>
+

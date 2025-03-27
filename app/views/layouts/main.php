@@ -42,6 +42,7 @@
                             <ul class="dropdown-menu dropdown-menu-end">
                                 <li><a class="dropdown-item" href="<?= Helper::url('perfil') ?>">Mi Perfil</a></li>
                                 <li><a class="dropdown-item" href="<?= Helper::url('reservas') ?>">Mis Reservas</a></li>
+                                <li><a class="dropdown-item" href="<?= Helper::url('servicios/mis-valoraciones') ?>">Mis Valoraciones</a></li>
                                 <?php if (Auth::isAdmin()): ?>
                                     <li><hr class="dropdown-divider"></li>
                                     <li><a class="dropdown-item" href="<?= Helper::url('admin') ?>">Panel Admin</a></li>
@@ -83,3 +84,4 @@
         </div>
         <?php unset($_SESSION['error']); ?>
     <?php endif; ?>
+

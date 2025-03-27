@@ -29,6 +29,28 @@
                         <?php endif; ?>
                     </div>
                     
+                    <!-- Puntuación media -->
+                    <div class="mb-4">
+                        <div class="d-flex align-items-center">
+                            <div class="me-2">
+                                <span class="h5 mb-0"><?= $servicio['puntuacion_media'] ?></span>
+                                <span class="text-muted"> / 5</span>
+                            </div>
+                            <div class="me-2">
+                                <?php for ($i = 1; $i <= 5; $i++): ?>
+                                    <?php if ($i <= round($servicio['puntuacion_media'])): ?>
+                                        <i class="fas fa-star text-warning"></i>
+                                    <?php else: ?>
+                                        <i class="far fa-star text-warning"></i>
+                                    <?php endif; ?>
+                                <?php endfor; ?>
+                            </div>
+                            <div>
+                                <span class="text-muted">(<?= $servicio['total_valoraciones'] ?> valoraciones)</span>
+                            </div>
+                        </div>
+                    </div>
+                    
                     <h5 class="card-subtitle mb-3">Descripción</h5>
                     <p class="card-text"><?= nl2br(Helper::e($servicio['descripcion'])) ?></p>
                     
@@ -53,6 +75,155 @@
                     </div>
                 </div>
             </div>
+            
+            <!-- Sección de valoraciones -->
+            <div class="card shadow-sm mt-4">
+                <div class="card-header bg-white">
+                    <h4 class="card-title mb-0">Valoraciones</h4>
+                </div>
+                <div class="card-body">
+                    <?php if (Auth::check()): ?>
+                        <?php if (!$usuarioHaValorado): ?>
+                            <!-- Formulario para añadir valoración -->
+                            <form action="<?= Helper::url('servicios/' . $servicio['id'] . '/valorar') ?>" method="post" class="mb-4">
+                                <h5>Deja tu valoración</h5>
+                                <div class="mb-3">
+                                    <label class="form-label">Puntuación</label>
+                                    <div class="star-rating">
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="puntuacion" id="star5" value="5" required>
+                                            <label class="form-check-label" for="star5"><i class="far fa-star"></i></label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="puntuacion" id="star4" value="4">
+                                            <label class="form-check-label" for="star4"><i class="far fa-star"></i></label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="puntuacion" id="star3" value="3">
+                                            <label class="form-check-label" for="star3"><i class="far fa-star"></i></label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="puntuacion" id="star2" value="2">
+                                            <label class="form-check-label" for="star2"><i class="far fa-star"></i></label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="puntuacion" id="star1" value="1">
+                                            <label class="form-check-label" for="star1"><i class="far fa-star"></i></label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="comentario" class="form-label">Comentario</label>
+                                    <textarea class="form-control" id="comentario" name="comentario" rows="3" required></textarea>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Enviar Valoración</button>
+                            </form>
+                        <?php else: ?>
+                            <!-- Mostrar la valoración del usuario -->
+                            <div class="alert alert-info mb-4">
+                                <h5>Tu valoración</h5>
+                                <div class="d-flex align-items-center mb-2">
+                                    <?php for ($i = 1; $i <= 5; $i++): ?>
+                                        <?php if ($i <= $valoracionUsuario['puntuacion']): ?>
+                                            <i class="fas fa-star text-warning me-1"></i>
+                                        <?php else: ?>
+                                            <i class="far fa-star text-warning me-1"></i>
+                                        <?php endif; ?>
+                                    <?php endfor; ?>
+                                    <span class="ms-2"><?= Helper::formatDate($valoracionUsuario['fecha_creacion']) ?></span>
+                                </div>
+                                <p class="mb-0"><?= nl2br(Helper::e($valoracionUsuario['comentario'])) ?></p>
+                                <div class="mt-2">
+                                    <a href="<?= Helper::url('servicios/' . $servicio['id'] . '/valorar') ?>" class="btn btn-sm btn-outline-primary">Editar</a>
+                                    <a href="<?= Helper::url('servicios/valoracion/' . $valoracionUsuario['id'] . '/eliminar') ?>" 
+                                       class="btn btn-sm btn-outline-danger"
+                                       onclick="return confirm('¿Estás seguro de eliminar tu valoración?')">
+                                        Eliminar
+                                    </a>
+                                </div>
+                            </div>
+                        <?php endif; ?>
+                    <?php else: ?>
+                        <div class="alert alert-info mb-4">
+                            <p class="mb-0">
+                                <a href="<?= Helper::url('login') ?>">Inicia sesión</a> para dejar tu valoración.
+                            </p>
+                        </div>
+                    <?php endif; ?>
+                    
+                    <!-- Listado de valoraciones -->
+                    <?php if (empty($valoraciones)): ?>
+                        <p class="text-center">No hay valoraciones para este servicio.</p>
+                    <?php else: ?>
+                        <h5>Opiniones de otros usuarios</h5>
+                        <?php foreach ($valoraciones as $valoracion): ?>
+                            <?php if (Auth::check() && $valoracion['id_usuario'] == Auth::id()) continue; ?>
+                            <div class="card mb-3">
+                                <div class="card-body">
+                                    <div class="d-flex justify-content-between align-items-center mb-2">
+                                        <h6 class="card-subtitle"><?= Helper::e($valoracion['nombre_usuario']) ?></h6>
+                                        <small class="text-muted"><?= Helper::formatDate($valoracion['fecha_creacion']) ?></small>
+                                    </div>
+                                    <div class="mb-2">
+                                        <?php for ($i = 1; $i <= 5; $i++): ?>
+                                            <?php if ($i <= $valoracion['puntuacion']): ?>
+                                                <i class="fas fa-star text-warning"></i>
+                                            <?php else: ?>
+                                                <i class="far fa-star text-warning"></i>
+                                            <?php endif; ?>
+                                        <?php endfor; ?>
+                                    </div>
+                                    <p class="card-text"><?= nl2br(Helper::e($valoracion['comentario'])) ?></p>
+                                </div>
+                            </div>
+                        <?php endforeach; ?>
+                    <?php endif; ?>
+                </div>
+            </div>
         </div>
     </div>
 </div>
+
+<script>
+// Script para la funcionalidad de las estrellas en el formulario de valoración
+document.addEventListener('DOMContentLoaded', function() {
+    const starLabels = document.querySelectorAll('.star-rating .form-check-label');
+    const starInputs = document.querySelectorAll('.star-rating input[type="radio"]');
+    
+    // Función para actualizar las estrellas
+    function updateStars(rating) {
+        starLabels.forEach((label, index) => {
+            if (index < rating) {
+                label.innerHTML = '<i class="fas fa-star"></i>';
+            } else {
+                label.innerHTML = '<i class="far fa-star"></i>';
+            }
+        });
+    }
+    
+    // Evento para cuando se selecciona una estrella
+    starInputs.forEach((input, index) => {
+        input.addEventListener('change', function() {
+            updateStars(5 - index);
+        });
+    });
+    
+    // Evento para cuando se pasa el ratón por encima
+    starLabels.forEach((label, index) => {
+        label.addEventListener('mouseenter', function() {
+            updateStars(5 - index);
+        });
+    });
+    
+    // Evento para cuando se quita el ratón
+    document.querySelector('.star-rating').addEventListener('mouseleave', function() {
+        const selectedRating = document.querySelector('.star-rating input[type="radio"]:checked');
+        if (selectedRating) {
+            updateStars(selectedRating.value);
+        } else {
+            updateStars(0);
+        }
+    });
+});
+</script>
+
