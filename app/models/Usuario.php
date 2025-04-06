@@ -1,4 +1,31 @@
 <?php
+/**
+ * Usuario
+ *
+ * Este archivo contiene la clase Usuario, que representa el modelo de datos para los usuarios.
+ *
+ * @package SpaIbaiondo
+ * @autor Lander Ribera
+ * @version 1.0.0
+ *
+ * @description
+ * Este modelo interactúa con la base de datos para realizar operaciones relacionadas con los usuarios, como el registro, inicio de sesión y obtención de información.
+ *
+ * @purpose
+ * Proporcionar métodos para gestionar los datos de los usuarios en la base de datos.
+ *
+ * @class Usuario
+ * - Métodos principales:
+ *   - login(): Verifica las credenciales del usuario.
+ *   - register(): Registra un nuevo usuario en la base de datos.
+ *   - emailExists(): Comprueba si un email ya está registrado.
+ *   - getById(): Obtiene un usuario por su ID.
+ *
+ * @relationships
+ * - Relación con el controlador UsuarioController: Proporciona datos y lógica para las operaciones del controlador.
+ * - Relación con la base de datos: Realiza consultas y operaciones en la tabla `usuarios`.
+ */
+
 class Usuario {
     private $db;
     

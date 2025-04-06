@@ -1,4 +1,32 @@
 <?php
+/**
+ * ReservaController
+ *
+ * Este archivo contiene la clase ReservaController, que gestiona las operaciones relacionadas con las reservas.
+ *
+ * @package SpaIbaiondo
+ * @autor Lander Ribera
+ * @version 1.0.0
+ *
+ * @description
+ * Este controlador maneja las acciones relacionadas con las reservas, como la creación, cancelación y visualización.
+ *
+ * @purpose
+ * Proporcionar la lógica necesaria para gestionar las reservas realizadas por los usuarios.
+ *
+ * @class ReservaController
+ * - Métodos principales:
+ *   - misReservas(): Muestra las reservas del usuario autenticado.
+ *   - showCrear(): Muestra el formulario para crear una reserva.
+ *   - crear(): Procesa la creación de una nueva reserva.
+ *   - cancelar(): Procesa la cancelación de una reserva.
+ *
+ * @relationships
+ * - Relación con el modelo Reserva: Utiliza el modelo Reserva para interactuar con la base de datos.
+ * - Relación con el modelo Servicio: Obtiene información de los servicios relacionados con las reservas.
+ * - Relación con las vistas: Renderiza las vistas ubicadas en `app/views/reservas`.
+ */
+
 class ReservaController {
     private $reservaModel;
     private $servicioModel;

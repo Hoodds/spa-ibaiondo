@@ -1,4 +1,29 @@
 <?php
+/**
+ * ServicioController
+ *
+ * Este archivo contiene la clase ServicioController, que gestiona las operaciones relacionadas con los servicios.
+ *
+ * @package SpaIbaiondo
+ * @autor Lander Ribera
+ * @version 1.0.0
+ *
+ * @description
+ * Este controlador maneja las acciones relacionadas con los servicios, como la visualización, creación y edición.
+ *
+ * @purpose
+ * Proporcionar la lógica necesaria para gestionar los servicios ofrecidos por el spa.
+ *
+ * @class ServicioController
+ * - Métodos principales:
+ *   - listar(): Muestra la lista de servicios.
+ *   - mostrar(): Muestra los detalles de un servicio.
+ *
+ * @relationships
+ * - Relación con el modelo Servicio: Utiliza el modelo Servicio para interactuar con la base de datos.
+ * - Relación con las vistas: Renderiza las vistas ubicadas en `app/views/servicios`.
+ */
+
 class ServicioController {
     private $servicioModel;
     private $valoracionModel;

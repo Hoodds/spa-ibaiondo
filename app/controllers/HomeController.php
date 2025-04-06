@@ -1,4 +1,29 @@
 <?php
+/**
+ * HomeController
+ *
+ * Este archivo contiene la clase HomeController, que gestiona las operaciones relacionadas con la página principal y la página de contacto.
+ *
+ * @package SpaIbaiondo
+ * @autor Lander Ribera
+ * @version 1.0.0
+ *
+ * @description
+ * Este controlador maneja las acciones relacionadas con la visualización de la página principal y la página de contacto.
+ *
+ * @purpose
+ * Proporcionar la lógica necesaria para mostrar información general del spa y gestionar la navegación inicial.
+ *
+ * @class HomeController
+ * - Métodos principales:
+ *   - index(): Muestra la página principal.
+ *   - contacto(): Muestra la página de contacto.
+ *
+ * @relationships
+ * - Relación con el modelo Servicio: Obtiene servicios destacados para la página principal.
+ * - Relación con las vistas: Renderiza las vistas ubicadas en `app/views/home`.
+ */
+
 class HomeController {
     private $servicioModel;
     

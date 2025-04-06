@@ -1,4 +1,35 @@
 <?php
+/**
+ * UsuarioController
+ *
+ * Este archivo contiene la clase UsuarioController, que gestiona las operaciones relacionadas con los usuarios.
+ *
+ * @package SpaIbaiondo
+ * @author 
+ * Lander Ribera
+ * @version 1.0.0
+ *
+ * @description
+ * Este controlador maneja las acciones relacionadas con los usuarios, como el inicio de sesión, registro, y la visualización del perfil.
+ *
+ * @purpose
+ * Proporcionar la lógica necesaria para gestionar las interacciones de los usuarios con el sistema.
+ *
+ * @class UsuarioController
+ * - Métodos principales:
+ *   - showLogin(): Muestra la vista de inicio de sesión.
+ *   - login(): Procesa el inicio de sesión del usuario.
+ *   - showRegistro(): Muestra la vista de registro de usuario.
+ *   - registro(): Procesa el registro de un nuevo usuario.
+ *   - perfil(): Muestra el perfil del usuario autenticado.
+ *   - logout(): Cierra la sesión del usuario.
+ *
+ * @relationships
+ * - Relación con el modelo Usuario: Utiliza el modelo Usuario para interactuar con la base de datos.
+ * - Relación con el modelo Reserva: Obtiene las reservas asociadas al usuario.
+ * - Relación con las vistas: Renderiza las vistas ubicadas en `app/views/usuarios`.
+ */
+
 class UsuarioController {
     private $usuarioModel;
     private $reservaModel;

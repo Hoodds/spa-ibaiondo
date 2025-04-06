@@ -1,4 +1,28 @@
 <?php
+/**
+ * ContactoController
+ *
+ * Este archivo contiene la clase ContactoController, que gestiona las operaciones relacionadas con el formulario de contacto.
+ *
+ * @package SpaIbaiondo
+ * @autor Lander Ribera
+ * @version 1.0.0
+ *
+ * @description
+ * Este controlador maneja las acciones relacionadas con el envío y gestión de mensajes de contacto.
+ *
+ * @purpose
+ * Proporcionar la lógica necesaria para gestionar los mensajes enviados desde el formulario de contacto.
+ *
+ * @class ContactoController
+ * - Métodos principales:
+ *   - enviar(): Procesa el envío de un mensaje de contacto.
+ *
+ * @relationships
+ * - Relación con el modelo MensajeContacto: Utiliza el modelo MensajeContacto para guardar y gestionar los mensajes.
+ * - Relación con las vistas: Renderiza las vistas ubicadas en `app/views/home`.
+ */
+
 class ContactoController {
     private $mensajeModel;
 

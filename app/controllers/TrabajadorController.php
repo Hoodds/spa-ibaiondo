@@ -1,4 +1,32 @@
 <?php
+/**
+ * TrabajadorController
+ *
+ * Este archivo contiene la clase TrabajadorController, que gestiona las operaciones relacionadas con los trabajadores.
+ *
+ * @package SpaIbaiondo
+ * @autor Lander Ribera
+ * @version 1.0.0
+ *
+ * @description
+ * Este controlador maneja las acciones relacionadas con los trabajadores, como el inicio de sesión, gestión de reservas y valoraciones.
+ *
+ * @purpose
+ * Proporcionar la lógica necesaria para gestionar las interacciones de los trabajadores con el sistema.
+ *
+ * @class TrabajadorController
+ * - Métodos principales:
+ *   - login(): Procesa el inicio de sesión del trabajador.
+ *   - dashboard(): Muestra el panel principal del trabajador.
+ *   - misReservas(): Muestra las reservas asignadas al trabajador.
+ *   - logout(): Cierra la sesión del trabajador.
+ *
+ * @relationships
+ * - Relación con el modelo Trabajador: Utiliza el modelo Trabajador para interactuar con la base de datos.
+ * - Relación con el modelo Reserva: Obtiene las reservas asociadas al trabajador.
+ * - Relación con las vistas: Renderiza las vistas ubicadas en `app/views/trabajadores`.
+ */
+
 class TrabajadorController {
     private $trabajadorModel;
     private $reservaModel;

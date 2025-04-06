@@ -1,4 +1,33 @@
 <?php
+/**
+ * AdminController
+ *
+ * Este archivo contiene la clase AdminController, que gestiona las operaciones relacionadas con la administración del sistema.
+ *
+ * @package SpaIbaiondo
+ * @autor Lander Ribera
+ * @version 1.0.0
+ *
+ * @description
+ * Este controlador maneja las acciones administrativas, como la gestión de usuarios, trabajadores, servicios, reservas y valoraciones.
+ *
+ * @purpose
+ * Proporcionar la lógica necesaria para gestionar las operaciones administrativas del sistema.
+ *
+ * @class AdminController
+ * - Métodos principales:
+ *   - dashboard(): Muestra el panel de administración.
+ *   - listarUsuarios(): Lista todos los usuarios.
+ *   - listarTrabajadores(): Lista todos los trabajadores.
+ *   - listarServicios(): Lista todos los servicios.
+ *   - listarReservas(): Lista todas las reservas.
+ *   - listarValoraciones(): Lista todas las valoraciones.
+ *
+ * @relationships
+ * - Relación con los modelos Usuario, Trabajador, Servicio, Reserva: Interactúa con estos modelos para obtener y gestionar datos.
+ * - Relación con las vistas: Renderiza las vistas ubicadas en `app/views/admin`.
+ */
+
 class AdminController {
     private $usuarioModel;
     private $trabajadorModel;

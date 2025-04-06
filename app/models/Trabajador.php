@@ -1,4 +1,30 @@
 <?php
+/**
+ * Trabajador
+ *
+ * Este archivo contiene la clase Trabajador, que representa el modelo de datos para los trabajadores.
+ *
+ * @package SpaIbaiondo
+ * @autor Lander Ribera
+ * @version 1.0.0
+ *
+ * @description
+ * Este modelo interactúa con la base de datos para realizar operaciones relacionadas con los trabajadores, como la autenticación y obtención de información.
+ *
+ * @purpose
+ * Proporcionar métodos para gestionar los datos de los trabajadores en la base de datos.
+ *
+ * @class Trabajador
+ * - Métodos principales:
+ *   - login(): Verifica las credenciales del trabajador.
+ *   - getById(): Obtiene un trabajador por su ID.
+ *   - getAll(): Obtiene todos los trabajadores.
+ *
+ * @relationships
+ * - Relación con el controlador TrabajadorController: Proporciona datos y lógica para las operaciones del controlador.
+ * - Relación con la base de datos: Realiza consultas y operaciones en la tabla `trabajadores`.
+ */
+
 class Trabajador {
     private $db;
     

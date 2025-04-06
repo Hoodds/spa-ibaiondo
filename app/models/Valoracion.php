@@ -1,4 +1,30 @@
 <?php
+/**
+ * Valoracion
+ *
+ * Este archivo contiene la clase Valoracion, que representa el modelo de datos para las valoraciones de los servicios.
+ *
+ * @package SpaIbaiondo
+ * @autor Lander Ribera
+ * @version 1.0.0
+ *
+ * @description
+ * Este modelo interactúa con la base de datos para realizar operaciones relacionadas con las valoraciones, como la creación y obtención de estadísticas.
+ *
+ * @purpose
+ * Proporcionar métodos para gestionar los datos de las valoraciones en la base de datos.
+ *
+ * @class Valoracion
+ * - Métodos principales:
+ *   - guardar(): Guarda una nueva valoración.
+ *   - getByServicio(): Obtiene las valoraciones de un servicio.
+ *   - getPuntuacionMedia(): Calcula la puntuación media de un servicio.
+ *
+ * @relationships
+ * - Relación con el controlador ServicioController: Proporciona datos y lógica para las operaciones del controlador.
+ * - Relación con la base de datos: Realiza consultas y operaciones en la tabla `valoraciones`.
+ */
+
 class Valoracion {
     private $db;
     

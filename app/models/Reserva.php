@@ -1,4 +1,30 @@
 <?php
+/**
+ * Reserva
+ *
+ * Este archivo contiene la clase Reserva, que representa el modelo de datos para las reservas.
+ *
+ * @package SpaIbaiondo
+ * @autor Lander Ribera
+ * @version 1.0.0
+ *
+ * @description
+ * Este modelo interactúa con la base de datos para realizar operaciones relacionadas con las reservas, como la creación, actualización y obtención de información.
+ *
+ * @purpose
+ * Proporcionar métodos para gestionar los datos de las reservas en la base de datos.
+ *
+ * @class Reserva
+ * - Métodos principales:
+ *   - getById(): Obtiene una reserva por su ID.
+ *   - getByUsuario(): Obtiene las reservas asociadas a un usuario.
+ *   - create(): Crea una nueva reserva.
+ *
+ * @relationships
+ * - Relación con el controlador ReservaController: Proporciona datos y lógica para las operaciones del controlador.
+ * - Relación con la base de datos: Realiza consultas y operaciones en la tabla `reservas`.
+ */
+
 class Reserva {
     private $db;
     
