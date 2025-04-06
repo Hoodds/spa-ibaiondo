@@ -1,91 +1,81 @@
-<div class="container py-4">
-    <h1 class="mb-4">Mis Reservas Asignadas</h1>
-    
-    <?php if (empty($reservas)): ?>
-        <div class="alert alert-info">
-            <p class="mb-0">No tienes reservas asignadas.</p>
-        </div>
-    <?php else: ?>
-        <div class="card shadow-sm">
+<div class="row">
+    <div class="col-md-3">
+        <div class="card mb-4">
+            <div class="card-header bg-primary text-white">
+                <h5 class="mb-0">Panel de Control</h5>
+            </div>
             <div class="card-body">
-                <div class="table-responsive">
-                    <table class="table table-hover">
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Cliente</th>
-                                <th>Servicio</th>
-                                <th>Fecha y Hora</th>
-                                <th>Duración</th>
-                                <th>Estado</th>
-                                <th>Acciones</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php foreach ($reservas as $reserva): ?>
-                                <tr>
-                                    <td><?= $reserva['id'] ?></td>
-                                    <td><?= Helper::e($reserva['nombre_usuario']) ?></td>
-                                    <td><?= Helper::e($reserva['nombre_servicio']) ?></td>
-                                    <td><?= Helper::formatDate($reserva['fecha_hora']) ?></td>
-                                    <td><?= $reserva['duracion'] ?> min</td>
-                                    <td>
-                                        <?php if ($reserva['estado'] == 'pendiente'): ?>
-                                            <span class="badge bg-warning text-dark">Pendiente</span>
-                                        <?php elseif ($reserva['estado'] == 'confirmada'): ?>
-                                            <span class="badge bg-success">Confirmada</span>
-                                        <?php else: ?>
-                                            <span class="badge bg-danger">Cancelada</span>
-                                        <?php endif; ?>
-                                    </td>
-                                    <td>
-                                        <?php if ($reserva['estado'] == 'pendiente'): ?>
-                                            <a href="#" class="btn btn-sm btn-success" title="Marcar como completada">
-                                                <i class="fas fa-check"></i> Completar
-                                            </a>
-                                        <?php endif; ?>
-                                        <button type="button" class="btn btn-sm btn-info" data-bs-toggle="modal" data-bs-target="#detalleReserva<?= $reserva['id'] ?>">
-                                            <i class="fas fa-info-circle"></i> Detalles
-                                        </button>
-                                    </td>
-                                </tr>
-                                
-                                <!-- Modal de detalles -->
-                                <div class="modal fade" id="detalleReserva<?= $reserva['id'] ?>" tabindex="-1" aria-hidden="true">
-                                    <div class="modal-dialog">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title">Detalles de la Reserva #<?= $reserva['id'] ?></h5>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                            </div>
-                                            <div class="modal-body">
-                                                <p><strong>Cliente:</strong> <?= Helper::e($reserva['nombre_usuario']) ?></p>
-                                                <p><strong>Servicio:</strong> <?= Helper::e($reserva['nombre_servicio']) ?></p>
-                                                <p><strong>Fecha y Hora:</strong> <?= Helper::formatDate($reserva['fecha_hora']) ?></p>
-                                                <p><strong>Duración:</strong> <?= $reserva['duracion'] ?> minutos</p>
-                                                <p><strong>Precio:</strong> <?= Helper::formatPrice($reserva['precio']) ?></p>
-                                                <p><strong>Estado:</strong> 
-                                                    <?php if ($reserva['estado'] == 'pendiente'): ?>
-                                                        <span class="badge bg-warning text-dark">Pendiente</span>
-                                                    <?php elseif ($reserva['estado'] == 'confirmada'): ?>
-                                                        <span class="badge bg-success">Confirmada</span>
-                                                    <?php else: ?>
-                                                        <span class="badge bg-danger">Cancelada</span>
-                                                    <?php endif; ?>
-                                                </p>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            <?php endforeach; ?>
-                        </tbody>
-                    </table>
+                <div class="list-group">
+                    <a href="<?= Helper::url('trabajador/dashboard') ?>" class="list-group-item list-group-item-action">
+                        <i class="fas fa-tachometer-alt me-2"></i> Dashboard
+                    </a>
+                    <a href="<?= Helper::url('trabajador/reservas') ?>" class="list-group-item list-group-item-action active">
+                        <i class="fas fa-calendar-alt me-2"></i> Mis Reservas
+                    </a>
+                    <a href="<?= Helper::url('trabajador/valoraciones') ?>" class="list-group-item list-group-item-action">
+                        <i class="fas fa-star me-2"></i> Mis Valoraciones
+                    </a>
+                    <a href="<?= Helper::url('trabajador/logout') ?>" class="list-group-item list-group-item-action text-danger">
+                        <i class="fas fa-sign-out-alt me-2"></i> Cerrar Sesión
+                    </a>
                 </div>
             </div>
         </div>
-    <?php endif; ?>
+    </div>
+    
+    <div class="col-md-9">
+        <h1 class="mb-4">Mis Reservas</h1>
+        
+        <div class="card">
+            <div class="card-body">
+                <?php if (empty($reservas)): ?>
+                    <div class="alert alert-info">
+                        <i class="fas fa-info-circle me-2"></i> No tienes reservas asignadas.
+                    </div>
+                <?php else: ?>
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Cliente</th>
+                                    <th>Servicio</th>
+                                    <th>Fecha y Hora</th>
+                                    <th>Duración</th>
+                                    <th>Estado</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php foreach ($reservas as $reserva): ?>
+                                    <tr>
+                                        <td><?= Helper::e($reserva['nombre_usuario']) ?></td>
+                                        <td><?= Helper::e($reserva['nombre_servicio']) ?></td>
+                                        <td><?= Helper::formatDate($reserva['fecha_hora']) ?></td>
+                                        <td><?= $reserva['duracion'] ?> min</td>
+                                        <td>
+                                            <?php if ($reserva['estado'] == 'confirmada'): ?>
+                                                <span class="badge bg-success">Confirmada</span>
+                                            <?php elseif ($reserva['estado'] == 'pendiente'): ?>
+                                                <span class="badge bg-warning text-dark">Pendiente</span>
+                                            <?php else: ?>
+                                                <span class="badge bg-danger">Cancelada</span>
+                                            <?php endif; ?>
+                                        </td>
+                                        <td>
+                                            <?php if ($reserva['estado'] == 'pendiente'): ?>
+                                                <a href="<?= Helper::url('trabajador/reservas/' . $reserva['id'] . '/confirmar') ?>" class="btn btn-sm btn-success">
+                                                    <i class="fas fa-check"></i>
+                                                </a>
+                                            <?php endif; ?>
+                                        </td>
+                                    </tr>
+                                <?php endforeach; ?>
+                            </tbody>
+                        </table>
+                    </div>
+                <?php endif; ?>
+            </div>
+        </div>
+    </div>
 </div>
 

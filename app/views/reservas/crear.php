@@ -1,62 +1,79 @@
-<div class="container py-5">
-    <div class="row">
-        <div class="col-lg-8 mx-auto">
-            <div class="card shadow-sm">
-                <div class="card-header bg-white">
-                    <h2 class="card-title mb-0">Reservar Servicio</h2>
+<div class="row">
+    <div class="col-md-8">
+        <h1 class="mb-4">Reservar Servicio</h1>
+        
+        <div class="card mb-4">
+            <div class="card-header bg-primary text-white">
+                <h5 class="mb-0">Detalles del Servicio</h5>
+            </div>
+            <div class="card-body">
+                <h5 class="card-title"><?= Helper::e($servicio['nombre']) ?></h5>
+                <p class="card-text"><?= Helper::e($servicio['descripcion']) ?></p>
+                
+                <div class="row mt-3">
+                    <div class="col-md-6">
+                        <p><i class="far fa-clock me-2 text-primary"></i> Duración: <?= $servicio['duracion'] ?> minutos</p>
+                    </div>
+                    <div class="col-md-6">
+                        <p><i class="fas fa-tag me-2 text-primary"></i> Precio: <?= Helper::formatPrice($servicio['precio']) ?></p>
+                    </div>
                 </div>
-                <div class="card-body">
-                    <div class="row mb-4">
-                        <div class="col-md-4">
-                            <img src="<?= Helper::asset('images/servicios/' . $servicio['id'] . '.jpg') ?>" 
-                                 alt="<?= Helper::e($servicio['nombre']) ?>" 
-                                 class="img-fluid rounded" 
-                                 onerror="this.src='<?= Helper::asset('images/servicio-default.jpg') ?>'">
-                        </div>
-                        <div class="col-md-8">
-                            <h4><?= Helper::e($servicio['nombre']) ?></h4>
-                            <p><?= substr(Helper::e($servicio['descripcion']), 0, 150) ?>...</p>
-                            <div class="d-flex">
-                                <span class="badge bg-primary me-2">
-                                    <i class="far fa-clock"></i> <?= $servicio['duracion'] ?> minutos
-                                </span>
-                                <span class="badge bg-info">
-                                    <i class="fas fa-tag"></i> <?= Helper::formatPrice($servicio['precio']) ?>
-                                </span>
-                            </div>
-                        </div>
+            </div>
+        </div>
+        
+        <div class="card">
+            <div class="card-header bg-primary text-white">
+                <h5 class="mb-0">Formulario de Reserva</h5>
+            </div>
+            <div class="card-body">
+                <form action="<?= Helper::url('reservas/crear') ?>" method="post" id="reservaForm">
+                    <input type="hidden" name="csrf_token" value="<?= Helper::generateCSRFToken() ?>">
+                    <input type="hidden" name="id_servicio" value="<?= $servicio['id'] ?>">
+                    
+                    <div class="mb-3">
+                        <label for="fecha" class="form-label">Fecha</label>
+                        <input type="date" class="form-control" id="fecha" name="fecha" required min="<?= date('Y-m-d') ?>">
                     </div>
                     
-                    <form action="<?= Helper::url('reservas/crear') ?>" method="post" id="reservaForm">
-                        <input type="hidden" name="id_servicio" value="<?= $servicio['id'] ?>">
-                        
-                        <div class="mb-3">
-                            <label for="fecha" class="form-label">Fecha</label>
-                            <input type="date" class="form-control" id="fecha" name="fecha" required min="<?= date('Y-m-d') ?>">
-                        </div>
-                        
-                        <div class="mb-3">
-                            <label for="id_trabajador" class="form-label">Profesional</label>
-                            <select class="form-select" id="id_trabajador" name="id_trabajador" required disabled>
-                                <option value="">Selecciona un profesional</option>
-                            </select>
-                            <div class="form-text">Primero selecciona una fecha para ver los profesionales disponibles.</div>
-                        </div>
-                        
-                        <div class="mb-3">
-                            <label for="hora" class="form-label">Hora</label>
-                            <select class="form-select" id="hora" name="hora" required disabled>
-                                <option value="">Selecciona una hora</option>
-                            </select>
-                            <div class="form-text">Primero selecciona un profesional para ver las horas disponibles.</div>
-                        </div>
-                        
-                        <div class="d-flex justify-content-between">
-                            <a href="<?= Helper::url('servicios/' . $servicio['id']) ?>" class="btn btn-outline-secondary">Cancelar</a>
-                            <button type="submit" class="btn btn-primary" id="btnReservar" disabled>Confirmar Reserva</button>
-                        </div>
-                    </form>
-                </div>
+                    <div class="mb-3">
+                        <label for="id_trabajador" class="form-label">Profesional</label>
+                        <select class="form-select" id="id_trabajador" name="id_trabajador" required disabled>
+                            <option value="">Seleccione una fecha primero</option>
+                        </select>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="hora" class="form-label">Hora</label>
+                        <select class="form-select" id="hora" name="hora" required disabled>
+                            <option value="">Seleccione un profesional primero</option>
+                        </select>
+                    </div>
+                    
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn btn-primary" id="btnReservar" disabled>
+                            <i class="fas fa-calendar-check me-2"></i> Confirmar Reserva
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-4">
+        <div class="card mb-4">
+            <div class="card-header bg-primary text-white">
+                <h5 class="mb-0">Información</h5>
+            </div>
+            <div class="card-body">
+                <h6>Política de Cancelación</h6>
+                <p>Puede cancelar su reserva hasta 24 horas antes de la cita sin cargo alguno.</p>
+                
+                <h6>Recomendaciones</h6>
+                <ul>
+                    <li>Llegue 10 minutos antes de su cita</li>
+                    <li>Use ropa cómoda</li>
+                    <li>Informe sobre cualquier condición médica relevante</li>
+                </ul>
             </div>
         </div>
     </div>
@@ -71,8 +88,8 @@ document.addEventListener('DOMContentLoaded', function() {
     
     fechaInput.addEventListener('change', function() {
         if (this.value) {
-            // Obtener disponibilidad para esta fecha y servicio
-            fetch('<?= Helper::url('reservas/disponibilidad') ?>?id_servicio=<?= $servicio['id'] ?>&fecha=' + this.value)
+            // Obtener disponibilidad para la fecha seleccionada
+            fetch('<?= Helper::url('reservas/getDisponibilidad') ?>?id_servicio=<?= $servicio['id'] ?>&fecha=' + this.value)
                 .then(response => response.json())
                 .then(data => {
                     if (data.error) {
@@ -80,18 +97,11 @@ document.addEventListener('DOMContentLoaded', function() {
                         return;
                     }
                     
-                    // Limpiar y habilitar select de trabajadores
-                    trabajadorSelect.innerHTML = '<option value="">Selecciona un profesional</option>';
+                    // Limpiar y habilitar el select de trabajadores
+                    trabajadorSelect.innerHTML = '<option value="">Seleccione un profesional</option>';
+                    trabajadorSelect.disabled = false;
                     
-                    if (data.length === 0) {
-                        trabajadorSelect.disabled = true;
-                        horaSelect.disabled = true;
-                        btnReservar.disabled = true;
-                        alert('No hay disponibilidad para esta fecha. Por favor, selecciona otra fecha.');
-                        return;
-                    }
-                    
-                    // Añadir trabajadores disponibles
+                    // Añadir opciones de trabajadores
                     data.forEach(item => {
                         const option = document.createElement('option');
                         option.value = item.id_trabajador;
@@ -100,16 +110,23 @@ document.addEventListener('DOMContentLoaded', function() {
                         trabajadorSelect.appendChild(option);
                     });
                     
-                    trabajadorSelect.disabled = false;
-                    horaSelect.disabled = true;
-                    btnReservar.disabled = true;
+                    // Si no hay disponibilidad
+                    if (data.length === 0) {
+                        trabajadorSelect.innerHTML = '<option value="">No hay disponibilidad para esta fecha</option>';
+                        trabajadorSelect.disabled = true;
+                        horaSelect.innerHTML = '<option value="">No hay horas disponibles</option>';
+                        horaSelect.disabled = true;
+                        btnReservar.disabled = true;
+                    }
                 })
                 .catch(error => {
                     console.error('Error:', error);
-                    alert('Error al obtener disponibilidad. Por favor, inténtalo de nuevo.');
+                    alert('Error al obtener disponibilidad');
                 });
         } else {
+            trabajadorSelect.innerHTML = '<option value="">Seleccione una fecha primero</option>';
             trabajadorSelect.disabled = true;
+            horaSelect.innerHTML = '<option value="">Seleccione un profesional primero</option>';
             horaSelect.disabled = true;
             btnReservar.disabled = true;
         }
@@ -117,14 +134,14 @@ document.addEventListener('DOMContentLoaded', function() {
     
     trabajadorSelect.addEventListener('change', function() {
         if (this.value) {
-            // Obtener horas disponibles para este trabajador
             const selectedOption = this.options[this.selectedIndex];
             const horasDisponibles = JSON.parse(selectedOption.dataset.horas);
             
-            // Limpiar y habilitar select de horas
-            horaSelect.innerHTML = '<option value="">Selecciona una hora</option>';
+            // Limpiar y habilitar el select de horas
+            horaSelect.innerHTML = '<option value="">Seleccione una hora</option>';
+            horaSelect.disabled = false;
             
-            // Añadir horas disponibles
+            // Añadir opciones de horas
             horasDisponibles.forEach(hora => {
                 const option = document.createElement('option');
                 option.value = hora;
@@ -132,9 +149,14 @@ document.addEventListener('DOMContentLoaded', function() {
                 horaSelect.appendChild(option);
             });
             
-            horaSelect.disabled = false;
-            btnReservar.disabled = true;
+            // Si no hay horas disponibles
+            if (horasDisponibles.length === 0) {
+                horaSelect.innerHTML = '<option value="">No hay horas disponibles</option>';
+                horaSelect.disabled = true;
+                btnReservar.disabled = true;
+            }
         } else {
+            horaSelect.innerHTML = '<option value="">Seleccione un profesional primero</option>';
             horaSelect.disabled = true;
             btnReservar.disabled = true;
         }
@@ -145,3 +167,4 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 </script>
+
