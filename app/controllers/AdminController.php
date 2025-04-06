@@ -21,7 +21,7 @@ class AdminController {
     }
     
     private function checkAdmin() {
-        if (!isset($_SESSION['trabajador_id']) || !isset($_SESSION['trabajador_rol']) || $_SESSION['trabajador_rol'] !== 'admin') {
+        if (!isset($_SESSION['is_trabajador']) || $_SESSION['is_trabajador'] !== true || $_SESSION['trabajador_rol'] !== 'admin') {
             $_SESSION['error'] = 'No tienes permisos para acceder a esta sección';
             Helper::redirect('trabajador/login');
             exit;
