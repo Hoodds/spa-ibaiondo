@@ -60,11 +60,10 @@
             </div>
         </div>
     </div>
-    
+
     <div class="mt-4">
         <a href="<?= Helper::url('servicios') ?>" class="btn btn-primary">
             <i class="fas fa-calendar-plus me-2"></i> Nueva Reserva
         </a>
     </div>
 <?php endif; ?>
-

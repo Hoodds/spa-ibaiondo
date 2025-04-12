@@ -44,7 +44,7 @@
             </div>
         </div>
     </nav>
-    
+
     <!-- Mensajes de alerta -->
     <?php if (isset($_SESSION['success'])): ?>
         <div class="container mt-3">
@@ -55,7 +55,7 @@
         </div>
         <?php unset($_SESSION['success']); ?>
     <?php endif; ?>
-    
+
     <?php if (isset($_SESSION['error'])): ?>
         <div class="container mt-3">
             <div class="alert alert-danger alert-dismissible fade show">
@@ -65,4 +65,3 @@
         </div>
         <?php unset($_SESSION['error']); ?>
     <?php endif; ?>
-
