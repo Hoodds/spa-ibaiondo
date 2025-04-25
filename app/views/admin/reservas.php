@@ -99,7 +99,7 @@
                                 
                                 <!-- Modal Ver Reserva -->
                                 <div class="modal fade" id="verReservaModal<?= $reserva['id'] ?>" tabindex="-1" aria-hidden="true">
-                                    <div class="modal-dialog">
+                                    <div class="modal-dialog modal-dialog-centered">
                                         <div class="modal-content">
                                             <div class="modal-header">
                                                 <h5 class="modal-title">Detalles de la Reserva</h5>
@@ -132,7 +132,7 @@
                                 
                                 <!-- Modal Editar Reserva -->
                                 <div class="modal fade" id="editarReservaModal<?= $reserva['id'] ?>" tabindex="-1" aria-hidden="true">
-                                    <div class="modal-dialog">
+                                    <div class="modal-dialog modal-dialog-centered">
                                         <div class="modal-content">
                                             <div class="modal-header">
                                                 <h5 class="modal-title">Editar Reserva</h5>
@@ -184,7 +184,7 @@
 
 <!-- Modal Nueva Reserva -->
 <div class="modal fade" id="nuevaReservaModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">Nueva Reserva</h5>

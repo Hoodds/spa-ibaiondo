@@ -92,6 +92,10 @@ footer a:hover {
     text-decoration: none;
 }
 
+.modal-backdrop {
+    display: none !important;
+}
+
 /* Responsive */
 @media (max-width: 768px) {
     .hero-section {

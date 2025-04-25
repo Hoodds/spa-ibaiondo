@@ -65,7 +65,7 @@
                                 
                                 <!-- Modal Ver Trabajador -->
                                 <div class="modal fade" id="verTrabajadorModal<?= $trabajador['id'] ?>" tabindex="-1" aria-hidden="true">
-                                    <div class="modal-dialog">
+                                    <div class="modal-dialog modal-dialog-centered">
                                         <div class="modal-content">
                                             <div class="modal-header">
                                                 <h5 class="modal-title">Detalles del Trabajador</h5>
@@ -86,7 +86,7 @@
                                 
                                 <!-- Modal Editar Trabajador -->
                                 <div class="modal fade" id="editarTrabajadorModal<?= $trabajador['id'] ?>" tabindex="-1" aria-hidden="true">
-                                    <div class="modal-dialog">
+                                    <div class="modal-dialog modal-dialog-centered">
                                         <div class="modal-content">
                                             <div class="modal-header">
                                                 <h5 class="modal-title">Editar Trabajador</h5>
@@ -136,7 +136,7 @@
 
 <!-- Modal Nuevo Trabajador -->
 <div class="modal fade" id="nuevoTrabajadorModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">Nuevo Trabajador</h5>
