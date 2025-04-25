@@ -39,9 +39,9 @@ $router->add('GET', '/admin/reservas', 'AdminController', 'listarReservas');
 $router->add('GET', '/admin/servicios', 'AdminController', 'listarServicios');
 $router->add('GET', '/admin/usuarios', 'AdminController', 'listarUsuarios');
 $router->add('GET', '/admin/trabajadores', 'AdminController', 'listarTrabajadores');
+$router->add('POST', '/admin/trabajadores/editar', 'TrabajadorController', 'editar');
 $router->add('GET', '/admin/valoraciones', 'AdminController', 'listarValoraciones');
 $router->add('GET', '/admin/valoraciones/pendientes', 'AdminController', 'valoracionesPendientes');
 $router->add('GET', '/admin/valoraciones/{id}/aprobar', 'AdminController', 'aprobarValoracion');
 $router->add('GET', '/admin/valoraciones/{id}/rechazar', 'AdminController', 'rechazarValoracion');
 $router->add('GET', '/admin/valoraciones/{id}/eliminar', 'AdminController', 'eliminarValoracion');
-

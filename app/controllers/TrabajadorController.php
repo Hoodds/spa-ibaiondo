@@ -125,5 +125,34 @@ class TrabajadorController {
             exit;
         }
     }
+
+    public function editar() {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $id = $_POST['id'];
+            $nombre = $_POST['nombre'];
+            $email = $_POST['email'];
+            $rol = $_POST['rol'];
+            $password = !empty($_POST['password']) ? password_hash($_POST['password'], PASSWORD_BCRYPT) : null;
+
+            // Validar los datos
+            if (empty($id) || empty($nombre) || empty($email) || empty($rol)) {
+                $_SESSION['error'] = 'Todos los campos son obligatorios.';
+                Helper::redirect('/admin/trabajadores');
+                return;
+            }
+
+            // Actualizar en la base de datos
+            $trabajadorModel = new Trabajador();
+            $result = $trabajadorModel->update($id, $nombre, $email, $rol, $password);
+
+            if ($result) {
+                $_SESSION['success'] = 'Trabajador actualizado correctamente.';
+            } else {
+                $_SESSION['error'] = 'Error al actualizar el trabajador.';
+            }
+
+            Helper::redirect('/admin/trabajadores');
+        }
+    }
 }
 

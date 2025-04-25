@@ -36,4 +36,20 @@ class Trabajador {
         
         return false;
     }
+
+    public function update($id, $nombre, $email, $rol, $password = null) {
+        $query = "UPDATE trabajadores SET nombre = ?, email = ?, rol = ?";
+        $params = [$nombre, $email, $rol];
+
+        if ($password) {
+            $query .= ", contrasena = ?";
+            $params[] = $password;
+        }
+
+        $query .= " WHERE id = ?";
+        $params[] = $id;
+
+        $stmt = $this->db->prepare($query);
+        return $stmt->execute($params);
+    }
 }

@@ -1,3 +1,13 @@
+<?php if (isset($_SESSION['success'])): ?>
+    <div class="alert alert-success"><?= $_SESSION['success'] ?></div>
+    <?php unset($_SESSION['success']); ?>
+<?php endif; ?>
+
+<?php if (isset($_SESSION['error'])): ?>
+    <div class="alert alert-danger"><?= $_SESSION['error'] ?></div>
+    <?php unset($_SESSION['error']); ?>
+<?php endif; ?>
+
 <div class="container-fluid py-4">
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h1>Gestión de Trabajadores</h1>
@@ -93,18 +103,19 @@
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                             </div>
                                             <div class="modal-body">
-                                                <form>
+                                                <form action="<?= Helper::url('/admin/trabajadores/editar') ?>" method="POST">
+                                                    <input type="hidden" name="id" value="<?= $trabajador['id'] ?>">
                                                     <div class="mb-3">
                                                         <label for="nombre<?= $trabajador['id'] ?>" class="form-label">Nombre</label>
-                                                        <input type="text" class="form-control" id="nombre<?= $trabajador['id'] ?>" value="<?= Helper::e($trabajador['nombre']) ?>">
+                                                        <input type="text" class="form-control" id="nombre<?= $trabajador['id'] ?>" name="nombre" value="<?= Helper::e($trabajador['nombre']) ?>" required>
                                                     </div>
                                                     <div class="mb-3">
                                                         <label for="email<?= $trabajador['id'] ?>" class="form-label">Email</label>
-                                                        <input type="email" class="form-control" id="email<?= $trabajador['id'] ?>" value="<?= Helper::e($trabajador['email']) ?>">
+                                                        <input type="email" class="form-control" id="email<?= $trabajador['id'] ?>" name="email" value="<?= Helper::e($trabajador['email']) ?>" required>
                                                     </div>
                                                     <div class="mb-3">
                                                         <label for="rol<?= $trabajador['id'] ?>" class="form-label">Rol</label>
-                                                        <select class="form-select" id="rol<?= $trabajador['id'] ?>">
+                                                        <select class="form-select" id="rol<?= $trabajador['id'] ?>" name="rol" required>
                                                             <option value="admin" <?= $trabajador['rol'] == 'admin' ? 'selected' : '' ?>>Administrador</option>
                                                             <option value="recepcionista" <?= $trabajador['rol'] == 'recepcionista' ? 'selected' : '' ?>>Recepcionista</option>
                                                             <option value="masajista" <?= $trabajador['rol'] == 'masajista' ? 'selected' : '' ?>>Masajista</option>
@@ -113,14 +124,14 @@
                                                     </div>
                                                     <div class="mb-3">
                                                         <label for="password<?= $trabajador['id'] ?>" class="form-label">Nueva Contraseña</label>
-                                                        <input type="password" class="form-control" id="password<?= $trabajador['id'] ?>">
+                                                        <input type="password" class="form-control" id="password<?= $trabajador['id'] ?>" name="password">
                                                         <div class="form-text">Dejar en blanco para mantener la contraseña actual.</div>
                                                     </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                                        <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+                                                    </div>
                                                 </form>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                                                <button type="button" class="btn btn-primary">Guardar Cambios</button>
                                             </div>
                                         </div>
                                     </div>
