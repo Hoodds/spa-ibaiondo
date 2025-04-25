@@ -58,10 +58,10 @@ class AdminController {
         $servicios = $this->servicioModel->getAll();
         
         // Para cada servicio, obtener su puntuación media
-        foreach ($servicios as &$servicio) {
+        foreach ($servicios as $key => $servicio) {
             $puntuacion = $this->valoracionModel->getPuntuacionMedia($servicio['id']);
-            $servicio['puntuacion_media'] = $puntuacion['media'] ? round($puntuacion['media'], 1) : 0;
-            $servicio['total_valoraciones'] = $puntuacion['total'];
+            $servicios[$key]['puntuacion_media'] = $puntuacion['media'] ? round($puntuacion['media'], 1) : 0;
+            $servicios[$key]['total_valoraciones'] = $puntuacion['total'];
         }
         
         include BASE_PATH . '/app/views/layouts/admin.php';
