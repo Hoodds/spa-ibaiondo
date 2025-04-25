@@ -45,4 +45,20 @@ class Usuario {
         $stmt->execute([$email]);
         return (int)$stmt->fetchColumn() > 0;
     }
+
+    public function update($id, $nombre, $email, $password = null) {
+        $query = "UPDATE usuarios SET nombre = ?, email = ?";
+        $params = [$nombre, $email];
+
+        if ($password) {
+            $query .= ", contrasena = ?";
+            $params[] = $password;
+        }
+
+        $query .= " WHERE id = ?";
+        $params[] = $id;
+
+        $stmt = $this->db->prepare($query);
+        return $stmt->execute($params);
+    }
 }

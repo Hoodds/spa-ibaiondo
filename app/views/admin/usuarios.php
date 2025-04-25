@@ -1,3 +1,13 @@
+<?php if (isset($_SESSION['success'])): ?>
+    <div class="alert alert-success"><?= $_SESSION['success'] ?></div>
+    <?php unset($_SESSION['success']); ?>
+<?php endif; ?>
+
+<?php if (isset($_SESSION['error'])): ?>
+    <div class="alert alert-danger"><?= $_SESSION['error'] ?></div>
+    <?php unset($_SESSION['error']); ?>
+<?php endif; ?>
+
 <div class="container-fluid py-4">
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h1>Gestión de Usuarios</h1>
@@ -74,25 +84,26 @@
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                             </div>
                                             <div class="modal-body">
-                                                <form>
+                                                <form action="<?= Helper::url('/admin/usuarios/editar') ?>" method="POST">
+                                                    <input type="hidden" name="id" value="<?= $usuario['id'] ?>">
                                                     <div class="mb-3">
                                                         <label for="nombre<?= $usuario['id'] ?>" class="form-label">Nombre</label>
-                                                        <input type="text" class="form-control" id="nombre<?= $usuario['id'] ?>" value="<?= Helper::e($usuario['nombre']) ?>">
+                                                        <input type="text" class="form-control" id="nombre<?= $usuario['id'] ?>" name="nombre" value="<?= Helper::e($usuario['nombre']) ?>" required>
                                                     </div>
                                                     <div class="mb-3">
                                                         <label for="email<?= $usuario['id'] ?>" class="form-label">Email</label>
-                                                        <input type="email" class="form-control" id="email<?= $usuario['id'] ?>" value="<?= Helper::e($usuario['email']) ?>">
+                                                        <input type="email" class="form-control" id="email<?= $usuario['id'] ?>" name="email" value="<?= Helper::e($usuario['email']) ?>" required>
                                                     </div>
                                                     <div class="mb-3">
                                                         <label for="password<?= $usuario['id'] ?>" class="form-label">Nueva Contraseña</label>
-                                                        <input type="password" class="form-control" id="password<?= $usuario['id'] ?>">
+                                                        <input type="password" class="form-control" id="password<?= $usuario['id'] ?>" name="password">
                                                         <div class="form-text">Dejar en blanco para mantener la contraseña actual.</div>
                                                     </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                                        <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+                                                    </div>
                                                 </form>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                                                <button type="button" class="btn btn-primary">Guardar Cambios</button>
                                             </div>
                                         </div>
                                     </div>

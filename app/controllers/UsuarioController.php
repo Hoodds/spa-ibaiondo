@@ -108,4 +108,32 @@ class UsuarioController {
         $_SESSION['success'] = 'Has cerrado sesión correctamente.';
         Helper::redirect('');
     }
+
+    public function editar() {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $id = $_POST['id'];
+            $nombre = $_POST['nombre'];
+            $email = $_POST['email'];
+            $password = !empty($_POST['password']) ? password_hash($_POST['password'], PASSWORD_BCRYPT) : null;
+
+            // Validar los datos
+            if (empty($id) || empty($nombre) || empty($email)) {
+                $_SESSION['error'] = 'Todos los campos son obligatorios.';
+                Helper::redirect('/admin/usuarios');
+                return;
+            }
+
+            // Actualizar en la base de datos
+            $usuarioModel = new Usuario();
+            $result = $usuarioModel->update($id, $nombre, $email, $password);
+
+            if ($result) {
+                $_SESSION['success'] = 'Usuario actualizado correctamente.';
+            } else {
+                $_SESSION['error'] = 'Error al actualizar el usuario.';
+            }
+
+            Helper::redirect('/admin/usuarios');
+        }
+    }
 }

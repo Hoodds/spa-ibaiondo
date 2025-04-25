@@ -38,6 +38,7 @@ $router->add('GET', '/admin', 'AdminController', 'dashboard');
 $router->add('GET', '/admin/reservas', 'AdminController', 'listarReservas');
 $router->add('GET', '/admin/servicios', 'AdminController', 'listarServicios');
 $router->add('GET', '/admin/usuarios', 'AdminController', 'listarUsuarios');
+$router->add('POST', '/admin/usuarios/editar', 'UsuarioController', 'editar');
 $router->add('GET', '/admin/trabajadores', 'AdminController', 'listarTrabajadores');
 $router->add('POST', '/admin/trabajadores/editar', 'TrabajadorController', 'editar');
 $router->add('GET', '/admin/valoraciones', 'AdminController', 'listarValoraciones');
