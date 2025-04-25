@@ -23,7 +23,11 @@ class Servicio {
     }
     
     public function update($id, $nombre, $descripcion, $duracion, $precio) {
-        $stmt = $this->db->prepare("UPDATE servicios SET nombre = ?, descripcion = ?, duracion = ?, precio = ? WHERE id = ?");
+        $stmt = $this->db->prepare("
+            UPDATE servicios 
+            SET nombre = ?, descripcion = ?, duracion = ?, precio = ? 
+            WHERE id = ?
+        ");
         return $stmt->execute([$nombre, $descripcion, $duracion, $precio, $id]);
     }
     

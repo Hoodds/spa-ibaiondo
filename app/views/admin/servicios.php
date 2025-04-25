@@ -98,28 +98,29 @@
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                             </div>
                                             <div class="modal-body">
-                                                <form>
+                                                <form action="<?= Helper::url('/admin/servicios/editar') ?>" method="POST">
+                                                    <input type="hidden" name="id" value="<?= $servicio['id'] ?>">
                                                     <div class="mb-3">
                                                         <label for="nombre<?= $servicio['id'] ?>" class="form-label">Nombre</label>
-                                                        <input type="text" class="form-control" id="nombre<?= $servicio['id'] ?>" value="<?= Helper::e($servicio['nombre']) ?>">
+                                                        <input type="text" class="form-control" id="nombre<?= $servicio['id'] ?>" name="nombre" value="<?= Helper::e($servicio['nombre']) ?>" required>
                                                     </div>
                                                     <div class="mb-3">
                                                         <label for="descripcion<?= $servicio['id'] ?>" class="form-label">Descripción</label>
-                                                        <textarea class="form-control" id="descripcion<?= $servicio['id'] ?>" rows="3"><?= Helper::e($servicio['descripcion']) ?></textarea>
+                                                        <textarea class="form-control" id="descripcion<?= $servicio['id'] ?>" name="descripcion" rows="3" required><?= Helper::e($servicio['descripcion']) ?></textarea>
                                                     </div>
                                                     <div class="mb-3">
                                                         <label for="duracion<?= $servicio['id'] ?>" class="form-label">Duración (minutos)</label>
-                                                        <input type="number" class="form-control" id="duracion<?= $servicio['id'] ?>" value="<?= $servicio['duracion'] ?>">
+                                                        <input type="number" class="form-control" id="duracion<?= $servicio['id'] ?>" name="duracion" value="<?= $servicio['duracion'] ?>" required>
                                                     </div>
                                                     <div class="mb-3">
                                                         <label for="precio<?= $servicio['id'] ?>" class="form-label">Precio (€)</label>
-                                                        <input type="number" step="0.01" class="form-control" id="precio<?= $servicio['id'] ?>" value="<?= $servicio['precio'] ?>">
+                                                        <input type="number" step="0.01" class="form-control" id="precio<?= $servicio['id'] ?>" name="precio" value="<?= $servicio['precio'] ?>" required>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                                        <button type="submit" class="btn btn-primary">Guardar Cambios</button>
                                                     </div>
                                                 </form>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                                                <button type="button" class="btn btn-primary">Guardar Cambios</button>
                                             </div>
                                         </div>
                                     </div>

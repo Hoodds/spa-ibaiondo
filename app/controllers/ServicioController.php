@@ -153,5 +153,34 @@ class ServicioController {
         
         Helper::redirect('servicios/mis-valoraciones');
     }
+
+    public function editar() {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $id = $_POST['id'];
+            $nombre = $_POST['nombre'];
+            $descripcion = $_POST['descripcion'];
+            $duracion = $_POST['duracion'];
+            $precio = $_POST['precio'];
+
+            // Validar los datos
+            if (empty($id) || empty($nombre) || empty($descripcion) || empty($duracion) || empty($precio)) {
+                $_SESSION['error'] = 'Todos los campos son obligatorios.';
+                Helper::redirect('/admin/servicios');
+                return;
+            }
+
+            // Actualizar en la base de datos
+            $servicioModel = new Servicio();
+            $result = $servicioModel->update($id, $nombre, $descripcion, $duracion, $precio);
+
+            if ($result) {
+                $_SESSION['success'] = 'Servicio actualizado correctamente.';
+            } else {
+                $_SESSION['error'] = 'Error al actualizar el servicio.';
+            }
+
+            Helper::redirect('/admin/servicios');
+        }
+    }
 }
 
