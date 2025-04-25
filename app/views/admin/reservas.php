@@ -1,3 +1,13 @@
+<?php if (isset($_SESSION['success'])): ?>
+    <div class="alert alert-success"><?= $_SESSION['success'] ?></div>
+    <?php unset($_SESSION['success']); ?>
+<?php endif; ?>
+
+<?php if (isset($_SESSION['error'])): ?>
+    <div class="alert alert-danger"><?= $_SESSION['error'] ?></div>
+    <?php unset($_SESSION['error']); ?>
+<?php endif; ?>
+
 <div class="container-fluid py-4">
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h1>Gestión de Reservas</h1>
@@ -139,10 +149,11 @@
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                             </div>
                                             <div class="modal-body">
-                                                <form>
+                                                <form action="<?= Helper::url('/admin/reservas/editar') ?>" method="POST">
+                                                    <input type="hidden" name="id" value="<?= $reserva['id'] ?>">
                                                     <div class="mb-3">
                                                         <label for="estado<?= $reserva['id'] ?>" class="form-label">Estado</label>
-                                                        <select class="form-select" id="estado<?= $reserva['id'] ?>">
+                                                        <select class="form-select" id="estado<?= $reserva['id'] ?>" name="estado" required>
                                                             <option value="pendiente" <?= $reserva['estado'] == 'pendiente' ? 'selected' : '' ?>>Pendiente</option>
                                                             <option value="confirmada" <?= $reserva['estado'] == 'confirmada' ? 'selected' : '' ?>>Confirmada</option>
                                                             <option value="cancelada" <?= $reserva['estado'] == 'cancelada' ? 'selected' : '' ?>>Cancelada</option>
@@ -151,24 +162,24 @@
                                                     <div class="mb-3">
                                                         <label for="fecha<?= $reserva['id'] ?>" class="form-label">Fecha</label>
                                                         <?php $fecha = new DateTime($reserva['fecha_hora']); ?>
-                                                        <input type="date" class="form-control" id="fecha<?= $reserva['id'] ?>" value="<?= $fecha->format('Y-m-d') ?>">
+                                                        <input type="date" class="form-control" id="fecha<?= $reserva['id'] ?>" name="fecha" value="<?= $fecha->format('Y-m-d') ?>" required>
                                                     </div>
                                                     <div class="mb-3">
                                                         <label for="hora<?= $reserva['id'] ?>" class="form-label">Hora</label>
-                                                        <input type="time" class="form-control" id="hora<?= $reserva['id'] ?>" value="<?= $fecha->format('H:i') ?>">
+                                                        <input type="time" class="form-control" id="hora<?= $reserva['id'] ?>" name="hora" value="<?= $fecha->format('H:i') ?>" required>
                                                     </div>
                                                     <div class="mb-3">
                                                         <label for="trabajador<?= $reserva['id'] ?>" class="form-label">Trabajador</label>
-                                                        <select class="form-select" id="trabajador<?= $reserva['id'] ?>">
+                                                        <select class="form-select" id="trabajador<?= $reserva['id'] ?>" name="id_trabajador" required>
                                                             <!-- Aquí se cargarían los trabajadores dinámicamente -->
                                                             <option value="<?= $reserva['id_trabajador'] ?>" selected><?= Helper::e($reserva['nombre_trabajador']) ?></option>
                                                         </select>
                                                     </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                                        <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+                                                    </div>
                                                 </form>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                                                <button type="button" class="btn btn-primary">Guardar Cambios</button>
                                             </div>
                                         </div>
                                     </div>

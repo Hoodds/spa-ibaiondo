@@ -107,4 +107,36 @@ class ReservaController {
         $disponibilidad = $this->reservaModel->getDisponibilidad($idServicio, $fecha);
         echo json_encode($disponibilidad);
     }
+
+    public function editar() {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $id = $_POST['id'];
+            $estado = $_POST['estado'];
+            $fecha = $_POST['fecha'];
+            $hora = $_POST['hora'];
+            $idTrabajador = $_POST['id_trabajador'];
+
+            // Validar los datos
+            if (empty($id) || empty($estado) || empty($fecha) || empty($hora) || empty($idTrabajador)) {
+                $_SESSION['error'] = 'Todos los campos son obligatorios.';
+                Helper::redirect('/admin/reservas');
+                return;
+            }
+
+            // Crear la fecha y hora en formato MySQL
+            $fechaHora = $fecha . ' ' . $hora . ':00';
+
+            // Actualizar en la base de datos
+            $reservaModel = new Reserva();
+            $result = $reservaModel->update($id, $estado, $fechaHora, $idTrabajador);
+
+            if ($result) {
+                $_SESSION['success'] = 'Reserva actualizada correctamente.';
+            } else {
+                $_SESSION['error'] = 'Error al actualizar la reserva.';
+            }
+
+            Helper::redirect('/admin/reservas');
+        }
+    }
 }

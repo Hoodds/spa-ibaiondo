@@ -73,6 +73,15 @@ class Reserva {
         $stmt = $this->db->prepare("UPDATE reservas SET estado = ? WHERE id = ?");
         return $stmt->execute([$estado, $id]);
     }
+
+    public function update($id, $estado, $fechaHora, $idTrabajador) {
+        $stmt = $this->db->prepare("
+            UPDATE reservas 
+            SET estado = ?, fecha_hora = ?, id_trabajador = ? 
+            WHERE id = ?
+        ");
+        return $stmt->execute([$estado, $fechaHora, $idTrabajador, $id]);
+    }
     
     public function delete($id) {
         $stmt = $this->db->prepare("DELETE FROM reservas WHERE id = ?");
