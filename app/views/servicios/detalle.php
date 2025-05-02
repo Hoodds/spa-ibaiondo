@@ -2,10 +2,10 @@
     <div class="row">
         <div class="col-lg-8 mx-auto">
             <div class="card shadow-sm">
-                <img src="<?= Helper::asset('images/servicios/' . $servicio['id'] . '.jpg') ?>" 
-                     alt="<?= Helper::e($servicio['nombre']) ?>" 
-                     class="card-img-top" 
-                     onerror="this.src='<?= Helper::asset('images/servicio-default.jpg') ?>'">
+                <img src="<?= Helper::asset('assets/images/servicios/' . ($servicio['imagen'] ?? 'servicio-default.jpg')) ?>"
+                     alt="<?= Helper::e($servicio['nombre']) ?>"
+                     class="card-img-top"
+                     onerror="this.src='<?= Helper::asset('assets/images/servicio-default.jpg') ?>'">
                 <div class="card-body">
                     <h1 class="card-title"><?= Helper::e($servicio['nombre']) ?></h1>
                     

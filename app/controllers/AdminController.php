@@ -197,5 +197,87 @@ class AdminController {
         }
         Helper::redirect('admin/usuarios');
     }
+
+    public function crearUsuario() {
+        $nombre = $_POST['nombre'] ?? '';
+        $email = $_POST['email'] ?? '';
+        $password = $_POST['password'] ?? '';
+
+        if (empty($nombre) || empty($email) || empty($password)) {
+            $_SESSION['error'] = 'Todos los campos son obligatorios.';
+            Helper::redirect('admin/usuarios');
+            return;
+        }
+
+        // Comprobar si el email ya existe
+        if ($this->usuarioModel->emailExists($email)) {
+            $_SESSION['error'] = 'El email ya está registrado.';
+            Helper::redirect('admin/usuarios');
+            return;
+        }
+
+        if ($this->usuarioModel->crear([
+            'nombre' => $nombre,
+            'email' => $email,
+            'password' => $password
+        ])) {
+            $_SESSION['success'] = 'Usuario creado correctamente.';
+        } else {
+            $_SESSION['error'] = 'Error al crear el usuario.';
+        }
+        Helper::redirect('admin/usuarios');
+    }
+
+    public function crearTrabajador() {
+        $nombre = $_POST['nombre'] ?? '';
+        $email = $_POST['email'] ?? '';
+        $rol = $_POST['rol'] ?? 'trabajador';
+        $password = $_POST['password'] ?? '';
+
+        if (empty($nombre) || empty($email) || empty($password)) {
+            $_SESSION['error'] = 'Todos los campos son obligatorios.';
+            Helper::redirect('admin/trabajadores');
+            return;
+        }
+
+        // Comprobar si el email ya existe
+        if ($this->trabajadorModel->emailExists($email)) {
+            $_SESSION['error'] = 'El email ya está registrado.';
+            Helper::redirect('admin/trabajadores');
+            return;
+        }
+
+        if ($this->trabajadorModel->crear([
+            'nombre' => $nombre,
+            'email' => $email,
+            'rol' => $rol,
+            'password' => $password
+        ])) {
+            $_SESSION['success'] = 'Trabajador creado correctamente.';
+        } else {
+            $_SESSION['error'] = 'Error al crear el trabajador.';
+        }
+        Helper::redirect('admin/trabajadores');
+    }
+
+    public function crearServicio() {
+        $nombre = $_POST['nombre'] ?? '';
+        $descripcion = $_POST['descripcion'] ?? '';
+        $duracion = $_POST['duracion'] ?? '';
+        $precio = $_POST['precio'] ?? '';
+
+        if (empty($nombre) || empty($descripcion) || empty($duracion) || empty($precio)) {
+            $_SESSION['error'] = 'Todos los campos son obligatorios.';
+            Helper::redirect('admin/servicios');
+            return;
+        }
+
+        if ($this->servicioModel->create($nombre, $descripcion, $duracion, $precio)) {
+            $_SESSION['success'] = 'Servicio creado correctamente.';
+        } else {
+            $_SESSION['error'] = 'Error al crear el servicio.';
+        }
+        Helper::redirect('admin/servicios');
+    }
 }
 
