@@ -178,4 +178,38 @@ class Reserva {
         $stmt = $this->db->prepare("UPDATE reservas SET estado = ? WHERE id = ?");
         return $stmt->execute([$estado, $id]);
     }
+
+    public function getFiltered($filtros) {
+        $sql = "SELECT r.*, u.nombre as nombre_usuario, s.nombre as nombre_servicio, 
+                   t.nombre as nombre_trabajador, s.duracion, s.precio
+            FROM reservas r
+            JOIN usuarios u ON r.id_usuario = u.id
+            JOIN servicios s ON r.id_servicio = s.id
+            JOIN trabajadores t ON r.id_trabajador = t.id
+            WHERE 1=1";
+        $params = [];
+    
+        if ($filtros['fecha']) {
+            $sql .= " AND DATE(r.fecha_hora) = ?";
+            $params[] = $filtros['fecha'];
+        }
+        if ($filtros['servicio']) {
+            $sql .= " AND r.id_servicio = ?";
+            $params[] = $filtros['servicio'];
+        }
+        if ($filtros['trabajador']) {
+            $sql .= " AND r.id_trabajador = ?";
+            $params[] = $filtros['trabajador'];
+        }
+        if ($filtros['estado']) {
+            $sql .= " AND r.estado = ?";
+            $params[] = $filtros['estado'];
+        }
+    
+        $sql .= " ORDER BY r.fecha_hora DESC";
+    
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute($params);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 }

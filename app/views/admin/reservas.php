@@ -18,28 +18,32 @@
             <h5 class="card-title mb-0">Filtros</h5>
         </div>
         <div class="card-body">
-            <form class="row g-3">
+            <form class="row g-3" method="GET" action="<?= Helper::url('/admin/reservas') ?>">
                 <div class="col-md-3">
                     <label for="filtroFecha" class="form-label">Fecha</label>
-                    <input type="date" class="form-control" id="filtroFecha">
+                    <input type="date" class="form-control" id="filtroFecha" name="filtroFecha">
                 </div>
                 <div class="col-md-3">
                     <label for="filtroServicio" class="form-label">Servicio</label>
-                    <select class="form-select" id="filtroServicio">
+                    <select class="form-select" id="filtroServicio" name="filtroServicio">
                         <option value="">Todos los servicios</option>
-                        <!-- Aquí se podrían cargar los servicios dinámicamente -->
+                        <?php foreach ($servicios as $servicio): ?>
+                            <option value="<?= $servicio['id'] ?>"><?= Helper::e($servicio['nombre']) ?></option>
+                        <?php endforeach; ?>
                     </select>
                 </div>
                 <div class="col-md-3">
                     <label for="filtroTrabajador" class="form-label">Trabajador</label>
-                    <select class="form-select" id="filtroTrabajador">
+                    <select class="form-select" id="filtroTrabajador" name="filtroTrabajador">
                         <option value="">Todos los trabajadores</option>
-                        <!-- Aquí se podrían cargar los trabajadores dinámicamente -->
+                        <?php foreach ($trabajadores as $trabajador): ?>
+                            <option value="<?= $trabajador['id'] ?>"><?= Helper::e($trabajador['nombre']) ?></option>
+                        <?php endforeach; ?>
                     </select>
                 </div>
                 <div class="col-md-3">
                     <label for="filtroEstado" class="form-label">Estado</label>
-                    <select class="form-select" id="filtroEstado">
+                    <select class="form-select" id="filtroEstado" name="filtroEstado">
                         <option value="">Todos los estados</option>
                         <option value="pendiente">Pendiente</option>
                         <option value="confirmada">Confirmada</option>
@@ -47,8 +51,7 @@
                     </select>
                 </div>
                 <div class="col-12 text-end">
-                    <button type="button" class="btn btn-secondary">Limpiar</button>
-                    <button type="button" class="btn btn-primary">Filtrar</button>
+                    <button type="submit" class="btn btn-primary">Filtrar</button>
                 </div>
             </form>
         </div>

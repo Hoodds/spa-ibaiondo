@@ -70,10 +70,19 @@ class AdminController {
     }
     
     public function listarReservas() {
-        $reservas = $this->reservaModel->getAll();
-        
+        $servicios = $this->servicioModel->getAll();
+        $trabajadores = $this->trabajadorModel->getAll();
+    
+        $filtros = [
+            'fecha' => $_GET['filtroFecha'] ?? null,
+            'servicio' => $_GET['filtroServicio'] ?? null,
+            'trabajador' => $_GET['filtroTrabajador'] ?? null,
+            'estado' => $_GET['filtroEstado'] ?? null,
+        ];
+        $reservas = $this->reservaModel->getFiltered($filtros);
+
         include BASE_PATH . '/app/views/layouts/admin.php';
-        include BASE_PATH . '/app/views/admin/reservas.php';
+        require BASE_PATH . '/app/views/admin/reservas.php';
         include BASE_PATH . '/app/views/layouts/footer.php';
     }
     
@@ -145,98 +154,6 @@ class AdminController {
         }
         
         Helper::redirect('admin/valoraciones');
-    }
-
-    public function crearUsuario() {
-        $nombre = trim($_POST['nombre'] ?? '');
-        $email = trim($_POST['email'] ?? '');
-        $password = $_POST['password'] ?? '';
-
-        if (!$nombre || !$email || !$password) {
-            $_SESSION['error'] = 'Todos los campos son obligatorios';
-            Helper::redirect('admin/usuarios');
-            return;
-        }
-
-        // Verifica si el email ya existe
-        if ($this->usuarioModel->emailExists($email)) {
-            $_SESSION['error'] = 'El email ya está registrado';
-            Helper::redirect('admin/usuarios');
-            return;
-        }
-
-        // Crea el usuario
-        $hash = password_hash($password, PASSWORD_DEFAULT);
-        $result = $this->usuarioModel->crear([
-            'nombre' => $nombre,
-            'email' => $email,
-            'password' => $hash
-        ]);
-
-        if ($result) {
-            $_SESSION['success'] = 'Usuario creado correctamente';
-        } else {
-            $_SESSION['error'] = 'Error al crear el usuario';
-        }
-        Helper::redirect('admin/usuarios');
-    }
-
-    public function crearTrabajador() {
-        $nombre = trim($_POST['nombre'] ?? '');
-        $email = trim($_POST['email'] ?? '');
-        $rol = trim($_POST['rol'] ?? '');
-        $password = $_POST['password'] ?? '';
-
-        if (!$nombre || !$email || !$rol || !$password) {
-            $_SESSION['error'] = 'Todos los campos son obligatorios';
-            Helper::redirect('admin/trabajadores');
-            return;
-        }
-
-        // Verifica si el email ya existe
-        if ($this->trabajadorModel->emailExists($email)) {
-            $_SESSION['error'] = 'El email ya está registrado';
-            Helper::redirect('admin/trabajadores');
-            return;
-        }
-
-        // Crea el trabajador
-        $hash = password_hash($password, PASSWORD_DEFAULT);
-        $result = $this->trabajadorModel->crear([
-            'nombre' => $nombre,
-            'email' => $email,
-            'rol' => $rol,
-            'password' => $hash
-        ]);
-
-        if ($result) {
-            $_SESSION['success'] = 'Trabajador creado correctamente';
-        } else {
-            $_SESSION['error'] = 'Error al crear el trabajador';
-        }
-        Helper::redirect('admin/trabajadores');
-    }
-
-    public function crearServicio() {
-        $nombre = trim($_POST['nombre'] ?? '');
-        $descripcion = trim($_POST['descripcion'] ?? '');
-        $duracion = intval($_POST['duracion'] ?? 0);
-        $precio = floatval($_POST['precio'] ?? 0);
-
-        if (!$nombre || !$descripcion || !$duracion || !$precio) {
-            $_SESSION['error'] = 'Todos los campos son obligatorios';
-            Helper::redirect('admin/servicios');
-            return;
-        }
-
-        $result = $this->servicioModel->create($nombre, $descripcion, $duracion, $precio);
-
-        if ($result) {
-            $_SESSION['success'] = 'Servicio creado correctamente';
-        } else {
-            $_SESSION['error'] = 'Error al crear el servicio';
-        }
-        Helper::redirect('admin/servicios');
     }
 }
 
