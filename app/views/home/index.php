@@ -21,10 +21,10 @@
         <?php foreach (array_slice($serviciosDestacados, 0, 3) as $servicio): ?>
             <div class="col-md-4 mb-4">
                 <div class="card h-100">
-                    <img src="<?= Helper::asset('images/servicios/' . $servicio['id'] . '.jpg') ?>" 
-                         alt="<?= Helper::e($servicio['nombre']) ?>" 
-                         class="card-img-top" 
-                         onerror="this.src='<?= Helper::asset('images/servicio-default.jpg') ?>'">
+                <img src="<?= Helper::asset('images/servicios/' . ($servicio['imagen'] ?? 'servicio-default.jpg')) ?>"
+                     alt="<?= Helper::e($servicio['nombre']) ?>"
+                     class="card-img-top"
+                     onerror="if(this.src.indexOf('servicio-default.jpg') === -1) this.src='<?= Helper::asset('images/servicios/servicio-default.jpg') ?>';">
                     <div class="card-body">
                         <h5 class="card-title"><?= Helper::e($servicio['nombre']) ?></h5>
                         <p class="card-text"><?= substr(Helper::e($servicio['descripcion']), 0, 100) ?>...</p>
