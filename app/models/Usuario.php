@@ -21,14 +21,22 @@ class Usuario {
         $stmt = $this->db->prepare("SELECT id, nombre, email, contrasena FROM usuarios WHERE email = ?");
         $stmt->execute([$email]);
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
-        
-        // Nota: En producción, usar password_verify() con contraseñas hasheadas
-        // Para este ejemplo, comparamos directamente ya que en la BD están en texto plano
-        if ($user && $password === $user['contrasena']) {
-            unset($user['contrasena']); // No devolver la contraseña
-            return $user;
+
+        if ($user) {
+            // Si la contraseña almacenada parece un hash, usar password_verify
+            if (strlen($user['contrasena']) > 30) {
+                if (password_verify($password, $user['contrasena'])) {
+                    unset($user['contrasena']);
+                    return $user;
+                }
+            } else {
+                // Comparación directa para contraseñas antiguas en texto plano
+                if ($password === $user['contrasena']) {
+                    unset($user['contrasena']);
+                    return $user;
+                }
+            }
         }
-        
         return false;
     }
     
@@ -60,5 +68,11 @@ class Usuario {
 
         $stmt = $this->db->prepare($query);
         return $stmt->execute($params);
+    }
+
+    public function crear($data) {
+        $sql = "INSERT INTO usuarios (nombre, email, contrasena, fecha_registro) VALUES (?, ?, ?, NOW())";
+        $stmt = $this->db->prepare($sql);
+        return $stmt->execute([$data['nombre'], $data['email'], $data['password']]);
     }
 }

@@ -153,19 +153,19 @@
                 <h5 class="modal-title">Nuevo Trabajador</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body">
-                <form>
+            <form action="<?= Helper::url('/admin/trabajadores/crear') ?>" method="POST">
+                <div class="modal-body">
                     <div class="mb-3">
                         <label for="nuevoNombre" class="form-label">Nombre</label>
-                        <input type="text" class="form-control" id="nuevoNombre" required>
+                        <input type="text" class="form-control" id="nuevoNombre" name="nombre" required>
                     </div>
                     <div class="mb-3">
                         <label for="nuevoEmail" class="form-label">Email</label>
-                        <input type="email" class="form-control" id="nuevoEmail" required>
+                        <input type="email" class="form-control" id="nuevoEmail" name="email" required>
                     </div>
                     <div class="mb-3">
                         <label for="nuevoRol" class="form-label">Rol</label>
-                        <select class="form-select" id="nuevoRol" required>
+                        <select class="form-select" id="nuevoRol" name="rol" required>
                             <option value="">Seleccionar rol</option>
                             <option value="admin">Administrador</option>
                             <option value="recepcionista">Recepcionista</option>
@@ -175,14 +175,14 @@
                     </div>
                     <div class="mb-3">
                         <label for="nuevoPassword" class="form-label">Contraseña</label>
-                        <input type="password" class="form-control" id="nuevoPassword" required>
+                        <input type="password" class="form-control" id="nuevoPassword" name="password" required>
                     </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                <button type="button" class="btn btn-primary">Crear Trabajador</button>
-            </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Crear Trabajador</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>
