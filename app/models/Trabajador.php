@@ -27,13 +27,22 @@ class Trabajador {
         $stmt = $this->db->prepare("SELECT id, nombre, email, contrasena, rol FROM trabajadores WHERE email = ?");
         $stmt->execute([$email]);
         $trabajador = $stmt->fetch(PDO::FETCH_ASSOC);
-        
-        // Nota: En producción, usar password_verify() con contraseñas hasheadas
-        if ($trabajador && $password === $trabajador['contrasena']) {
-            unset($trabajador['contrasena']); // No devolver la contraseña
-            return $trabajador;
+
+        if ($trabajador) {
+            // Si la contraseña almacenada parece un hash, usar password_verify
+            if (strlen($trabajador['contrasena']) > 30) {
+                if (password_verify($password, $trabajador['contrasena'])) {
+                    unset($trabajador['contrasena']);
+                    return $trabajador;
+                }
+            } else {
+                // Comparación directa para contraseñas antiguas en texto plano
+                if ($password === $trabajador['contrasena']) {
+                    unset($trabajador['contrasena']);
+                    return $trabajador;
+                }
+            }
         }
-        
         return false;
     }
 
@@ -51,5 +60,17 @@ class Trabajador {
 
         $stmt = $this->db->prepare($query);
         return $stmt->execute($params);
+    }
+
+    public function emailExists($email) {
+        $stmt = $this->db->prepare("SELECT COUNT(*) FROM trabajadores WHERE email = ?");
+        $stmt->execute([$email]);
+        return (int)$stmt->fetchColumn() > 0;
+    }
+
+    public function crear($data) {
+        $sql = "INSERT INTO trabajadores (nombre, email, rol, contrasena) VALUES (?, ?, ?, ?)";
+        $stmt = $this->db->prepare($sql);
+        return $stmt->execute([$data['nombre'], $data['email'], $data['rol'], $data['password']]);
     }
 }
