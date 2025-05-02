@@ -8,7 +8,9 @@
                 <a href="<?= Helper::url('servicios') ?>" class="btn btn-light btn-lg">Ver Servicios</a>
             </div>
             <div class="col-md-6">
-                <img src="<?= Helper::asset('images/spa-hero.jpg') ?>" alt="Spa Ibaiondo" class="img-fluid rounded">
+                <img src="<?= Helper::asset('images/ini.jpg') ?>"
+                    alt="Spa Ibaiondo"
+                    class="img-fluid rounded-circle w-50 mx-auto d-block">
             </div>
         </div>
     </div>
