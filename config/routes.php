@@ -41,6 +41,7 @@ $router->add('GET', '/admin/reservas', 'AdminController', 'listarReservas');
 $router->add('POST', '/admin/reservas/editar', 'ReservaController', 'editar');
 $router->add('GET', '/admin/servicios', 'AdminController', 'listarServicios');
 $router->add('POST', '/admin/servicios/editar', 'ServicioController', 'editar');
+$router->add('POST', '/admin/servicios/crear', 'AdminController', 'crearServicio');
 $router->add('GET', '/admin/usuarios', 'AdminController', 'listarUsuarios');
 $router->add('POST', '/admin/usuarios/editar', 'UsuarioController', 'editar');
 $router->add('POST', '/admin/usuarios/crear', 'AdminController', 'crearUsuario');

@@ -216,5 +216,27 @@ class AdminController {
         }
         Helper::redirect('admin/trabajadores');
     }
+
+    public function crearServicio() {
+        $nombre = trim($_POST['nombre'] ?? '');
+        $descripcion = trim($_POST['descripcion'] ?? '');
+        $duracion = intval($_POST['duracion'] ?? 0);
+        $precio = floatval($_POST['precio'] ?? 0);
+
+        if (!$nombre || !$descripcion || !$duracion || !$precio) {
+            $_SESSION['error'] = 'Todos los campos son obligatorios';
+            Helper::redirect('admin/servicios');
+            return;
+        }
+
+        $result = $this->servicioModel->create($nombre, $descripcion, $duracion, $precio);
+
+        if ($result) {
+            $_SESSION['success'] = 'Servicio creado correctamente';
+        } else {
+            $_SESSION['error'] = 'Error al crear el servicio';
+        }
+        Helper::redirect('admin/servicios');
+    }
 }
 

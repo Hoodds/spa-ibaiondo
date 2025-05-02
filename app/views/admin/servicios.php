@@ -143,28 +143,28 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form>
+                <form action="<?= Helper::url('/admin/servicios/crear') ?>" method="POST">
                     <div class="mb-3">
-                        <label for="nuevoNombre" class="form-label">Nombre</label>
-                        <input type="text" class="form-control" id="nuevoNombre" required>
+                        <label for="nombre" class="form-label">Nombre</label>
+                        <input type="text" class="form-control" id="nombre" name="nombre" required>
                     </div>
                     <div class="mb-3">
-                        <label for="nuevaDescripcion" class="form-label">Descripción</label>
-                        <textarea class="form-control" id="nuevaDescripcion" rows="3" required></textarea>
+                        <label for="descripcion" class="form-label">Descripción</label>
+                        <textarea class="form-control" id="descripcion" name="descripcion" rows="3" required></textarea>
                     </div>
                     <div class="mb-3">
-                        <label for="nuevaDuracion" class="form-label">Duración (minutos)</label>
-                        <input type="number" class="form-control" id="nuevaDuracion" required>
+                        <label for="duracion" class="form-label">Duración (minutos)</label>
+                        <input type="number" class="form-control" id="duracion" name="duracion" required>
                     </div>
                     <div class="mb-3">
-                        <label for="nuevoPrecio" class="form-label">Precio (€)</label>
-                        <input type="number" step="0.01" class="form-control" id="nuevoPrecio" required>
+                        <label for="precio" class="form-label">Precio (€)</label>
+                        <input type="number" step="0.01" class="form-control" id="precio" name="precio" required>
                     </div>
+                    <button type="submit" class="btn btn-primary">Crear Servicio</button>
                 </form>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                <button type="button" class="btn btn-primary">Crear Servicio</button>
             </div>
         </div>
     </div>
