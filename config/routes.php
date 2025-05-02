@@ -12,6 +12,7 @@ $router->add('POST', '/contacto/enviar', 'ContactoController', 'enviar');
 
 // Rutas para usuarios autenticados
 $router->add('GET', '/perfil', 'UsuarioController', 'perfil');
+$router->add('POST', '/perfil', 'UsuarioController', 'perfil');
 $router->add('GET', '/reservas', 'ReservaController', 'misReservas');
 $router->add('GET', '/reservas/crear/{id}', 'ReservaController', 'showCrear');
 $router->add('POST', '/reservas/crear', 'ReservaController', 'crear');

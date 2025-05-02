@@ -19,6 +19,12 @@
                     <h5 class="card-title mb-0">Mis Reservas</h5>
                 </div>
                 <div class="card-body">
+                    <?php if (!empty($_SESSION['success'])): ?>
+                        <div class="alert alert-success"><?= $_SESSION['success']; unset($_SESSION['success']); ?></div>
+                    <?php endif; ?>
+                    <?php if (!empty($_SESSION['error'])): ?>
+                        <div class="alert alert-danger"><?= $_SESSION['error']; unset($_SESSION['error']); ?></div>
+                    <?php endif; ?>
                     <?php if (empty($reservas)): ?>
                         <p class="text-center">No tienes reservas activas.</p>
                         <div class="text-center">
@@ -75,23 +81,30 @@
                     <h5 class="card-title mb-0">Editar Perfil</h5>
                 </div>
                 <div class="card-body">
-                    <form>
+                    <?php if (!empty($_SESSION['success'])): ?>
+                        <div class="alert alert-success"><?= $_SESSION['success']; unset($_SESSION['success']); ?></div>
+                    <?php endif; ?>
+                    <?php if (!empty($_SESSION['error'])): ?>
+                        <div class="alert alert-danger"><?= $_SESSION['error']; unset($_SESSION['error']); ?></div>
+                    <?php endif; ?>
+                    <form method="POST" action="<?= Helper::url('perfil') ?>">
+                        <input type="hidden" name="id" value="<?= $usuario['id'] ?>">
                         <div class="mb-3">
                             <label for="nombre" class="form-label">Nombre</label>
-                            <input type="text" class="form-control" id="nombre" value="<?= Helper::e($usuario['nombre']) ?>">
+                            <input type="text" class="form-control" id="nombre" name="nombre" value="<?= Helper::e($usuario['nombre']) ?>">
                         </div>
                         <div class="mb-3">
                             <label for="email" class="form-label">Email</label>
-                            <input type="email" class="form-control" id="email" value="<?= Helper::e($usuario['email']) ?>" readonly>
+                            <input type="email" class="form-control" id="email" name="email" value="<?= Helper::e($usuario['email']) ?>">
                         </div>
                         <div class="mb-3">
                             <label for="password" class="form-label">Nueva Contraseña</label>
-                            <input type="password" class="form-control" id="password">
+                            <input type="password" class="form-control" id="password" name="password">
                             <div class="form-text">Dejar en blanco para mantener la contraseña actual.</div>
                         </div>
                         <div class="mb-3">
                             <label for="password_confirm" class="form-label">Confirmar Nueva Contraseña</label>
-                            <input type="password" class="form-control" id="password_confirm">
+                            <input type="password" class="form-control" id="password_confirm" name="password_confirm">
                         </div>
                         <button type="submit" class="btn btn-primary">Guardar Cambios</button>
                     </form>

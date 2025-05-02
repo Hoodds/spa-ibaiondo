@@ -88,15 +88,39 @@ class UsuarioController {
     }
     
     public function perfil() {
-        // Verificar si el usuario está autenticado
         Auth::checkAuth();
-        
-        // Obtener datos del usuario
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $id = Auth::id();
+            $nombre = $_POST['nombre'] ?? '';
+            $email = $_POST['email'] ?? '';
+            $password = $_POST['password'] ?? '';
+            $password_confirm = $_POST['password_confirm'] ?? '';
+
+            // Validaciones básicas
+            if (empty($nombre) || empty($email)) {
+                $_SESSION['error'] = 'Nombre y email son obligatorios.';
+                Helper::redirect('perfil');
+            }
+            if (!empty($password) && $password !== $password_confirm) {
+                $_SESSION['error'] = 'Las contraseñas no coinciden.';
+                Helper::redirect('perfil');
+            }
+
+            $passwordToSave = !empty($password) ? $password : null;
+            $result = $this->usuarioModel->update($id, $nombre, $email, $passwordToSave);
+
+            if ($result) {
+                $_SESSION['success'] = 'Perfil actualizado correctamente.';
+            } else {
+                $_SESSION['error'] = 'Error al actualizar el perfil.';
+            }
+            Helper::redirect('perfil');
+        }
+
         $usuario = $this->usuarioModel->getById(Auth::id());
-        
-        // Obtener reservas del usuario
         $reservas = $this->reservaModel->getByUsuario(Auth::id());
-        
+
         include BASE_PATH . '/app/views/layouts/main.php';
         include BASE_PATH . '/app/views/usuarios/perfil.php';
         include BASE_PATH . '/app/views/layouts/footer.php';
