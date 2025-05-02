@@ -11,14 +11,13 @@ class UsuarioController {
     }
     
     public function showLogin() {
-        // Si ya está autenticado, redirigir al perfil
         if (Auth::check()) {
             Helper::redirect('perfil');
         }
-        
-        include BASE_PATH . '/app/views/layouts/main.php';
+        ob_start();
         include BASE_PATH . '/app/views/usuarios/login.php';
-        include BASE_PATH . '/app/views/layouts/footer.php';
+        $content = ob_get_clean();
+        include BASE_PATH . '/app/views/layouts/main.php';
     }
     
     public function login() {
@@ -44,14 +43,13 @@ class UsuarioController {
     }
     
     public function showRegistro() {
-        // Si ya está autenticado, redirigir al perfil
         if (Auth::check()) {
             Helper::redirect('perfil');
         }
-        
-        include BASE_PATH . '/app/views/layouts/main.php';
+        ob_start();
         include BASE_PATH . '/app/views/usuarios/registro.php';
-        include BASE_PATH . '/app/views/layouts/footer.php';
+        $content = ob_get_clean();
+        include BASE_PATH . '/app/views/layouts/main.php';
     }
     
     public function registro() {
@@ -129,9 +127,10 @@ class UsuarioController {
         $usuario = $this->usuarioModel->getById(Auth::id());
         $reservas = $this->reservaModel->getByUsuario(Auth::id());
 
-        include BASE_PATH . '/app/views/layouts/main.php';
+        ob_start();
         include BASE_PATH . '/app/views/usuarios/perfil.php';
-        include BASE_PATH . '/app/views/layouts/footer.php';
+        $content = ob_get_clean();
+        include BASE_PATH . '/app/views/layouts/main.php';
     }
     
     public function logout() {

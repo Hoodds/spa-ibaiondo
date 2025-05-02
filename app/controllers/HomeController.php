@@ -12,15 +12,17 @@ class HomeController {
         $serviciosDestacados = $this->servicioModel->getAll();
         
         // Cargar la vista
-        include BASE_PATH . '/app/views/layouts/main.php';
+        ob_start();
         include BASE_PATH . '/app/views/home/index.php';
-        include BASE_PATH . '/app/views/layouts/footer.php';
+        $content = ob_get_clean();
+        include BASE_PATH . '/app/views/layouts/main.php';
     }
     
     public function contacto() {
         // Cargar la vista de contacto
-        include BASE_PATH . '/app/views/layouts/main.php';
+        ob_start();
         include BASE_PATH . '/app/views/home/contacto.php';
-        include BASE_PATH . '/app/views/layouts/footer.php';
+        $content = ob_get_clean();
+        include BASE_PATH . '/app/views/layouts/main.php';
     }
 }

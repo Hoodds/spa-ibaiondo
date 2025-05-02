@@ -56,9 +56,10 @@ class TrabajadorController {
         }
         
         // Mostrar formulario de login
-        include BASE_PATH . '/app/views/layouts/main.php';
+        ob_start();
         include BASE_PATH . '/app/views/trabajadores/login.php';
-        include BASE_PATH . '/app/views/layouts/footer.php';
+        $content = ob_get_clean();
+        include BASE_PATH . '/app/views/layouts/trabajador.php';
     }
     
     public function dashboard() {
@@ -74,9 +75,10 @@ class TrabajadorController {
         // Obtener valoraciones de los servicios realizados por el trabajador
         $valoraciones = $this->valoracionModel->getByTrabajador($_SESSION['trabajador_id']);
         
-        include BASE_PATH . '/app/views/layouts/trabajador.php';
+        ob_start();
         include BASE_PATH . '/app/views/trabajadores/dashboard.php';
-        include BASE_PATH . '/app/views/layouts/footer.php';
+        $content = ob_get_clean();
+        include BASE_PATH . '/app/views/layouts/trabajador.php';
     }
     
     public function misReservas() {
@@ -86,9 +88,10 @@ class TrabajadorController {
         // Obtener reservas asignadas al trabajador
         $reservas = $this->reservaModel->getByTrabajador($_SESSION['trabajador_id']);
         
-        include BASE_PATH . '/app/views/layouts/trabajador.php';
+        ob_start();
         include BASE_PATH . '/app/views/trabajadores/mis_reservas.php';
-        include BASE_PATH . '/app/views/layouts/footer.php';
+        $content = ob_get_clean();
+        include BASE_PATH . '/app/views/layouts/trabajador.php';
     }
     
     public function misValoraciones() {
@@ -98,9 +101,10 @@ class TrabajadorController {
         // Obtener valoraciones de los servicios realizados por el trabajador
         $valoraciones = $this->valoracionModel->getByTrabajador($_SESSION['trabajador_id']);
         
-        include BASE_PATH . '/app/views/layouts/trabajador.php';
+        ob_start();
         include BASE_PATH . '/app/views/trabajadores/mis_valoraciones.php';
-        include BASE_PATH . '/app/views/layouts/footer.php';
+        $content = ob_get_clean();
+        include BASE_PATH . '/app/views/layouts/trabajador.php';
     }
     
     public function logout() {

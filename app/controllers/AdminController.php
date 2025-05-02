@@ -24,7 +24,6 @@ class AdminController {
     }
     
     public function dashboard() {
-        // Obtener estadísticas para el dashboard
         $stats = [
             'usuarios' => count($this->usuarioModel->getAll()),
             'trabajadores' => count($this->trabajadorModel->getAll()),
@@ -32,26 +31,29 @@ class AdminController {
             'reservas' => count($this->reservaModel->getAll()),
             'valoraciones' => $this->valoracionModel->getEstadisticas()
         ];
-        
-        include BASE_PATH . '/app/views/layouts/admin.php';
+
+        ob_start();
         include BASE_PATH . '/app/views/admin/dashboard.php';
-        include BASE_PATH . '/app/views/layouts/footer.php';
+        $content = ob_get_clean();
+        include BASE_PATH . '/app/views/layouts/admin.php';
     }
     
     public function listarUsuarios() {
         $usuarios = $this->usuarioModel->getAll();
-        
-        include BASE_PATH . '/app/views/layouts/admin.php';
+
+        ob_start();
         include BASE_PATH . '/app/views/admin/usuarios.php';
-        include BASE_PATH . '/app/views/layouts/footer.php';
+        $content = ob_get_clean();
+        include BASE_PATH . '/app/views/layouts/admin.php';
     }
     
     public function listarTrabajadores() {
         $trabajadores = $this->trabajadorModel->getAll();
-        
-        include BASE_PATH . '/app/views/layouts/admin.php';
+
+        ob_start();
         include BASE_PATH . '/app/views/admin/trabajadores.php';
-        include BASE_PATH . '/app/views/layouts/footer.php';
+        $content = ob_get_clean();
+        include BASE_PATH . '/app/views/layouts/admin.php';
     }
     
     public function listarServicios() {
@@ -63,10 +65,11 @@ class AdminController {
             $servicios[$key]['puntuacion_media'] = $puntuacion['media'] ? round($puntuacion['media'], 1) : 0;
             $servicios[$key]['total_valoraciones'] = $puntuacion['total'];
         }
-        
-        include BASE_PATH . '/app/views/layouts/admin.php';
+
+        ob_start();
         include BASE_PATH . '/app/views/admin/servicios.php';
-        include BASE_PATH . '/app/views/layouts/footer.php';
+        $content = ob_get_clean();
+        include BASE_PATH . '/app/views/layouts/admin.php';
     }
     
     public function listarReservas() {
@@ -81,25 +84,28 @@ class AdminController {
         ];
         $reservas = $this->reservaModel->getFiltered($filtros);
 
+        ob_start();
+        include BASE_PATH . '/app/views/admin/reservas.php';
+        $content = ob_get_clean();
         include BASE_PATH . '/app/views/layouts/admin.php';
-        require BASE_PATH . '/app/views/admin/reservas.php';
-        include BASE_PATH . '/app/views/layouts/footer.php';
     }
     
     public function listarValoraciones() {
         $valoraciones = $this->valoracionModel->getAll();
-        
-        include BASE_PATH . '/app/views/layouts/admin.php';
+
+        ob_start();
         include BASE_PATH . '/app/views/admin/valoraciones.php';
-        include BASE_PATH . '/app/views/layouts/footer.php';
+        $content = ob_get_clean();
+        include BASE_PATH . '/app/views/layouts/admin.php';
     }
     
     public function valoracionesPendientes() {
         $valoraciones = $this->valoracionModel->getByEstado('pendiente');
-        
-        include BASE_PATH . '/app/views/layouts/admin.php';
+
+        ob_start();
         include BASE_PATH . '/app/views/admin/valoraciones_pendientes.php';
-        include BASE_PATH . '/app/views/layouts/footer.php';
+        $content = ob_get_clean();
+        include BASE_PATH . '/app/views/layouts/admin.php';
     }
     
     public function aprobarValoracion($id) {

@@ -11,7 +11,7 @@
     <!-- Estilos personalizados -->
     <link rel="stylesheet" href="<?= Helper::asset('css/styles.css') ?>">
 </head>
-<body>
+<body class="d-flex flex-column min-vh-100">
     <!-- Barra de navegación -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
         <div class="container">
@@ -84,4 +84,11 @@
         </div>
         <?php unset($_SESSION['error']); ?>
     <?php endif; ?>
+
+    <main class="flex-fill">
+        <?= $content ?? '' ?>
+    </main>
+    <?php include BASE_PATH . '/app/views/layouts/footer.php'; ?>
+</body>
+</html>
 

@@ -11,15 +11,15 @@ class ReservaController {
     }
     
     public function misReservas() {
-        // Verificar si el usuario está autenticado
         Auth::checkAuth();
-        
-        // Obtener reservas del usuario
+
         $reservas = $this->reservaModel->getByUsuario(Auth::id());
-        
-        include BASE_PATH . '/app/views/layouts/main.php';
+
+        ob_start();
         include BASE_PATH . '/app/views/reservas/mis_reservas.php';
-        include BASE_PATH . '/app/views/layouts/footer.php';
+        $content = ob_get_clean();
+
+        include BASE_PATH . '/app/views/layouts/main.php';
     }
     
     public function showCrear($idServicio) {
@@ -35,9 +35,10 @@ class ReservaController {
             return;
         }
         
-        include BASE_PATH . '/app/views/layouts/main.php';
+        ob_start();
         include BASE_PATH . '/app/views/reservas/crear.php';
-        include BASE_PATH . '/app/views/layouts/footer.php';
+        $content = ob_get_clean();
+        include BASE_PATH . '/app/views/layouts/main.php';
     }
     
     public function crear() {

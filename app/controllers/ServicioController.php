@@ -11,47 +11,34 @@ class ServicioController {
     }
     
     public function listar() {
-        // Obtener todos los servicios
         $servicios = $this->servicioModel->getAll();
-        
-        // Para cada servicio, obtener su puntuación media
         foreach ($servicios as $key => $servicio) {
             $puntuacion = $this->valoracionModel->getPuntuacionMedia($servicio['id']);
             $servicios[$key]['puntuacion_media'] = $puntuacion['media'] ? round($puntuacion['media'], 1) : 0;
             $servicios[$key]['total_valoraciones'] = $puntuacion['total'];
         }
-        
-        // Cargar la vista
-        include BASE_PATH . '/app/views/layouts/main.php';
+
+        ob_start();
         include BASE_PATH . '/app/views/servicios/lista.php';
-        include BASE_PATH . '/app/views/layouts/footer.php';
+        $content = ob_get_clean();
+        include BASE_PATH . '/app/views/layouts/main.php';
     }
     
     public function mostrar($id) {
-        // Obtener el servicio
         $servicio = $this->servicioModel->getById($id);
-        
         if (!$servicio) {
             Helper::redirect('servicios');
             return;
         }
-        
-        // Obtener valoraciones del servicio
         $valoraciones = $this->valoracionModel->getByServicio($id);
-        
-        // Obtener puntuación media
         $puntuacion = $this->valoracionModel->getPuntuacionMedia($id);
         $servicio['puntuacion_media'] = $puntuacion['media'] ? round($puntuacion['media'], 1) : 0;
         $servicio['total_valoraciones'] = $puntuacion['total'];
-        
-        // Verificar si el usuario ya ha valorado este servicio
+
         $usuarioHaValorado = false;
         $valoracionUsuario = null;
-        
         if (Auth::check()) {
             $usuarioHaValorado = $this->valoracionModel->existeValoracion(Auth::id(), $id);
-            
-            // Si el usuario ha valorado, obtener su valoración
             if ($usuarioHaValorado) {
                 foreach ($valoraciones as $val) {
                     if ($val['id_usuario'] == Auth::id()) {
@@ -61,11 +48,11 @@ class ServicioController {
                 }
             }
         }
-        
-        // Cargar la vista
-        include BASE_PATH . '/app/views/layouts/main.php';
+
+        ob_start();
         include BASE_PATH . '/app/views/servicios/detalle.php';
-        include BASE_PATH . '/app/views/layouts/footer.php';
+        $content = ob_get_clean();
+        include BASE_PATH . '/app/views/layouts/main.php';
     }
     
     public function valorar($id) {
@@ -115,16 +102,13 @@ class ServicioController {
     }
     
     public function misValoraciones() {
-        // Verificar si el usuario está autenticado
         Auth::checkAuth();
-        
-        // Obtener valoraciones del usuario
         $valoraciones = $this->valoracionModel->getByUsuario(Auth::id());
-        
-        // Cargar la vista
-        include BASE_PATH . '/app/views/layouts/main.php';
+
+        ob_start();
         include BASE_PATH . '/app/views/servicios/mis_valoraciones.php';
-        include BASE_PATH . '/app/views/layouts/footer.php';
+        $content = ob_get_clean();
+        include BASE_PATH . '/app/views/layouts/main.php';
     }
     
     public function eliminarValoracion($id) {
