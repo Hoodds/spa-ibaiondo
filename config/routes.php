@@ -30,6 +30,7 @@ $router->add('GET', '/trabajador/login', 'TrabajadorController', 'login');
 $router->add('POST', '/trabajador/login', 'TrabajadorController', 'login');
 $router->add('GET', '/trabajador/dashboard', 'TrabajadorController', 'dashboard');
 $router->add('GET', '/trabajador/reservas', 'TrabajadorController', 'misReservas');
+$router->add('GET', '/trabajador/reservas/{id}/completar', 'TrabajadorController', 'completarReserva');
 $router->add('GET', '/trabajador/valoraciones', 'TrabajadorController', 'misValoraciones');
 $router->add('GET', '/trabajador/logout', 'TrabajadorController', 'logout');
 

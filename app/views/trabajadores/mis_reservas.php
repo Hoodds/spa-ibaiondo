@@ -34,15 +34,13 @@
                                             <span class="badge bg-warning text-dark">Pendiente</span>
                                         <?php elseif ($reserva['estado'] == 'confirmada'): ?>
                                             <span class="badge bg-success">Confirmada</span>
-                                        <?php else: ?>
+                                        <?php else: ?>completarReserva 
                                             <span class="badge bg-danger">Cancelada</span>
                                         <?php endif; ?>
                                     </td>
                                     <td>
                                         <?php if ($reserva['estado'] == 'pendiente'): ?>
-                                            <a href="#" class="btn btn-sm btn-success" title="Marcar como completada">
-                                                <i class="fas fa-check"></i> Completar
-                                            </a>
+                                            <a href="<?= Helper::url('trabajador/reservas/' . $reserva['id'] . '/completar') ?>" class="btn btn-sm btn-success">Confirmar</a>
                                         <?php endif; ?>
                                         <button type="button" class="btn btn-sm btn-info" data-bs-toggle="modal" data-bs-target="#detalleReserva<?= $reserva['id'] ?>">
                                             <i class="fas fa-info-circle"></i> Detalles

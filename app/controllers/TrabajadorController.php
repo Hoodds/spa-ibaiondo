@@ -154,5 +154,37 @@ class TrabajadorController {
             Helper::redirect('/admin/trabajadores');
         }
     }
+
+    public function completarReserva($id) {
+        $this->checkTrabajador();
+
+        // Obtener la reserva
+        $reserva = $this->reservaModel->getById($id);
+
+        // Validar que la reserva exista y pertenezca al trabajador logueado
+        if (!$reserva || $reserva['id_trabajador'] != $_SESSION['trabajador_id']) {
+            $_SESSION['error'] = 'Reserva no encontrada o no autorizada.';
+            Helper::redirect('trabajador/reservas');
+            return;
+        }
+
+        // Solo permitir completar si está pendiente
+        if ($reserva['estado'] !== 'pendiente') {
+            $_SESSION['error'] = 'Solo puedes completar reservas pendientes.';
+            Helper::redirect('trabajador/reservas');
+            return;
+        }
+
+        // Actualizar el estado de la reserva a 'confirmada'
+        $resultado = $this->reservaModel->actualizarEstado($id, 'confirmada');
+
+        if ($resultado) {
+            $_SESSION['success'] = 'Reserva marcada como completada.';
+        } else {
+            $_SESSION['error'] = 'No se pudo completar la reserva.';
+        }
+
+        Helper::redirect('trabajador/reservas');
+    }
 }
 

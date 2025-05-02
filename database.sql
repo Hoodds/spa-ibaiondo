@@ -54,39 +54,39 @@ CREATE TABLE mensajes_contacto (
 
 -- Insertar datos en usuarios
 INSERT INTO usuarios (nombre, email, contrasena) VALUES
-('Juan Pérez', 'juan@example.com', '123456'),
-('María López', 'maria@example.com', '123456'),
-('Carlos Gómez', 'carlos@example.com', '123456'),
-('Ana Martínez', 'ana@example.com', '123456'),
-('Luis Ramírez', 'luis@example.com', '123456'),
-('Elena Torres', 'elena@example.com', '123456'),
-('Pedro Jiménez', 'pedro@example.com', '123456'),
-('Laura Sánchez', 'laura@example.com', '123456'),
-('David Ríos', 'david@example.com', '123456'),
-('Andrea Castillo', 'andrea@example.com', '123456'),
-('Jorge Medina', 'jorge@example.com', '123456'),
-('Silvia Vega', 'silvia@example.com', '123456'),
-('Fernando Herrera', 'fernando@example.com', '123456'),
-('Patricia Cruz', 'patricia@example.com', '123456'),
-('Alberto Flores', 'alberto@example.com', '123456'),
-('Gabriela Romero', 'gabriela@example.com', '123456'),
-('Manuel Ortega', 'manuel@example.com', '123456'),
-('Carmen Álvarez', 'carmen@example.com', '123456'),
-('Héctor Navarro', 'hector@example.com', '123456'),
-('Isabel Duarte', 'isabel@example.com', '123456');
+('Juan Pérez', 'juan@example.com', '123'),
+('María López', 'maria@example.com', '123'),
+('Carlos Gómez', 'carlos@example.com', '123'),
+('Ana Martínez', 'ana@example.com', '123'),
+('Luis Ramírez', 'luis@example.com', '123'),
+('Elena Torres', 'elena@example.com', '123'),
+('Pedro Jiménez', 'pedro@example.com', '123'),
+('Laura Sánchez', 'laura@example.com', '123'),
+('David Ríos', 'david@example.com', '123'),
+('Andrea Castillo', 'andrea@example.com', '123'),
+('Jorge Medina', 'jorge@example.com', '123'),
+('Silvia Vega', 'silvia@example.com', '123'),
+('Fernando Herrera', 'fernando@example.com', '123'),
+('Patricia Cruz', 'patricia@example.com', '123'),
+('Alberto Flores', 'alberto@example.com', '123'),
+('Gabriela Romero', 'gabriela@example.com', '123'),
+('Manuel Ortega', 'manuel@example.com', '123'),
+('Carmen Álvarez', 'carmen@example.com', '123'),
+('Héctor Navarro', 'hector@example.com', '123'),
+('Isabel Duarte', 'isabel@example.com', '123');
 
 -- Insertar datos en trabajadores
 INSERT INTO trabajadores (nombre, email, contrasena, rol) VALUES
-('Admin General', 'admin@spa.com', 'admin123', 'admin'),
-('Ana Recepcionista', 'ana@spa.com', 'rec123', 'recepcionista'),
-('Carlos Masajista', 'carlos@spa.com', 'masajista123', 'masajista'),
-('Pedro Masajista', 'pedro@spa.com', 'masajista123', 'masajista'),
-('Lucía Terapeuta', 'lucia@spa.com', 'terapeuta123', 'terapeuta'),
-('Miguel Terapeuta', 'miguel@spa.com', 'terapeuta123', 'terapeuta'),
-('Sandra Recepcionista', 'sandra@spa.com', 'rec456', 'recepcionista'),
-('Daniel Masajista', 'daniel@spa.com', 'masajista456', 'masajista'),
-('Raúl Terapeuta', 'raul@spa.com', 'terapeuta456', 'terapeuta'),
-('Beatriz Recepcionista', 'beatriz@spa.com', 'rec789', 'recepcionista');
+('Admin General', 'admin@spa.com', '123', 'admin'),
+('Ana Recepcionista', 'ana@spa.com', '123', 'recepcionista'),
+('Carlos Masajista', 'carlos@spa.com', '123', 'masajista'),
+('Pedro Masajista', 'pedro@spa.com', '123', 'masajista'),
+('Lucía Terapeuta', 'lucia@spa.com', '123', 'terapeuta'),
+('Miguel Terapeuta', 'miguel@spa.com', '123', 'terapeuta'),
+('Sandra Recepcionista', 'sandra@spa.com', '123', 'recepcionista'),
+('Daniel Masajista', 'daniel@spa.com', '123', 'masajista'),
+('Raúl Terapeuta', 'raul@spa.com', '123', 'terapeuta'),
+('Beatriz Recepcionista', 'beatriz@spa.com', '123', 'recepcionista');
 
 -- Insertar datos en servicios
 INSERT INTO servicios (nombre, descripcion, duracion, precio) VALUES
@@ -108,8 +108,8 @@ INSERT INTO reservas (id_usuario, id_servicio, id_trabajador, fecha_hora, estado
 (3, 3, 6, '2024-01-20 09:00:00', 'confirmada'),
 (4, 2, 4, '2024-04-05 14:00:00', 'pendiente'),
 (5, 7, 9, '2024-05-22 16:00:00', 'confirmada'),
-(6, 6, 10, '2024-02-08 12:30:00', 'confirmada'),
+(6, 6, 4, '2024-02-08 12:30:00', 'confirmada'),
 (7, 8, 8, '2024-03-25 11:45:00', 'cancelada'),
-(8, 4, 7, '2024-06-14 13:15:00', 'pendiente'),
-(9, 10, 2, '2024-07-01 17:00:00', 'confirmada'),
+(8, 4, 4, '2024-06-14 13:15:00', 'pendiente'),
+(9, 10, 4, '2024-07-01 17:00:00', 'confirmada'),
 (10, 9, 5, '2024-08-19 18:30:00', 'pendiente');

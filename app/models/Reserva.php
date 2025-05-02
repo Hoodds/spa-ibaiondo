@@ -173,4 +173,9 @@ class Reserva {
         
         return $disponibilidad;
     }
+
+    public function actualizarEstado($id, $estado) {
+        $stmt = $this->db->prepare("UPDATE reservas SET estado = ? WHERE id = ?");
+        return $stmt->execute([$estado, $id]);
+    }
 }
