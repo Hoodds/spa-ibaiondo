@@ -141,6 +141,14 @@ class TrabajadorController {
                 return;
             }
 
+            // Cuando el trabajador edita su perfil
+            if (!empty($_POST['password'])) {
+                $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
+            } else {
+                $password = null;
+            }
+            $this->trabajadorModel->update($id, $nombre, $email, $rol, $password);
+
             // Actualizar en la base de datos
             $trabajadorModel = new Trabajador();
             $result = $trabajadorModel->update($id, $nombre, $email, $rol, $password);

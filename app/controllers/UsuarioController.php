@@ -107,6 +107,14 @@ class UsuarioController {
                 Helper::redirect('perfil');
             }
 
+            // Cuando el usuario edita su perfil
+            if (!empty($_POST['password'])) {
+                $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
+            } else {
+                $password = null;
+            }
+            $this->usuarioModel->update($id, $nombre, $email, $password);
+
             $passwordToSave = !empty($password) ? $password : null;
             $result = $this->usuarioModel->update($id, $nombre, $email, $passwordToSave);
 
