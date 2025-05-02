@@ -155,5 +155,41 @@ class AdminController {
         
         Helper::redirect('admin/valoraciones');
     }
+
+    public function eliminarReserva($id) {
+        if ($this->reservaModel->eliminar($id)) {
+            $_SESSION['success'] = 'Reserva eliminada correctamente.';
+        } else {
+            $_SESSION['error'] = 'Error al eliminar la reserva.';
+        }
+        Helper::redirect('admin/reservas');
+    }
+
+    public function eliminarServicio($id) {
+        if ($this->servicioModel->delete($id)) {
+            $_SESSION['success'] = 'Servicio eliminado correctamente.';
+        } else {
+            $_SESSION['error'] = 'Error al eliminar el servicio.';
+        }
+        Helper::redirect('admin/servicios');
+    }
+
+    public function eliminarTrabajador($id) {
+        if ($this->trabajadorModel->eliminar($id)) {
+            $_SESSION['success'] = 'Trabajador eliminado correctamente.';
+        } else {
+            $_SESSION['error'] = 'Error al eliminar el trabajador.';
+        }
+        Helper::redirect('admin/trabajadores');
+    }
+
+    public function eliminarUsuario($id) {
+        if ($this->usuarioModel->eliminar($id)) {
+            $_SESSION['success'] = 'Usuario eliminado correctamente.';
+        } else {
+            $_SESSION['error'] = 'Error al eliminar el usuario.';
+        }
+        Helper::redirect('admin/usuarios');
+    }
 }
 

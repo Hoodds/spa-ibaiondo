@@ -212,4 +212,9 @@ class Reserva {
         $stmt->execute($params);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+
+    public function eliminar($id) {
+        $stmt = $this->db->prepare("DELETE FROM reservas WHERE id = ?");
+        return $stmt->execute([$id]);
+    }
 }

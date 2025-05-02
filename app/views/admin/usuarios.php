@@ -48,7 +48,9 @@
                                         <button type="button" class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#editarUsuarioModal<?= $usuario['id'] ?>">
                                             <i class="fas fa-edit"></i>
                                         </button>
-                                        <a href="#" class="btn btn-sm btn-danger" onclick="return confirm('¿Estás seguro de eliminar este usuario?')">
+                                        <a href="<?= Helper::url('/admin/usuarios/eliminar/' . $usuario['id']) ?>"
+                                           class="btn btn-sm btn-danger"
+                                           onclick="return confirm('¿Estás seguro de eliminar este usuario?')">
                                             <i class="fas fa-trash"></i>
                                         </a>
                                     </td>

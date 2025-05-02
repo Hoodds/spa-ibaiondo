@@ -67,7 +67,9 @@
                                         <button type="button" class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#editarTrabajadorModal<?= $trabajador['id'] ?>">
                                             <i class="fas fa-edit"></i>
                                         </button>
-                                        <a href="#" class="btn btn-sm btn-danger" onclick="return confirm('¿Estás seguro de eliminar este trabajador?')">
+                                        <a href="<?= Helper::url('/admin/trabajadores/eliminar/' . $trabajador['id']) ?>"
+                                           class="btn btn-sm btn-danger"
+                                           onclick="return confirm('¿Estás seguro de eliminar este trabajador?')">
                                             <i class="fas fa-trash"></i>
                                         </a>
                                     </td>

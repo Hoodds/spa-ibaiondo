@@ -73,4 +73,9 @@ class Trabajador {
         $stmt = $this->db->prepare($sql);
         return $stmt->execute([$data['nombre'], $data['email'], $data['rol'], $data['password']]);
     }
+
+    public function eliminar($id) {
+        $stmt = $this->db->prepare("DELETE FROM trabajadores WHERE id = ?");
+        return $stmt->execute([$id]);
+    }
 }

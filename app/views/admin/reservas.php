@@ -101,7 +101,9 @@
                                         <button type="button" class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#editarReservaModal<?= $reserva['id'] ?>">
                                             <i class="fas fa-edit"></i>
                                         </button>
-                                        <a href="#" class="btn btn-sm btn-danger" onclick="return confirm('¿Estás seguro de eliminar esta reserva?')">
+                                        <a href="<?= Helper::url('/admin/reservas/eliminar/' . $reserva['id']) ?>" 
+                                           class="btn btn-sm btn-danger"
+                                           onclick="return confirm('¿Estás seguro de eliminar esta reserva?')">
                                             <i class="fas fa-trash"></i>
                                         </a>
                                     </td>

@@ -75,4 +75,9 @@ class Usuario {
         $stmt = $this->db->prepare($sql);
         return $stmt->execute([$data['nombre'], $data['email'], $data['password']]);
     }
+
+    public function eliminar($id) {
+        $stmt = $this->db->prepare("DELETE FROM usuarios WHERE id = ?");
+        return $stmt->execute([$id]);
+    }
 }
