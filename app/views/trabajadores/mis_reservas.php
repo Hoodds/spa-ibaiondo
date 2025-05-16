@@ -34,13 +34,14 @@
                                             <span class="badge bg-warning text-dark">Pendiente</span>
                                         <?php elseif ($reserva['estado'] == 'confirmada'): ?>
                                             <span class="badge bg-success">Confirmada</span>
-                                        <?php else: ?>completarReserva 
+                                        <?php else: ?>
                                             <span class="badge bg-danger">Cancelada</span>
                                         <?php endif; ?>
                                     </td>
                                     <td>
                                         <?php if ($reserva['estado'] == 'pendiente'): ?>
                                             <a href="<?= Helper::url('trabajador/reservas/' . $reserva['id'] . '/completar') ?>" class="btn btn-sm btn-success">Confirmar</a>
+                                            <a href="<?= Helper::url('trabajador/reservas/' . $reserva['id'] . '/cancelar') ?>" class="btn btn-sm btn-danger" onclick="return confirm('¿Estás seguro de que deseas cancelar esta reserva?')">Cancelar</a>
                                         <?php endif; ?>
                                         <button type="button" class="btn btn-sm btn-info" data-bs-toggle="modal" data-bs-target="#detalleReserva<?= $reserva['id'] ?>">
                                             <i class="fas fa-info-circle"></i> Detalles
@@ -49,7 +50,7 @@
                                 </tr>
                                 
                                 <!-- Modal de detalles -->
-                                <div class="modal fade fixed-modal" id="detalleReserva<?= $reserva['id'] ?>" tabindex="-1" aria-hidden="true">
+                                <div class="modal fade fixed-modal" id="detalleReserva<?= $reserva['id'] ?>" tabindex="-1" aria-hidden="true" data-bs-focus="false">
                                     <div class="modal-dialog">
                                         <div class="modal-content">
                                             <div class="modal-header">
