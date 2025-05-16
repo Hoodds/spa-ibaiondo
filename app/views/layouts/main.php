@@ -9,11 +9,11 @@
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <!-- Estilos personalizados -->
-    <link rel="stylesheet" href="<?= Helper::asset('css/styles.css') ?>">
-</head>
-<body class="d-flex flex-column min-vh-100">
+    <link rel="stylesheet" href="<?= Helper::asset('css/styles.css') ?>?v=<?= time() ?>">
+    </head>
+<body class="d-flex flex-column min-vh-100 fixed-navbar-body">
     <!-- Barra de navegación -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary text-white">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary text-white fixed-top shadow-sm">
         <div class="container">
             <a class="navbar-brand" href="<?= Helper::url('') ?>">
                 <strong>SPA IBAIONDO</strong>

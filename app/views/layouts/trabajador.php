@@ -11,9 +11,9 @@
     <!-- Estilos personalizados -->
     <link rel="stylesheet" href="<?= Helper::asset('css/styles.css') ?>">
 </head>
-<body class="d-flex flex-column min-vh-100">
+<body class="d-flex flex-column min-vh-100 fixed-navbar-body">
     <!-- Barra de navegación -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-success">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-success fixed-top shadow-sm">
         <div class="container">
             <a class="navbar-brand" href="<?= Helper::url('trabajador/dashboard') ?>">
                 <strong>TRABAJADOR SPA IBAIONDO</strong>

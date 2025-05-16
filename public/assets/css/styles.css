@@ -17,6 +17,10 @@ body {
     --danger-color: #dc3545;
 }
 
+.fixed-navbar-body {
+    padding-top: 3.5rem !important;
+}
+
 /* Personalización de Bootstrap */
 .bg-primary {
     background-color: var(--primary-color) !important;
@@ -112,8 +116,12 @@ footer a:hover {
     .hero-section {
         padding: 3rem 0;
     }
-    
+
     .card-img-top {
         height: 180px;
+    }
+
+    .fixed-navbar-body {
+        padding-top: 3.5rem !important; /* Un poco más para móviles por si el navbar colapsa */
     }
 }

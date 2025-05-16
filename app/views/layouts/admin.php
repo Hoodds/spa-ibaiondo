@@ -11,9 +11,9 @@
     <!-- Estilos personalizados -->
     <link rel="stylesheet" href="<?= Helper::asset('css/styles.css') ?>">
 </head>
-<body class="d-flex flex-column min-vh-100">
+<body class="d-flex flex-column min-vh-100 fixed-navbar-body">
     <!-- Barra de navegación -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top shadow-sm">
         <div class="container">
             <a class="navbar-brand" href="<?= Helper::url('admin') ?>">
                 <strong>ADMIN SPA IBAIONDO</strong>
