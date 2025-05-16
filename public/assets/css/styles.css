@@ -7,7 +7,8 @@ body {
 
 /* Colores personalizados */
 :root {
-    --primary-color: #4e7a9e;
+    /* --primary-color: #4e7a9e; */
+    --primary-color: #189AB4;
     --secondary-color: #6c757d;
     --accent-color: #e9ecef;
     --success-color: #28a745;
@@ -62,7 +63,7 @@ body {
 
 /* Footer */
 footer {
-    background-color: #343a40;
+    background-color: #05445E   ;
     color: white;
 }
 
@@ -99,7 +100,7 @@ footer a:hover {
 /* Responsive imagen detalle servicio */
 .img-detalle-servicio {
     width: 100%;
-    height: 40vw;           /* Altura relativa al ancho de la pantalla */
+    height: 20vw;           /* Altura relativa al ancho de la pantalla */
     max-height: 500px;      /* Máximo en pantallas grandes */
     min-height: 250px;      /* Mínimo en móviles */
     object-fit: cover;

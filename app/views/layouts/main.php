@@ -13,7 +13,7 @@
 </head>
 <body class="d-flex flex-column min-vh-100">
     <!-- Barra de navegación -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary text-white">
         <div class="container">
             <a class="navbar-brand" href="<?= Helper::url('') ?>">
                 <strong>SPA IBAIONDO</strong>
