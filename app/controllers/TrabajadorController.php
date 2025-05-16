@@ -69,15 +69,29 @@ class TrabajadorController {
         // Obtener datos del trabajador
         $trabajador = $this->trabajadorModel->getById($_SESSION['trabajador_id']);
         
-        // Obtener reservas asignadas al trabajador
-        $reservas = $this->reservaModel->getByTrabajador($_SESSION['trabajador_id']);
+        if ($_SESSION['trabajador_rol'] === 'recepcionista') {
+            // Para recepcionistas, mostrar todas las reservas y valoraciones
+            $reservas = $this->reservaModel->getAll();
+            $valoraciones = $this->valoracionModel->getAll();
+            
+            // Obtener servicios (para estadísticas)
+            require_once BASE_PATH . '/app/models/Servicio.php';
+            $servicioModel = new Servicio();
+            $servicios = $servicioModel->getAll();
+            
+            ob_start();
+            include BASE_PATH . '/app/views/trabajadores/dashboard_recepcionista.php';
+            $content = ob_get_clean();
+        } else {
+            // Para otros trabajadores, mostrar solo sus datos
+            $reservas = $this->reservaModel->getByTrabajador($_SESSION['trabajador_id']);
+            $valoraciones = $this->valoracionModel->getByTrabajador($_SESSION['trabajador_id']);
+            
+            ob_start();
+            include BASE_PATH . '/app/views/trabajadores/dashboard.php';
+            $content = ob_get_clean();
+        }
         
-        // Obtener valoraciones de los servicios realizados por el trabajador
-        $valoraciones = $this->valoracionModel->getByTrabajador($_SESSION['trabajador_id']);
-        
-        ob_start();
-        include BASE_PATH . '/app/views/trabajadores/dashboard.php';
-        $content = ob_get_clean();
         include BASE_PATH . '/app/views/layouts/trabajador.php';
     }
     
@@ -85,12 +99,35 @@ class TrabajadorController {
         // Verificar si es trabajador
         $this->checkTrabajador();
         
-        // Obtener reservas asignadas al trabajador
-        $reservas = $this->reservaModel->getByTrabajador($_SESSION['trabajador_id']);
+        if ($_SESSION['trabajador_rol'] === 'recepcionista') {
+            // Para recepcionistas, mostrar todas las reservas (como admin)
+            require_once BASE_PATH . '/app/models/Servicio.php';
+            $servicioModel = new Servicio();
+            $servicios = $servicioModel->getAll();
+            $trabajadores = $this->trabajadorModel->getAll();
+            
+            // Aplicar filtros si los hay
+            $filtros = [
+                'fecha' => $_GET['filtroFecha'] ?? null,
+                'servicio' => $_GET['filtroServicio'] ?? null,
+                'trabajador' => $_GET['filtroTrabajador'] ?? null,
+                'estado' => $_GET['filtroEstado'] ?? null,
+            ];
+            $reservas = $this->reservaModel->getFiltered($filtros);
+            
+            // Usar la vista de reservas para recepcionistas
+            ob_start();
+            include BASE_PATH . '/app/views/trabajadores/reservas_recepcionista.php';
+            $content = ob_get_clean();
+        } else {
+            // Para otros trabajadores, mostrar solo sus reservas
+            $reservas = $this->reservaModel->getByTrabajador($_SESSION['trabajador_id']);
+            
+            ob_start();
+            include BASE_PATH . '/app/views/trabajadores/mis_reservas.php';
+            $content = ob_get_clean();
+        }
         
-        ob_start();
-        include BASE_PATH . '/app/views/trabajadores/mis_reservas.php';
-        $content = ob_get_clean();
         include BASE_PATH . '/app/views/layouts/trabajador.php';
     }
     
@@ -98,32 +135,43 @@ class TrabajadorController {
         // Verificar si es trabajador
         $this->checkTrabajador();
         
-        // Obtener valoraciones de los servicios realizados por el trabajador
-        $valoraciones = $this->valoracionModel->getByTrabajador($_SESSION['trabajador_id']);
+        if ($_SESSION['trabajador_rol'] === 'recepcionista') {
+            // Para recepcionistas, mostrar todas las valoraciones
+            $valoraciones = $this->valoracionModel->getAll();
+            
+            ob_start();
+            include BASE_PATH . '/app/views/trabajadores/valoraciones_recepcionista.php';
+            $content = ob_get_clean();
+        } else {
+            // Para otros trabajadores, mostrar solo sus valoraciones
+            $valoraciones = $this->valoracionModel->getByTrabajador($_SESSION['trabajador_id']);
+            
+            ob_start();
+            include BASE_PATH . '/app/views/trabajadores/mis_valoraciones.php';
+            $content = ob_get_clean();
+        }
         
-        ob_start();
-        include BASE_PATH . '/app/views/trabajadores/mis_valoraciones.php';
-        $content = ob_get_clean();
         include BASE_PATH . '/app/views/layouts/trabajador.php';
     }
     
     public function logout() {
-        // Eliminar datos del trabajador de la sesión
+        // Eliminar todas las variables de sesión relacionadas con el trabajador
         unset($_SESSION['trabajador']);
         unset($_SESSION['trabajador_id']);
         unset($_SESSION['trabajador_nombre']);
         unset($_SESSION['trabajador_rol']);
         
-        // Si también es usuario, mantener la sesión de usuario
-        if (!Auth::check()) {
-            session_destroy();
-        }
+        // Como medida adicional, podemos regenerar el ID de sesión
+        session_regenerate_id(true);
         
-        Helper::redirect('');
+        // Redirigir al login
+        $_SESSION['success'] = 'Has cerrado sesión correctamente.';
+        Helper::redirect('trabajador/login');
     }
     
     private function checkTrabajador() {
-        if (!isset($_SESSION['trabajador']) || !$_SESSION['trabajador']) {
+        if (!isset($_SESSION['trabajador']) || !$_SESSION['trabajador'] || 
+            !isset($_SESSION['trabajador_id']) || !isset($_SESSION['trabajador_rol'])) {
             $_SESSION['error'] = 'Debes iniciar sesión como trabajador';
             Helper::redirect('trabajador/login');
             exit;
@@ -173,9 +221,18 @@ class TrabajadorController {
         // Obtener la reserva
         $reserva = $this->reservaModel->getById($id);
 
-        // Validar que la reserva exista y pertenezca al trabajador logueado
-        if (!$reserva || $reserva['id_trabajador'] != $_SESSION['trabajador_id']) {
-            $_SESSION['error'] = 'Reserva no encontrada o no autorizada.';
+        // Validar que la reserva exista
+        if (!$reserva) {
+            $_SESSION['error'] = 'Reserva no encontrada.';
+            Helper::redirect('trabajador/reservas');
+            return;
+        }
+
+        // Si es recepcionista, puede confirmar cualquier reserva
+        // Si es otro trabajador, solo las suyas
+        if ($_SESSION['trabajador_rol'] !== 'recepcionista' && 
+            $reserva['id_trabajador'] != $_SESSION['trabajador_id']) {
+            $_SESSION['error'] = 'No tienes permiso para gestionar esta reserva.';
             Helper::redirect('trabajador/reservas');
             return;
         }
@@ -205,9 +262,18 @@ class TrabajadorController {
         // Obtener la reserva
         $reserva = $this->reservaModel->getById($id);
 
-        // Validar que la reserva exista y pertenezca al trabajador logueado
-        if (!$reserva || $reserva['id_trabajador'] != $_SESSION['trabajador_id']) {
-            $_SESSION['error'] = 'Reserva no encontrada o no autorizada.';
+        // Validar que la reserva exista
+        if (!$reserva) {
+            $_SESSION['error'] = 'Reserva no encontrada.';
+            Helper::redirect('trabajador/reservas');
+            return;
+        }
+
+        // Si es recepcionista, puede cancelar cualquier reserva
+        // Si es otro trabajador, solo las suyas
+        if ($_SESSION['trabajador_rol'] !== 'recepcionista' && 
+            $reserva['id_trabajador'] != $_SESSION['trabajador_id']) {
+            $_SESSION['error'] = 'No tienes permiso para gestionar esta reserva.';
             Helper::redirect('trabajador/reservas');
             return;
         }

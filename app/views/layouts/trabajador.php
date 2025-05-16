@@ -23,20 +23,37 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav me-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="<?= Helper::url('trabajador/dashboard') ?>">Dashboard</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="<?= Helper::url('trabajador/reservas') ?>">Mis Reservas</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="<?= Helper::url('trabajador/valoraciones') ?>">Mis Valoraciones</a>
-                    </li>
+                    <?php if (isset($_SESSION['trabajador']) && isset($_SESSION['trabajador_rol'])): ?>
+                        <li class="nav-item">
+                            <a class="nav-link" href="<?= Helper::url('trabajador/dashboard') ?>">Dashboard</a>
+                        </li>
+                        <?php if ($_SESSION['trabajador_rol'] === 'recepcionista'): ?>
+                            <li class="nav-item">
+                                <a class="nav-link" href="<?= Helper::url('trabajador/reservas') ?>">Reservas</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="<?= Helper::url('trabajador/valoraciones') ?>">Valoraciones</a>
+                            </li>
+                        <?php else: ?>
+                            <li class="nav-item">
+                                <a class="nav-link" href="<?= Helper::url('trabajador/reservas') ?>">Mis Reservas</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="<?= Helper::url('trabajador/valoraciones') ?>">Mis Valoraciones</a>
+                            </li>
+                        <?php endif; ?>
+                    <?php endif; ?>
                 </ul>
                 <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link" href="<?= Helper::url('trabajador/logout') ?>">Cerrar Sesión</a>
-                    </li>
+                    <?php if (isset($_SESSION['trabajador'])): ?>
+                        <li class="nav-item">
+                            <a class="nav-link" href="<?= Helper::url('trabajador/logout') ?>">Cerrar Sesión</a>
+                        </li>
+                    <?php else: ?>
+                        <li class="nav-item">
+                            <a class="nav-link" href="<?= Helper::url('trabajador/login') ?>">Iniciar Sesión</a>
+                        </li>
+                    <?php endif; ?>
                 </ul>
             </div>
         </div>
