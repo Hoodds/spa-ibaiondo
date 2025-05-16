@@ -76,7 +76,7 @@
                                 </tr>
                                 
                                 <!-- Modal Ver Trabajador -->
-                                <div class="modal fade" id="verTrabajadorModal<?= $trabajador['id'] ?>" tabindex="-1" aria-hidden="true">
+                                <div class="modal fade fixed-modal" id="verTrabajadorModal<?= $trabajador['id'] ?>" tabindex="-1" aria-hidden="true">
                                     <div class="modal-dialog modal-dialog-centered">
                                         <div class="modal-content">
                                             <div class="modal-header">
@@ -97,7 +97,7 @@
                                 </div>
                                 
                                 <!-- Modal Editar Trabajador -->
-                                <div class="modal fade" id="editarTrabajadorModal<?= $trabajador['id'] ?>" tabindex="-1" aria-hidden="true">
+                                <div class="modal fade fixed-modal" id="editarTrabajadorModal<?= $trabajador['id'] ?>" tabindex="-1" aria-hidden="true">
                                     <div class="modal-dialog modal-dialog-centered">
                                         <div class="modal-content">
                                             <div class="modal-header">

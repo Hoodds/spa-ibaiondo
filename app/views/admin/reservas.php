@@ -110,7 +110,7 @@
                                 </tr>
                                 
                                 <!-- Modal Ver Reserva -->
-                                <div class="modal fade" id="verReservaModal<?= $reserva['id'] ?>" tabindex="-1" aria-hidden="true">
+                                <div class="modal fade fixed-modal" id="verReservaModal<?= $reserva['id'] ?>" tabindex="-1" aria-hidden="true">
                                     <div class="modal-dialog modal-dialog-centered">
                                         <div class="modal-content">
                                             <div class="modal-header">
@@ -143,7 +143,7 @@
                                 </div>
                                 
                                 <!-- Modal Editar Reserva -->
-                                <div class="modal fade" id="editarReservaModal<?= $reserva['id'] ?>" tabindex="-1" aria-hidden="true">
+                                <div class="modal fade fixed-modal" id="editarReservaModal<?= $reserva['id'] ?>" tabindex="-1" aria-hidden="true">
                                     <div class="modal-dialog modal-dialog-centered">
                                         <div class="modal-content">
                                             <div class="modal-header">

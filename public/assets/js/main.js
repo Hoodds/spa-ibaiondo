@@ -87,4 +87,13 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     });
+    
+    // Ajustar la posición de los modales al abrirse
+    const adminModals = document.querySelectorAll('.fixed-modal');
+    adminModals.forEach(modal => {
+        modal.addEventListener('show.bs.modal', function() {
+            const navbarHeight = document.querySelector('.navbar').offsetHeight;
+            this.style.paddingTop = navbarHeight + 'px';
+        });
+    });
 });

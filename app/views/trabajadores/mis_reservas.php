@@ -49,7 +49,7 @@
                                 </tr>
                                 
                                 <!-- Modal de detalles -->
-                                <div class="modal fade" id="detalleReserva<?= $reserva['id'] ?>" tabindex="-1" aria-hidden="true">
+                                <div class="modal fade fixed-modal" id="detalleReserva<?= $reserva['id'] ?>" tabindex="-1" aria-hidden="true">
                                     <div class="modal-dialog">
                                         <div class="modal-content">
                                             <div class="modal-header">

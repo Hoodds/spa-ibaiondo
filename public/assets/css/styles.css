@@ -111,6 +111,25 @@ footer a:hover {
     border-radius: 0.5rem;
 }
 
+/* Posicionamiento de modales para la sección de administración */
+.fixed-modal {
+    margin-top: 4rem !important; /* Ajustado para que aparezca debajo del navbar fijo */
+    margin-bottom: 0;
+    padding-right: 0 !important; /* Evita el desplazamiento lateral */
+}
+
+.fixed-modal .modal-dialog {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    max-height: calc(100vh - 6rem); /* Altura máxima considerando el navbar */
+    overflow-y: auto; /* Permite scroll dentro del modal si el contenido es muy largo */
+}
+
+/* Asegura que el modal quede por encima de otros elementos pero debajo del navbar */
+.fixed-modal {
+    z-index: 1040 !important; /* Navbar suele tener z-index: 1030 en Bootstrap */
+}
+
 /* Responsive */
 @media (max-width: 768px) {
     .hero-section {

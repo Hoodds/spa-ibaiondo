@@ -60,7 +60,7 @@
                                 </tr>
                                 
                                 <!-- Modal Ver Servicio -->
-                                <div class="modal fade" id="verServicioModal<?= $servicio['id'] ?>" tabindex="-1" aria-hidden="true">
+                                <div class="modal fade fixed-modal" id="verServicioModal<?= $servicio['id'] ?>" tabindex="-1" aria-hidden="true">
                                     <div class="modal-dialog modal-dialog-centered">
                                         <div class="modal-content">
                                             <div class="modal-header">
@@ -92,7 +92,7 @@
                                 </div>
                                 
                                 <!-- Modal Editar Servicio -->
-                                <div class="modal fade" id="editarServicioModal<?= $servicio['id'] ?>" tabindex="-1" aria-hidden="true">
+                                <div class="modal fade fixed-modal" id="editarServicioModal<?= $servicio['id'] ?>" tabindex="-1" aria-hidden="true">
                                     <div class="modal-dialog modal-dialog-centered">
                                         <div class="modal-content">
                                             <div class="modal-header">

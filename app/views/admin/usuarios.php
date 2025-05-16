@@ -57,7 +57,7 @@
                                 </tr>
                                 
                                 <!-- Modal Ver Usuario -->
-                                <div class="modal fade" id="verUsuarioModal<?= $usuario['id'] ?>" tabindex="-1" aria-hidden="true">
+                                <div class="modal fade fixed-modal" id="verUsuarioModal<?= $usuario['id'] ?>" tabindex="-1" aria-hidden="true">
                                     <div class="modal-dialog modal-dialog-centered">
                                         <div class="modal-content">
                                             <div class="modal-header">
@@ -78,7 +78,7 @@
                                 </div>
                                 
                                 <!-- Modal Editar Usuario -->
-                                <div class="modal fade" id="editarUsuarioModal<?= $usuario['id'] ?>" tabindex="-1" aria-hidden="true">
+                                <div class="modal fade fixed-modal" id="editarUsuarioModal<?= $usuario['id'] ?>" tabindex="-1" aria-hidden="true">
                                     <div class="modal-dialog modal-dialog-centered">
                                         <div class="modal-content">
                                             <div class="modal-header">
@@ -120,7 +120,7 @@
 </div>
 
 <!-- Modal Nuevo Usuario -->
-<div class="modal fade" id="nuevoUsuarioModal" tabindex="-1" aria-hidden="true">
+<div class="modal fade fixed-modal" id="nuevoUsuarioModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
