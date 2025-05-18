@@ -217,4 +217,56 @@ class Reserva {
         $stmt = $this->db->prepare("DELETE FROM reservas WHERE id = ?");
         return $stmt->execute([$id]);
     }
+
+    public function verificarDisponibilidad($idTrabajador, $fechaHora, $idReservaExcluir = null) {
+        // Convertir fechaHora a objetos DateTime para manejar mejor las comparaciones
+        $dtReserva = new DateTime($fechaHora);
+        $fechaSolo = $dtReserva->format('Y-m-d');
+        
+        // Obtener la duración del servicio (asumimos que se incluye en la consulta)
+        // Para una implementación completa, deberías obtener la duración del servicio asociado
+        $duracionMinutos = 60; // Valor por defecto de 60 minutos
+        
+        // Calcular el tiempo de finalización
+        $dtFinReserva = clone $dtReserva;
+        $dtFinReserva->modify("+{$duracionMinutos} minutes");
+        
+        // Consultar reservas del trabajador en esa fecha que no estén canceladas
+        $sql = "SELECT r.*, s.duracion 
+                FROM reservas r
+                JOIN servicios s ON r.id_servicio = s.id
+                WHERE r.id_trabajador = ? 
+                AND DATE(r.fecha_hora) = ?
+                AND r.estado != 'cancelada'";
+        
+        $params = [$idTrabajador, $fechaSolo];
+        
+        // Si estamos actualizando una reserva existente, excluirla de la verificación
+        if ($idReservaExcluir) {
+            $sql .= " AND r.id != ?";
+            $params[] = $idReservaExcluir;
+        }
+        
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute($params);
+        $reservas = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        
+        // Verificar si hay conflictos
+        foreach ($reservas as $reserva) {
+            $dtReservaExistente = new DateTime($reserva['fecha_hora']);
+            
+            // Calcular fin de la reserva existente
+            $duracionExistente = $reserva['duracion'];
+            $dtFinReservaExistente = clone $dtReservaExistente;
+            $dtFinReservaExistente->modify("+{$duracionExistente} minutes");
+            
+            // Verificar si hay solapamiento
+            // (inicio1 < fin2) && (fin1 > inicio2)
+            if ($dtReserva < $dtFinReservaExistente && $dtFinReserva > $dtReservaExistente) {
+                return false; // Hay conflicto
+            }
+        }
+        
+        return true; // No hay conflictos
+    }
 }

@@ -116,6 +116,8 @@ class ReservaController {
             $fecha = $_POST['fecha'];
             $hora = $_POST['hora'];
             $idTrabajador = $_POST['id_trabajador'];
+            $idServicio = $_POST['id_servicio'] ?? null;
+            $idUsuario = $_POST['id_usuario'] ?? null;
 
             // Validar los datos
             if (empty($id) || empty($estado) || empty($fecha) || empty($hora) || empty($idTrabajador)) {
@@ -127,9 +129,25 @@ class ReservaController {
             // Crear la fecha y hora en formato MySQL
             $fechaHora = $fecha . ' ' . $hora . ':00';
 
+            // Verificar disponibilidad del trabajador en esa fecha/hora
+            // Esta verificación se omite si el estado es 'cancelada'
+            if ($estado !== 'cancelada') {
+                $reservaActual = $this->reservaModel->getById($id);
+                
+                // Solo verificar conflictos si se cambió la fecha/hora/trabajador
+                if ($fechaHora != $reservaActual['fecha_hora'] || $idTrabajador != $reservaActual['id_trabajador']) {
+                    $disponibilidad = $this->reservaModel->verificarDisponibilidad($idTrabajador, $fechaHora, $id);
+                    
+                    if (!$disponibilidad) {
+                        $_SESSION['error'] = 'El trabajador ya tiene una reserva en ese horario.';
+                        Helper::redirect('/admin/reservas');
+                        return;
+                    }
+                }
+            }
+
             // Actualizar en la base de datos
-            $reservaModel = new Reserva();
-            $result = $reservaModel->update($id, $estado, $fechaHora, $idTrabajador);
+            $result = $this->reservaModel->update($id, $estado, $fechaHora, $idTrabajador);
 
             if ($result) {
                 $_SESSION['success'] = 'Reserva actualizada correctamente.';

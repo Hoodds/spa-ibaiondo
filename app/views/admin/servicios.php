@@ -30,25 +30,29 @@
                                 <tr>
                                     <td><?= $servicio['id'] ?></td>
                                     <td><?= Helper::e($servicio['nombre']) ?></td>
-                                    <td><?= $servicio['duracion'] ?> min</td>
+                                    <td><?= $servicio['duracion'] ?> min.</td>
                                     <td><?= Helper::formatPrice($servicio['precio']) ?></td>
                                     <td>
-                                        <div class="d-flex align-items-center">
-                                            <?php for ($i = 1; $i <= 5; $i++): ?>
-                                                <?php if ($i <= round($servicio['puntuacion_media'])): ?>
-                                                    <i class="fas fa-star text-warning"></i>
-                                                <?php else: ?>
-                                                    <i class="far fa-star text-warning"></i>
-                                                <?php endif; ?>
-                                            <?php endfor; ?>
-                                            <span class="ms-2">(<?= $servicio['total_valoraciones'] ?>)</span>
-                                        </div>
+                                        <?php for ($i = 1; $i <= 5; $i++): ?>
+                                            <?php if ($i <= round($servicio['puntuacion_media'])): ?>
+                                                <i class="fas fa-star text-warning"></i>
+                                            <?php else: ?>
+                                                <i class="far fa-star text-warning"></i>
+                                            <?php endif; ?>
+                                        <?php endfor; ?>
+                                        (<?= $servicio['total_valoraciones'] ?>)
                                     </td>
                                     <td>
-                                        <button type="button" class="btn btn-sm btn-info" data-bs-toggle="modal" data-bs-target="#verServicioModal<?= $servicio['id'] ?>">
+                                        <button type="button" class="btn btn-sm btn-info toggle-collapse" 
+                                                data-bs-toggle="collapse" 
+                                                data-bs-target="#verServicio<?= $servicio['id'] ?>" 
+                                                aria-expanded="false">
                                             <i class="fas fa-eye"></i>
                                         </button>
-                                        <button type="button" class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#editarServicioModal<?= $servicio['id'] ?>">
+                                        <button type="button" class="btn btn-sm btn-warning toggle-collapse" 
+                                                data-bs-toggle="collapse" 
+                                                data-bs-target="#editarServicio<?= $servicio['id'] ?>" 
+                                                aria-expanded="false">
                                             <i class="fas fa-edit"></i>
                                         </button>
                                         <a href="<?= Helper::url('/admin/servicios/eliminar/' . $servicio['id']) ?>"
@@ -59,74 +63,75 @@
                                     </td>
                                 </tr>
                                 
-                                <!-- Modal Ver Servicio -->
-                                <div class="modal fade fixed-modal" id="verServicioModal<?= $servicio['id'] ?>" tabindex="-1" aria-hidden="true">
-                                    <div class="modal-dialog modal-dialog-centered">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title">Detalles del Servicio</h5>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                            </div>
-                                            <div class="modal-body">
-                                                <p><strong>ID:</strong> <?= $servicio['id'] ?></p>
-                                                <p><strong>Nombre:</strong> <?= Helper::e($servicio['nombre']) ?></p>
-                                                <p><strong>Descripción:</strong> <?= nl2br(Helper::e($servicio['descripcion'])) ?></p>
-                                                <p><strong>Duración:</strong> <?= $servicio['duracion'] ?> minutos</p>
-                                                <p><strong>Precio:</strong> <?= Helper::formatPrice($servicio['precio']) ?></p>
-                                                <p><strong>Valoración:</strong> 
-                                                    <?php for ($i = 1; $i <= 5; $i++): ?>
-                                                        <?php if ($i <= round($servicio['puntuacion_media'])): ?>
-                                                            <i class="fas fa-star text-warning"></i>
-                                                        <?php else: ?>
-                                                            <i class="far fa-star text-warning"></i>
-                                                        <?php endif; ?>
-                                                    <?php endfor; ?>
-                                                    (<?= $servicio['puntuacion_media'] ?>/5 - <?= $servicio['total_valoraciones'] ?> valoraciones)
-                                                </p>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                                <!-- Collapse Ver Servicio -->
+                                <tr class="collapse-row">
+                                    <td colspan="6" class="p-0">
+                                        <div class="collapse" id="verServicio<?= $servicio['id'] ?>">
+                                            <div class="card card-body m-2">
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <p><strong>ID:</strong> <?= $servicio['id'] ?></p>
+                                                        <p><strong>Nombre:</strong> <?= Helper::e($servicio['nombre']) ?></p>
+                                                        <p><strong>Duración:</strong> <?= $servicio['duracion'] ?> minutos</p>
+                                                        <p><strong>Precio:</strong> <?= Helper::formatPrice($servicio['precio']) ?></p>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <p><strong>Valoración:</strong></p>
+                                                        <p>
+                                                            <?php for ($i = 1; $i <= 5; $i++): ?>
+                                                                <?php if ($i <= round($servicio['puntuacion_media'])): ?>
+                                                                    <i class="fas fa-star text-warning"></i>
+                                                                <?php else: ?>
+                                                                    <i class="far fa-star text-warning"></i>
+                                                                <?php endif; ?>
+                                                            <?php endfor; ?>
+                                                            (<?= $servicio['puntuacion_media'] ?>/5 - <?= $servicio['total_valoraciones'] ?> valoraciones)
+                                                        </p>
+                                                        <p><strong>Descripción:</strong></p>
+                                                        <p><?= nl2br(Helper::e($servicio['descripcion'])) ?></p>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </div>
+                                    </td>
+                                </tr>
                                 
-                                <!-- Modal Editar Servicio -->
-                                <div class="modal fade fixed-modal" id="editarServicioModal<?= $servicio['id'] ?>" tabindex="-1" aria-hidden="true">
-                                    <div class="modal-dialog modal-dialog-centered">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title">Editar Servicio</h5>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                            </div>
-                                            <div class="modal-body">
-                                                <form action="<?= Helper::url('/admin/servicios/editar') ?>" method="POST">
+                                <!-- Collapse Editar Servicio -->
+                                <tr class="collapse-row">
+                                    <td colspan="6" class="p-0">
+                                        <div class="collapse" id="editarServicio<?= $servicio['id'] ?>">
+                                            <div class="card card-body m-2">
+                                                <form action="<?= Helper::url('/admin/servicios/editar') ?>" method="POST" class="row g-3">
                                                     <input type="hidden" name="id" value="<?= $servicio['id'] ?>">
-                                                    <div class="mb-3">
+                                                    
+                                                    <div class="col-md-6">
                                                         <label for="nombre<?= $servicio['id'] ?>" class="form-label">Nombre</label>
                                                         <input type="text" class="form-control" id="nombre<?= $servicio['id'] ?>" name="nombre" value="<?= Helper::e($servicio['nombre']) ?>" required>
                                                     </div>
-                                                    <div class="mb-3">
-                                                        <label for="descripcion<?= $servicio['id'] ?>" class="form-label">Descripción</label>
-                                                        <textarea class="form-control" id="descripcion<?= $servicio['id'] ?>" name="descripcion" rows="3" required><?= Helper::e($servicio['descripcion']) ?></textarea>
-                                                    </div>
-                                                    <div class="mb-3">
+                                                    
+                                                    <div class="col-md-3">
                                                         <label for="duracion<?= $servicio['id'] ?>" class="form-label">Duración (minutos)</label>
                                                         <input type="number" class="form-control" id="duracion<?= $servicio['id'] ?>" name="duracion" value="<?= $servicio['duracion'] ?>" required>
                                                     </div>
-                                                    <div class="mb-3">
+                                                    
+                                                    <div class="col-md-3">
                                                         <label for="precio<?= $servicio['id'] ?>" class="form-label">Precio (€)</label>
                                                         <input type="number" step="0.01" class="form-control" id="precio<?= $servicio['id'] ?>" name="precio" value="<?= $servicio['precio'] ?>" required>
                                                     </div>
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                                    
+                                                    <div class="col-12">
+                                                        <label for="descripcion<?= $servicio['id'] ?>" class="form-label">Descripción</label>
+                                                        <textarea class="form-control" id="descripcion<?= $servicio['id'] ?>" name="descripcion" rows="3" required><?= Helper::e($servicio['descripcion']) ?></textarea>
+                                                    </div>
+                                                    
+                                                    <div class="col-12 text-end mt-3">
                                                         <button type="submit" class="btn btn-primary">Guardar Cambios</button>
                                                     </div>
                                                 </form>
                                             </div>
                                         </div>
-                                    </div>
-                                </div>
+                                    </td>
+                                </tr>
                             <?php endforeach; ?>
                         <?php endif; ?>
                     </tbody>

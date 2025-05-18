@@ -36,35 +36,44 @@
                             </tr>
                         <?php else: ?>
                             <?php foreach ($trabajadores as $trabajador): ?>
+                                <?php
+                                // Determinar la clase de la etiqueta de rol
+                                switch($trabajador['rol']) {
+                                    case 'admin':
+                                        $badgeClass = 'bg-danger';
+                                        break;
+                                    case 'recepcionista':
+                                        $badgeClass = 'bg-primary';
+                                        break;
+                                    case 'masajista':
+                                        $badgeClass = 'bg-success';
+                                        break;
+                                    case 'terapeuta':
+                                        $badgeClass = 'bg-info';
+                                        break;
+                                    default:
+                                        $badgeClass = 'bg-warning';
+                                        break;
+                                }
+                                ?>
                                 <tr>
                                     <td><?= $trabajador['id'] ?></td>
                                     <td><?= Helper::e($trabajador['nombre']) ?></td>
                                     <td><?= Helper::e($trabajador['email']) ?></td>
                                     <td>
-                                        <?php
-                                        $badgeClass = '';
-                                        switch ($trabajador['rol']) {
-                                            case 'admin':
-                                                $badgeClass = 'bg-danger';
-                                                break;
-                                            case 'recepcionista':
-                                                $badgeClass = 'bg-info';
-                                                break;
-                                            case 'masajista':
-                                                $badgeClass = 'bg-success';
-                                                break;
-                                            case 'terapeuta':
-                                                $badgeClass = 'bg-warning';
-                                                break;
-                                        }
-                                        ?>
                                         <span class="badge <?= $badgeClass ?>"><?= ucfirst($trabajador['rol']) ?></span>
                                     </td>
                                     <td>
-                                        <button type="button" class="btn btn-sm btn-info" data-bs-toggle="modal" data-bs-target="#verTrabajadorModal<?= $trabajador['id'] ?>">
+                                        <button type="button" class="btn btn-sm btn-info toggle-collapse" 
+                                                data-bs-toggle="collapse" 
+                                                data-bs-target="#verTrabajador<?= $trabajador['id'] ?>" 
+                                                aria-expanded="false">
                                             <i class="fas fa-eye"></i>
                                         </button>
-                                        <button type="button" class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#editarTrabajadorModal<?= $trabajador['id'] ?>">
+                                        <button type="button" class="btn btn-sm btn-warning toggle-collapse" 
+                                                data-bs-toggle="collapse" 
+                                                data-bs-target="#editarTrabajador<?= $trabajador['id'] ?>" 
+                                                aria-expanded="false">
                                             <i class="fas fa-edit"></i>
                                         </button>
                                         <a href="<?= Helper::url('/admin/trabajadores/eliminar/' . $trabajador['id']) ?>"
@@ -75,47 +84,45 @@
                                     </td>
                                 </tr>
                                 
-                                <!-- Modal Ver Trabajador -->
-                                <div class="modal fade fixed-modal" id="verTrabajadorModal<?= $trabajador['id'] ?>" tabindex="-1" aria-hidden="true">
-                                    <div class="modal-dialog modal-dialog-centered">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title">Detalles del Trabajador</h5>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                            </div>
-                                            <div class="modal-body">
-                                                <p><strong>ID:</strong> <?= $trabajador['id'] ?></p>
-                                                <p><strong>Nombre:</strong> <?= Helper::e($trabajador['nombre']) ?></p>
-                                                <p><strong>Email:</strong> <?= Helper::e($trabajador['email']) ?></p>
-                                                <p><strong>Rol:</strong> <span class="badge <?= $badgeClass ?>"><?= ucfirst($trabajador['rol']) ?></span></p>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                                <!-- Collapse Ver Trabajador -->
+                                <tr class="collapse-row">
+                                    <td colspan="5" class="p-0">
+                                        <div class="collapse" id="verTrabajador<?= $trabajador['id'] ?>">
+                                            <div class="card card-body m-2">
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <p><strong>ID:</strong> <?= $trabajador['id'] ?></p>
+                                                        <p><strong>Nombre:</strong> <?= Helper::e($trabajador['nombre']) ?></p>
+                                                        <p><strong>Email:</strong> <?= Helper::e($trabajador['email']) ?></p>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <p><strong>Rol:</strong> <span class="badge <?= $badgeClass ?>"><?= ucfirst($trabajador['rol']) ?></span></p>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </div>
+                                    </td>
+                                </tr>
                                 
-                                <!-- Modal Editar Trabajador -->
-                                <div class="modal fade fixed-modal" id="editarTrabajadorModal<?= $trabajador['id'] ?>" tabindex="-1" aria-hidden="true">
-                                    <div class="modal-dialog modal-dialog-centered">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title">Editar Trabajador</h5>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                            </div>
-                                            <div class="modal-body">
-                                                <form action="<?= Helper::url('/admin/trabajadores/editar') ?>" method="POST">
+                                <!-- Collapse Editar Trabajador -->
+                                <tr class="collapse-row">
+                                    <td colspan="5" class="p-0">
+                                        <div class="collapse" id="editarTrabajador<?= $trabajador['id'] ?>">
+                                            <div class="card card-body m-2">
+                                                <form action="<?= Helper::url('/admin/trabajadores/editar') ?>" method="POST" class="row g-3">
                                                     <input type="hidden" name="id" value="<?= $trabajador['id'] ?>">
-                                                    <div class="mb-3">
+                                                    
+                                                    <div class="col-md-6">
                                                         <label for="nombre<?= $trabajador['id'] ?>" class="form-label">Nombre</label>
                                                         <input type="text" class="form-control" id="nombre<?= $trabajador['id'] ?>" name="nombre" value="<?= Helper::e($trabajador['nombre']) ?>" required>
                                                     </div>
-                                                    <div class="mb-3">
+                                                    
+                                                    <div class="col-md-6">
                                                         <label for="email<?= $trabajador['id'] ?>" class="form-label">Email</label>
                                                         <input type="email" class="form-control" id="email<?= $trabajador['id'] ?>" name="email" value="<?= Helper::e($trabajador['email']) ?>" required>
                                                     </div>
-                                                    <div class="mb-3">
+                                                    
+                                                    <div class="col-md-6">
                                                         <label for="rol<?= $trabajador['id'] ?>" class="form-label">Rol</label>
                                                         <select class="form-select" id="rol<?= $trabajador['id'] ?>" name="rol" required>
                                                             <option value="admin" <?= $trabajador['rol'] == 'admin' ? 'selected' : '' ?>>Administrador</option>
@@ -124,20 +131,21 @@
                                                             <option value="terapeuta" <?= $trabajador['rol'] == 'terapeuta' ? 'selected' : '' ?>>Terapeuta</option>
                                                         </select>
                                                     </div>
-                                                    <div class="mb-3">
+                                                    
+                                                    <div class="col-md-6">
                                                         <label for="password<?= $trabajador['id'] ?>" class="form-label">Nueva Contraseña</label>
                                                         <input type="password" class="form-control" id="password<?= $trabajador['id'] ?>" name="password">
                                                         <div class="form-text">Dejar en blanco para mantener la contraseña actual.</div>
                                                     </div>
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                                    
+                                                    <div class="col-12 text-end mt-3">
                                                         <button type="submit" class="btn btn-primary">Guardar Cambios</button>
                                                     </div>
                                                 </form>
                                             </div>
                                         </div>
-                                    </div>
-                                </div>
+                                    </td>
+                                </tr>
                             <?php endforeach; ?>
                         <?php endif; ?>
                     </tbody>
@@ -168,7 +176,6 @@
                     <div class="mb-3">
                         <label for="nuevoRol" class="form-label">Rol</label>
                         <select class="form-select" id="nuevoRol" name="rol" required>
-                            <option value="">Seleccionar rol</option>
                             <option value="admin">Administrador</option>
                             <option value="recepcionista">Recepcionista</option>
                             <option value="masajista">Masajista</option>
