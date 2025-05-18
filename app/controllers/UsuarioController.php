@@ -137,7 +137,7 @@ class UsuarioController {
         Auth::logout();
         session_start();
         $_SESSION['success'] = 'Has cerrado sesión correctamente.';
-        Helper::redirect('');
+        Helper::redirect('login'); // Redirige a la pantalla de login
     }
 
     public function editar() {

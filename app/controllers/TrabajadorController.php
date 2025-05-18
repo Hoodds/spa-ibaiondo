@@ -166,7 +166,7 @@ class TrabajadorController {
         
         // Redirigir al login
         $_SESSION['success'] = 'Has cerrado sesión correctamente.';
-        Helper::redirect('trabajador/login');
+        Helper::redirect('login');
     }
     
     private function checkTrabajador() {
