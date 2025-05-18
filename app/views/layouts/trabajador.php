@@ -84,6 +84,9 @@
         <?= $content ?? '' ?>
     </main>
     <?php include BASE_PATH . '/app/views/layouts/footer.php'; ?>
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="<?= Helper::asset('js/main.js') ?>"></script>
 </body>
 </html>
 

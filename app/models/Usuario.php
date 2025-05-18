@@ -41,11 +41,11 @@ class Usuario {
     }
     
     public function register($nombre, $email, $password) {
-        // En producción, usar password_hash() para hashear contraseñas
-        // $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+        // Hashear la contraseña antes de guardarla
+        $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
         
-        $stmt = $this->db->prepare("INSERT INTO usuarios (nombre, email, contrasena) VALUES (?, ?, ?)");
-        return $stmt->execute([$nombre, $email, $password]);
+        $stmt = $this->db->prepare("INSERT INTO usuarios (nombre, email, contrasena, fecha_registro) VALUES (?, ?, ?, NOW())");
+        return $stmt->execute([$nombre, $email, $hashedPassword]);
     }
     
     public function emailExists($email) {

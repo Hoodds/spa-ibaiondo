@@ -296,5 +296,63 @@ class TrabajadorController {
 
         Helper::redirect('trabajador/reservas');
     }
+
+    public function editarReserva() {
+        // Verificar permisos - solo recepcionista puede editar
+        $this->checkTrabajador();
+        if ($_SESSION['trabajador_rol'] !== 'recepcionista') {
+            $_SESSION['error'] = 'No tienes permisos para realizar esta acción.';
+            Helper::redirect('trabajador/dashboard');
+            return;
+        }
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $id = $_POST['id'];
+            $estado = $_POST['estado'];
+            $fecha = $_POST['fecha'];
+            $hora = $_POST['hora'];
+            $idTrabajador = $_POST['id_trabajador'];
+            $idServicio = $_POST['id_servicio'] ?? null;
+            $idUsuario = $_POST['id_usuario'] ?? null;
+
+            // Validar los datos
+            if (empty($id) || empty($estado) || empty($fecha) || empty($hora) || empty($idTrabajador)) {
+                $_SESSION['error'] = 'Todos los campos son obligatorios.';
+                Helper::redirect('/trabajador/reservas');
+                return;
+            }
+
+            // Crear la fecha y hora en formato MySQL
+            $fechaHora = $fecha . ' ' . $hora . ':00';
+
+            // Verificar disponibilidad del trabajador en esa fecha/hora
+            // Esta verificación se omite si el estado es 'cancelada'
+            if ($estado !== 'cancelada') {
+                $reservaActual = $this->reservaModel->getById($id);
+                
+                // Solo verificar conflictos si se cambió la fecha/hora/trabajador
+                if ($fechaHora != $reservaActual['fecha_hora'] || $idTrabajador != $reservaActual['id_trabajador']) {
+                    $disponibilidad = $this->reservaModel->verificarDisponibilidad($idTrabajador, $fechaHora, $id);
+                    
+                    if (!$disponibilidad) {
+                        $_SESSION['error'] = 'El trabajador ya tiene una reserva en ese horario.';
+                        Helper::redirect('/trabajador/reservas');
+                        return;
+                    }
+                }
+            }
+
+            // Actualizar en la base de datos
+            $result = $this->reservaModel->update($id, $estado, $fechaHora, $idTrabajador);
+
+            if ($result) {
+                $_SESSION['success'] = 'Reserva actualizada correctamente.';
+            } else {
+                $_SESSION['error'] = 'Error al actualizar la reserva.';
+            }
+
+            Helper::redirect('/trabajador/reservas');
+        }
+    }
 }
 

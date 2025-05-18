@@ -91,51 +91,148 @@
                                         <?php endif; ?>
                                     </td>
                                     <td>
-                                        <button type="button" class="btn btn-sm btn-info" data-bs-toggle="modal" data-bs-target="#verReservaModal<?= $reserva['id'] ?>">
-                                            <i class="fas fa-eye"></i> Detalles
+                                        <!-- Botones de acción con desplegables -->
+                                        <button type="button" class="btn btn-sm btn-info toggle-collapse" 
+                                                data-bs-toggle="collapse" 
+                                                data-bs-target="#verReserva<?= $reserva['id'] ?>" 
+                                                aria-expanded="false">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+                                        <button type="button" class="btn btn-sm btn-warning toggle-collapse" 
+                                                data-bs-toggle="collapse" 
+                                                data-bs-target="#editarReserva<?= $reserva['id'] ?>" 
+                                                aria-expanded="false">
+                                            <i class="fas fa-edit"></i>
                                         </button>
                                         <?php if ($reserva['estado'] == 'pendiente'): ?>
-                                            <a href="<?= Helper::url('trabajador/reservas/' . $reserva['id'] . '/completar') ?>" class="btn btn-sm btn-success">
-                                                <i class="fas fa-check"></i> Confirmar
+                                            <a href="<?= Helper::url('trabajador/reservas/' . $reserva['id'] . '/completar') ?>" 
+                                               class="btn btn-sm btn-success"
+                                               onclick="return confirm('¿Confirmar esta reserva?')">
+                                                <i class="fas fa-check"></i>
                                             </a>
-                                            <a href="<?= Helper::url('trabajador/reservas/' . $reserva['id'] . '/cancelar') ?>" class="btn btn-sm btn-danger" onclick="return confirm('¿Estás seguro de que deseas cancelar esta reserva?')">
-                                                <i class="fas fa-times"></i> Cancelar
+                                            <a href="<?= Helper::url('trabajador/reservas/' . $reserva['id'] . '/cancelar') ?>" 
+                                               class="btn btn-sm btn-danger"
+                                               onclick="return confirm('¿Estás seguro de cancelar esta reserva?')">
+                                                <i class="fas fa-times"></i>
                                             </a>
                                         <?php endif; ?>
                                     </td>
                                 </tr>
                                 
-                                <!-- Modal para ver detalles de la reserva -->
-                                <div class="modal fade" id="verReservaModal<?= $reserva['id'] ?>" tabindex="-1" aria-hidden="true">
-                                    <div class="modal-dialog">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title">Detalles de la Reserva #<?= $reserva['id'] ?></h5>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                            </div>
-                                            <div class="modal-body">
-                                                <p><strong>Cliente:</strong> <?= Helper::e($reserva['nombre_usuario']) ?></p>
-                                                <p><strong>Servicio:</strong> <?= Helper::e($reserva['nombre_servicio']) ?></p>
-                                                <p><strong>Trabajador:</strong> <?= Helper::e($reserva['nombre_trabajador']) ?></p>
-                                                <p><strong>Fecha y Hora:</strong> <?= Helper::formatDate($reserva['fecha_hora']) ?></p>
-                                                <p><strong>Duración:</strong> <?= $reserva['duracion'] ?> minutos</p>
-                                                <p><strong>Precio:</strong> <?= Helper::formatPrice($reserva['precio']) ?></p>
-                                                <p><strong>Estado:</strong> 
-                                                    <?php if ($reserva['estado'] == 'pendiente'): ?>
-                                                        <span class="badge bg-warning text-dark">Pendiente</span>
-                                                    <?php elseif ($reserva['estado'] == 'confirmada'): ?>
-                                                        <span class="badge bg-success">Confirmada</span>
-                                                    <?php else: ?>
-                                                        <span class="badge bg-danger">Cancelada</span>
-                                                    <?php endif; ?>
-                                                </p>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                                <!-- Collapse Ver Reserva -->
+                                <tr class="collapse-row">
+                                    <td colspan="7" class="p-0">
+                                        <div class="collapse" id="verReserva<?= $reserva['id'] ?>">
+                                            <div class="card card-body m-2">
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <p><strong>ID:</strong> <?= $reserva['id'] ?></p>
+                                                        <p><strong>Cliente:</strong> <?= Helper::e($reserva['nombre_usuario']) ?></p>
+                                                        <p><strong>Email Cliente:</strong> <?= Helper::e($reserva['email_usuario'] ?? 'No disponible') ?></p>
+                                                        <p><strong>Servicio:</strong> <?= Helper::e($reserva['nombre_servicio']) ?></p>
+                                                        <p><strong>Trabajador:</strong> <?= Helper::e($reserva['nombre_trabajador']) ?></p>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <p><strong>Fecha y Hora:</strong> <?= Helper::formatDate($reserva['fecha_hora']) ?></p>
+                                                        <p><strong>Duración:</strong> <?= $reserva['duracion'] ?> minutos</p>
+                                                        <p><strong>Precio:</strong> <?= Helper::formatPrice($reserva['precio']) ?></p>
+                                                        <p><strong>Estado:</strong> 
+                                                            <?php if ($reserva['estado'] == 'pendiente'): ?>
+                                                                <span class="badge bg-warning text-dark">Pendiente</span>
+                                                            <?php elseif ($reserva['estado'] == 'confirmada'): ?>
+                                                                <span class="badge bg-success">Confirmada</span>
+                                                            <?php else: ?>
+                                                                <span class="badge bg-danger">Cancelada</span>
+                                                            <?php endif; ?>
+                                                        </p>
+                                                        <p><strong>Fecha de creación:</strong> <?= isset($reserva['fecha_creacion']) ? Helper::formatDate($reserva['fecha_creacion']) : 'No disponible' ?></p>
+                                                    </div>
+                                                </div>
+                                                
+                                                <?php if ($reserva['estado'] == 'pendiente'): ?>
+                                                <div class="row mt-3">
+                                                    <div class="col-12 text-end">
+                                                        <a href="<?= Helper::url('trabajador/reservas/' . $reserva['id'] . '/completar') ?>" 
+                                                           class="btn btn-success"
+                                                           onclick="return confirm('¿Confirmar esta reserva?')">
+                                                            <i class="fas fa-check"></i> Confirmar Reserva
+                                                        </a>
+                                                        <a href="<?= Helper::url('trabajador/reservas/' . $reserva['id'] . '/cancelar') ?>" 
+                                                           class="btn btn-danger"
+                                                           onclick="return confirm('¿Estás seguro de cancelar esta reserva?')">
+                                                            <i class="fas fa-times"></i> Cancelar Reserva
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                                <?php endif; ?>
                                             </div>
                                         </div>
-                                    </div>
-                                </div>
+                                    </td>
+                                </tr>
+                                
+                                <!-- Collapse Editar Reserva -->
+                                <tr class="collapse-row">
+                                    <td colspan="7" class="p-0">
+                                        <div class="collapse" id="editarReserva<?= $reserva['id'] ?>">
+                                            <div class="card card-body m-2">
+                                                <form action="<?= Helper::url('/trabajador/reservas/editar') ?>" method="POST" class="row g-3">
+                                                    <input type="hidden" name="id" value="<?= $reserva['id'] ?>">
+                                                    <input type="hidden" name="id_servicio" value="<?= $reserva['id_servicio'] ?>">
+                                                    <input type="hidden" name="id_usuario" value="<?= $reserva['id_usuario'] ?>">
+                                                    
+                                                    <div class="col-md-4">
+                                                        <label for="estado<?= $reserva['id'] ?>" class="form-label">Estado</label>
+                                                        <select class="form-select" id="estado<?= $reserva['id'] ?>" name="estado" required>
+                                                            <option value="pendiente" <?= $reserva['estado'] == 'pendiente' ? 'selected' : '' ?>>Pendiente</option>
+                                                            <option value="confirmada" <?= $reserva['estado'] == 'confirmada' ? 'selected' : '' ?>>Confirmada</option>
+                                                            <option value="cancelada" <?= $reserva['estado'] == 'cancelada' ? 'selected' : '' ?>>Cancelada</option>
+                                                        </select>
+                                                    </div>
+                                                    
+                                                    <div class="col-md-4">
+                                                        <label for="fecha<?= $reserva['id'] ?>" class="form-label">Fecha</label>
+                                                        <?php $fecha = new DateTime($reserva['fecha_hora']); ?>
+                                                        <input type="date" class="form-control fecha-reserva" 
+                                                               id="fecha<?= $reserva['id'] ?>" 
+                                                               name="fecha" 
+                                                               value="<?= $fecha->format('Y-m-d') ?>" 
+                                                               min="<?= date('Y-m-d') ?>"
+                                                               data-reserva-id="<?= $reserva['id'] ?>"
+                                                               data-servicio-id="<?= $reserva['id_servicio'] ?>"
+                                                               required>
+                                                    </div>
+                                                    
+                                                    <div class="col-md-4">
+                                                        <label for="hora<?= $reserva['id'] ?>" class="form-label">Hora</label>
+                                                        <select class="form-select hora-reserva" 
+                                                                id="hora<?= $reserva['id'] ?>" 
+                                                                name="hora" 
+                                                                data-hora-actual="<?= $fecha->format('H:i') ?>"
+                                                                required>
+                                                            <option value="<?= $fecha->format('H:i') ?>"><?= $fecha->format('H:i') ?></option>
+                                                        </select>
+                                                    </div>
+                                                    
+                                                    <div class="col-md-12">
+                                                        <label for="trabajador<?= $reserva['id'] ?>" class="form-label">Trabajador</label>
+                                                        <select class="form-select trabajador-reserva" 
+                                                                id="trabajador<?= $reserva['id'] ?>" 
+                                                                name="id_trabajador" 
+                                                                data-trabajador-actual="<?= $reserva['id_trabajador'] ?>"
+                                                                required>
+                                                            <option value="<?= $reserva['id_trabajador'] ?>"><?= Helper::e($reserva['nombre_trabajador']) ?></option>
+                                                        </select>
+                                                        <div class="form-text">Selecciona una fecha para ver los trabajadores disponibles</div>
+                                                    </div>
+                                                    
+                                                    <div class="col-12 text-end mt-3">
+                                                        <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
                             <?php endforeach; ?>
                         <?php endif; ?>
                     </tbody>
@@ -144,3 +241,10 @@
         </div>
     </div>
 </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Inicializar el comportamiento de los desplegables
+    initAdminCollapses();
+});
+</script>

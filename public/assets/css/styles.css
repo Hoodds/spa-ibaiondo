@@ -130,7 +130,7 @@ footer a:hover {
     z-index: 1040 !important; /* Navbar suele tener z-index: 1030 en Bootstrap */
 }
 
-/* Estilos para desplegables en tablas del admin */
+/* Estilos para desplegables en tablas */
 .collapse-row {
     background-color: #f8f9fa;
 }
@@ -139,6 +139,7 @@ footer a:hover {
     border-radius: 0;
     border-left: 5px solid var(--primary-color);
     box-shadow: none;
+    transform: none !important; /* Prevenir que el card se eleve en hover */
 }
 
 .toggle-collapse:focus {
