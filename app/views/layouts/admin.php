@@ -73,5 +73,11 @@
         <?= $content ?? '' ?>
     </main>
     <?php include BASE_PATH . '/app/views/layouts/footer.php'; ?>
+    <script src="<?= Helper::asset('js/main.js') ?>"></script>
+    <script>
+document.addEventListener('DOMContentLoaded', function() {
+    initAdminCollapses();
+});
+</script>
 </body>
 </html>
