@@ -18,14 +18,7 @@ require_once BASE_PATH . '/core/Helper.php';
 
 // Iniciar sesión (MOVIDO AQUÍ, DESPUÉS DE CARGAR app.php)
 session_start();
-// if (isset($_SESSION['success'])) {
-//     echo '<div class="alert alert-success">' . $_SESSION['success'] . '</div>';
-//     unset($_SESSION['success']);
-// }
-if (isset($_SESSION['success'])) {
-    echo "<script>alert('" . $_SESSION['success'] . "');</script>";
-    unset($_SESSION['success']);
-}
+
 // Inicializar el router
 $router = new Router();
 
