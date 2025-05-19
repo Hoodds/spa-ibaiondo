@@ -113,8 +113,14 @@
                 <div class="card-body">
                     <p>Si tienes alguna duda o necesitas asistencia, contacta con el administrador:</p>
                     <ul class="list-unstyled">
-                        <li><i class="fas fa-envelope me-2"></i> admin@spaibaiondo.com</li>
-                        <li><i class="fas fa-phone me-2"></i> +34 946 123 456</li>
+                        <li>
+                            <i class="fas fa-envelope me-2"></i>
+                            <a href="mailto:admin@spaibaiondo.com">admin@spaibaiondo.com</a>
+                        </li>
+                        <li>
+                            <i class="fas fa-phone me-2"></i>
+                            <a href="tel:+34946123456">+34 946 123 456</a>
+                        </li>
                     </ul>
                 </div>
             </div>

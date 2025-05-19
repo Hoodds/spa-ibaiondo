@@ -182,4 +182,31 @@
             </div>
         </div>
     </div>
+
+    <div class="row mt-2">
+        <div class="col-12">
+            <div class="card shadow-sm">
+                <div class="card-header bg-white">
+                    <h5 class="card-title mb-0">Información de Contacto</h5>
+                </div>
+                <div class="card-body">
+                    <p>Si necesitas asistencia técnica o tienes alguna consulta, contacta con el administrador:</p>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <ul class="list-unstyled">
+                                <li class="mb-2">
+                                    <i class="fas fa-envelope me-2 text-primary"></i>
+                                    <a href="mailto:admin@spaibaiondo.com">admin@spaibaiondo.com</a>
+                                </li>
+                                <li>
+                                    <i class="fas fa-phone me-2 text-primary"></i>
+                                    <a href="tel:+34946123456">+34 946 123 456</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
