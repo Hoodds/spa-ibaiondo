@@ -385,11 +385,32 @@ class TrabajadorController {
         // Crear la fecha y hora en formato MySQL
         $fechaHora = $fecha . ' ' . $hora . ':00';
         
-        // Verificar disponibilidad
+        // Verificar disponibilidad del trabajador
         if ($estado !== 'cancelada') {
-            $disponibilidad = $this->reservaModel->verificarDisponibilidad($idTrabajador, $fechaHora);
-            if (!$disponibilidad) {
-                $_SESSION['error'] = 'El trabajador ya tiene una reserva en ese horario.';
+            // Obtener instancia del modelo Reserva para usar getDisponibilidad
+            $disponibilidad = $this->reservaModel->getDisponibilidad($idServicio, $fecha);
+            $trabajadorDisponible = false;
+            $horaDisponible = false;
+            
+            foreach ($disponibilidad as $disp) {
+                if ($disp['id_trabajador'] == $idTrabajador) {
+                    $trabajadorDisponible = true;
+                    // Verificar si la hora solicitada está en las disponibles
+                    if (in_array($hora, $disp['horas_disponibles'])) {
+                        $horaDisponible = true;
+                    }
+                    break;
+                }
+            }
+            
+            if (!$trabajadorDisponible) {
+                $_SESSION['error'] = 'El trabajador seleccionado no está disponible en esta fecha.';
+                Helper::redirect('trabajador/reservas');
+                return;
+            }
+            
+            if (!$horaDisponible) {
+                $_SESSION['error'] = 'La hora seleccionada no está disponible para este trabajador.';
                 Helper::redirect('trabajador/reservas');
                 return;
             }
@@ -401,8 +422,6 @@ class TrabajadorController {
         if ($resultado) {
             // Si se desea un estado diferente a pendiente, actualizar después de crear
             if ($estado !== 'pendiente') {
-                // Obtener el último ID insertado directamente desde el modelo
-                // que ya tiene acceso a la conexión de base de datos
                 $db = Database::getInstance()->getConnection();
                 $reservaId = $db->lastInsertId();
                 $this->reservaModel->updateEstado($reservaId, $estado);

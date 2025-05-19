@@ -276,21 +276,25 @@
                         </select>
                     </div>
                     <div class="mb-3">
-                        <label for="nuevoTrabajador" class="form-label">Trabajador</label>
-                        <select class="form-select" id="nuevoTrabajador" name="id_trabajador" required>
-                            <option value="">Seleccionar trabajador</option>
-                            <?php foreach ($trabajadores as $trabajador): ?>
-                                <option value="<?= $trabajador['id'] ?>"><?= Helper::e($trabajador['nombre']) ?></option>
-                            <?php endforeach; ?>
-                        </select>
-                    </div>
-                    <div class="mb-3">
                         <label for="nuevaFecha" class="form-label">Fecha</label>
                         <input type="date" class="form-control" id="nuevaFecha" name="fecha" required>
                     </div>
                     <div class="mb-3">
+                        <label for="nuevoTrabajador" class="form-label">Trabajador</label>
+                        <select class="form-select" id="nuevoTrabajador" name="id_trabajador" required>
+                            <option value="">Seleccionar trabajador</option>
+                            <?php foreach ($trabajadores as $trabajador): ?>
+                                <?php if ($trabajador['rol'] !== 'admin' && $trabajador['rol'] !== 'recepcionista'): ?>
+                                    <option value="<?= $trabajador['id'] ?>"><?= Helper::e($trabajador['nombre']) ?></option>
+                                <?php endif; ?>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
+                    <div class="mb-3">
                         <label for="nuevaHora" class="form-label">Hora</label>
-                        <input type="time" class="form-control" id="nuevaHora" name="hora" required>
+                        <select class="form-select" id="nuevaHora" name="hora" required disabled>
+                            <option value="">Seleccione fecha y trabajador primero</option>
+                        </select>
                     </div>
                     <div class="mb-3">
                         <label for="nuevoEstado" class="form-label">Estado</label>

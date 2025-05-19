@@ -283,3 +283,109 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 });
+
+// Añadir este script en ambas vistas después del código JavaScript existente
+// Para la vista de administrador (reservas.php) y recepcionista (reservas_recepcionista.php)
+
+// Manejo dinámico de disponibilidad para nueva reserva
+const nuevaFecha = document.getElementById('nuevaFecha');
+const nuevoTrabajador = document.getElementById('nuevoTrabajador');
+const nuevaHora = document.getElementById('nuevaHora');
+const nuevoServicio = document.getElementById('nuevoServicio');
+
+// Variable para guardar los datos de disponibilidad
+let disponibilidadActual = [];
+
+// Función para actualizar las horas disponibles
+function actualizarHorasDisponibles() {
+    if (!nuevaFecha.value || !nuevoServicio.value) {
+        return;
+    }
+
+    // Mostrar un indicador de carga
+    nuevaHora.innerHTML = '<option value="">Cargando disponibilidad...</option>';
+    nuevaHora.disabled = true;
+    nuevoTrabajador.disabled = true;
+    
+    // Obtener disponibilidad para esta fecha y servicio
+    fetch(`${window.location.origin}/spa-ibaiondo/public/index.php/reservas/disponibilidad?id_servicio=${nuevoServicio.value}&fecha=${nuevaFecha.value}`)
+        .then(response => response.json())
+        .then(data => {
+            if (data.error) {
+                alert(data.error);
+                return;
+            }
+            
+            // Guardar los datos de disponibilidad
+            disponibilidadActual = data;
+            
+            // Resetear y habilitar select de trabajadores
+            nuevoTrabajador.innerHTML = '<option value="">Seleccionar trabajador</option>';
+            
+            if (data.length === 0) {
+                nuevoTrabajador.disabled = true;
+                nuevaHora.disabled = true;
+                nuevaHora.innerHTML = '<option value="">No hay disponibilidad</option>';
+                return;
+            }
+            
+            // Añadir trabajadores disponibles
+            data.forEach(item => {
+                // Solo agregar si no es admin ni recepcionista
+                const option = document.createElement('option');
+                option.value = item.id_trabajador;
+                option.textContent = item.nombre_trabajador;
+                option.dataset.horas = JSON.stringify(item.horas_disponibles);
+                nuevoTrabajador.appendChild(option);
+            });
+            
+            nuevoTrabajador.disabled = false;
+            nuevaHora.disabled = true;
+            nuevaHora.innerHTML = '<option value="">Seleccione un trabajador</option>';
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Error al obtener disponibilidad. Por favor, inténtalo de nuevo.');
+        });
+}
+
+// Cuando cambia la fecha, actualizar disponibilidad
+if (nuevaFecha && nuevoServicio) {
+    nuevaFecha.addEventListener('change', actualizarHorasDisponibles);
+    nuevoServicio.addEventListener('change', actualizarHorasDisponibles);
+}
+
+// Cuando se selecciona un trabajador, mostrar sus horas disponibles
+if (nuevoTrabajador) {
+    nuevoTrabajador.addEventListener('change', function() {
+        if (!this.value) {
+            nuevaHora.disabled = true;
+            nuevaHora.innerHTML = '<option value="">Seleccione un trabajador</option>';
+            return;
+        }
+        
+        const selectedOption = this.options[this.selectedIndex];
+        if (selectedOption.dataset.horas) {
+            const horasDisponibles = JSON.parse(selectedOption.dataset.horas);
+            
+            // Resetear select de horas
+            nuevaHora.innerHTML = '<option value="">Seleccionar hora</option>';
+            
+            if (horasDisponibles.length === 0) {
+                nuevaHora.innerHTML = '<option value="">No hay horas disponibles</option>';
+                nuevaHora.disabled = true;
+                return;
+            }
+            
+            // Añadir horas disponibles
+            horasDisponibles.forEach(hora => {
+                const option = document.createElement('option');
+                option.value = hora;
+                option.textContent = hora;
+                nuevaHora.appendChild(option);
+            });
+            
+            nuevaHora.disabled = false;
+        }
+    });
+}

@@ -299,11 +299,32 @@ class AdminController {
         // Crear la fecha y hora en formato MySQL
         $fechaHora = $fecha . ' ' . $hora . ':00';
         
-        // Verificar disponibilidad
+        // Verificar disponibilidad del trabajador
         if ($estado !== 'cancelada') {
-            $disponibilidad = $this->reservaModel->verificarDisponibilidad($idTrabajador, $fechaHora);
-            if (!$disponibilidad) {
-                $_SESSION['error'] = 'El trabajador ya tiene una reserva en ese horario.';
+            // Primero verificar que el trabajador esté disponible en general
+            $disponibilidad = $this->reservaModel->getDisponibilidad($idServicio, $fecha);
+            $trabajadorDisponible = false;
+            $horaDisponible = false;
+            
+            foreach ($disponibilidad as $disp) {
+                if ($disp['id_trabajador'] == $idTrabajador) {
+                    $trabajadorDisponible = true;
+                    // Verificar si la hora solicitada está en las disponibles
+                    if (in_array($hora, $disp['horas_disponibles'])) {
+                        $horaDisponible = true;
+                    }
+                    break;
+                }
+            }
+            
+            if (!$trabajadorDisponible) {
+                $_SESSION['error'] = 'El trabajador seleccionado no está disponible en esta fecha.';
+                Helper::redirect('admin/reservas');
+                return;
+            }
+            
+            if (!$horaDisponible) {
+                $_SESSION['error'] = 'La hora seleccionada no está disponible para este trabajador.';
                 Helper::redirect('admin/reservas');
                 return;
             }
@@ -313,9 +334,8 @@ class AdminController {
         if ($this->reservaModel->create($idUsuario, $idServicio, $idTrabajador, $fechaHora)) {
             // Si la reserva se creó con estado diferente a pendiente, actualizarla
             if ($estado !== 'pendiente') {
-                $stmt = $this->db->prepare("SELECT LAST_INSERT_ID()");
-                $stmt->execute();
-                $reservaId = $stmt->fetchColumn();
+                $db = Database::getInstance()->getConnection();
+                $reservaId = $db->lastInsertId();
                 $this->reservaModel->updateEstado($reservaId, $estado);
             }
             $_SESSION['success'] = 'Reserva creada correctamente.';
