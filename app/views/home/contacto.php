@@ -8,21 +8,31 @@
                     <div class="bg-light p-4 rounded h-100">
                         <i class="fas fa-map-marker-alt fa-2x text-primary mb-3"></i>
                         <h5>Dirección</h5>
-                        <p class="mb-0">Calle Principal 123<br>Ciudad, CP 48001</p>
+                        <p class="mb-0">
+                            <a href="https://www.google.com/maps/search/?api=1&query=Calle+Principal+123,+Ciudad,+48001" class="text-dark" target="_blank">
+                                Calle Principal 123<br>Ciudad, CP 48001
+                            </a>
+                        </p>
                     </div>
                 </div>
                 <div class="col-md-4 text-center mb-4 mb-md-0">
                     <div class="bg-light p-4 rounded h-100">
                         <i class="fas fa-phone fa-2x text-primary mb-3"></i>
                         <h5>Teléfono</h5>
-                        <p class="mb-0">+34 946 123 456<br>+34 688 789 012</p>
+                        <p class="mb-0">
+                            <a href="tel:+34946123456" class="text-dark">+34 946 123 456</a><br>
+                            <a href="tel:+34688789012" class="text-dark">+34 688 789 012</a>
+                        </p>
                     </div>
                 </div>
                 <div class="col-md-4 text-center">
                     <div class="bg-light p-4 rounded h-100">
                         <i class="fas fa-envelope fa-2x text-primary mb-3"></i>
                         <h5>Email</h5>
-                        <p class="mb-0">info@spaibaiondo.com<br>reservas@spaibaiondo.com</p>
+                        <p class="mb-0">
+                            <a href="mailto:info@spaibaiondo.com" class="text-dark">info@spaibaiondo.com</a><br>
+                            <a href="mailto:reservas@spaibaiondo.com" class="text-dark">reservas@spaibaiondo.com</a>
+                        </p>
                     </div>
                 </div>
             </div>
