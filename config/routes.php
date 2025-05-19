@@ -31,6 +31,7 @@ $router->add('GET', '/trabajador/login', 'TrabajadorController', 'login');
 $router->add('POST', '/trabajador/login', 'TrabajadorController', 'login');
 $router->add('GET', '/trabajador/dashboard', 'TrabajadorController', 'dashboard');
 $router->add('GET', '/trabajador/reservas', 'TrabajadorController', 'misReservas');
+$router->add('POST', '/trabajador/reservas/crear', 'TrabajadorController', 'crearReserva');
 $router->add('POST', '/trabajador/reservas/editar', 'TrabajadorController', 'editarReserva');
 $router->add('GET', '/trabajador/reservas/{id}/completar', 'TrabajadorController', 'completarReserva');
 $router->add('GET', '/trabajador/reservas/{id}/cancelar', 'TrabajadorController', 'cancelarReserva');
@@ -40,6 +41,7 @@ $router->add('GET', '/trabajador/logout', 'TrabajadorController', 'logout');
 // Rutas para administradores
 $router->add('GET', '/admin', 'AdminController', 'dashboard');
 $router->add('GET', '/admin/reservas', 'AdminController', 'listarReservas');
+$router->add('POST', '/admin/reservas/crear', 'AdminController', 'crearReserva');
 $router->add('POST', '/admin/reservas/editar', 'ReservaController', 'editar');
 $router->add('GET', '/admin/reservas/eliminar/{id}', 'AdminController', 'eliminarReserva');
 $router->add('GET', '/admin/servicios', 'AdminController', 'listarServicios');

@@ -102,9 +102,13 @@ class TrabajadorController {
         if ($_SESSION['trabajador_rol'] === 'recepcionista') {
             // Para recepcionistas, mostrar todas las reservas (como admin)
             require_once BASE_PATH . '/app/models/Servicio.php';
+            require_once BASE_PATH . '/app/models/Usuario.php'; // Add this line
             $servicioModel = new Servicio();
+            $usuarioModel = new Usuario(); // Add this line
+            
             $servicios = $servicioModel->getAll();
             $trabajadores = $this->trabajadorModel->getAll();
+            $usuarios = $usuarioModel->getAll(); // Add this line
             
             // Aplicar filtros si los hay
             $filtros = [
@@ -353,6 +357,62 @@ class TrabajadorController {
 
             Helper::redirect('/trabajador/reservas');
         }
+    }
+
+    public function crearReserva() {
+        // Verificar permisos - solo recepcionista puede crear reservas
+        $this->checkTrabajador();
+        if ($_SESSION['trabajador_rol'] !== 'recepcionista') {
+            $_SESSION['error'] = 'No tienes permisos para realizar esta acción.';
+            Helper::redirect('trabajador/dashboard');
+            return;
+        }
+
+        // Validar datos del formulario
+        $idUsuario = $_POST['id_usuario'] ?? '';
+        $idServicio = $_POST['id_servicio'] ?? '';
+        $idTrabajador = $_POST['id_trabajador'] ?? '';
+        $fecha = $_POST['fecha'] ?? '';
+        $hora = $_POST['hora'] ?? '';
+        $estado = $_POST['estado'] ?? 'pendiente';
+        
+        if (empty($idUsuario) || empty($idServicio) || empty($idTrabajador) || empty($fecha) || empty($hora)) {
+            $_SESSION['error'] = 'Todos los campos son obligatorios.';
+            Helper::redirect('trabajador/reservas');
+            return;
+        }
+        
+        // Crear la fecha y hora en formato MySQL
+        $fechaHora = $fecha . ' ' . $hora . ':00';
+        
+        // Verificar disponibilidad
+        if ($estado !== 'cancelada') {
+            $disponibilidad = $this->reservaModel->verificarDisponibilidad($idTrabajador, $fechaHora);
+            if (!$disponibilidad) {
+                $_SESSION['error'] = 'El trabajador ya tiene una reserva en ese horario.';
+                Helper::redirect('trabajador/reservas');
+                return;
+            }
+        }
+        
+        // Crear la reserva
+        $resultado = $this->reservaModel->create($idUsuario, $idServicio, $idTrabajador, $fechaHora);
+        
+        if ($resultado) {
+            // Si se desea un estado diferente a pendiente, actualizar después de crear
+            if ($estado !== 'pendiente') {
+                // Obtener el último ID insertado directamente desde el modelo
+                // que ya tiene acceso a la conexión de base de datos
+                $db = Database::getInstance()->getConnection();
+                $reservaId = $db->lastInsertId();
+                $this->reservaModel->updateEstado($reservaId, $estado);
+            }
+            $_SESSION['success'] = 'Reserva creada correctamente.';
+        } else {
+            $_SESSION['error'] = 'Error al crear la reserva.';
+        }
+        
+        Helper::redirect('trabajador/reservas');
     }
 }
 

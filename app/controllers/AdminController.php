@@ -75,7 +75,8 @@ class AdminController {
     public function listarReservas() {
         $servicios = $this->servicioModel->getAll();
         $trabajadores = $this->trabajadorModel->getAll();
-    
+        $usuarios = $this->usuarioModel->getAll(); // Add this line to load users
+
         $filtros = [
             'fecha' => $_GET['filtroFecha'] ?? null,
             'servicio' => $_GET['filtroServicio'] ?? null,
@@ -278,6 +279,51 @@ class AdminController {
             $_SESSION['error'] = 'Error al crear el servicio.';
         }
         Helper::redirect('admin/servicios');
+    }
+
+    public function crearReserva() {
+        // Validar datos del formulario
+        $idUsuario = $_POST['id_usuario'] ?? '';
+        $idServicio = $_POST['id_servicio'] ?? '';
+        $idTrabajador = $_POST['id_trabajador'] ?? '';
+        $fecha = $_POST['fecha'] ?? '';
+        $hora = $_POST['hora'] ?? '';
+        $estado = $_POST['estado'] ?? 'pendiente';
+        
+        if (empty($idUsuario) || empty($idServicio) || empty($idTrabajador) || empty($fecha) || empty($hora)) {
+            $_SESSION['error'] = 'Todos los campos son obligatorios.';
+            Helper::redirect('admin/reservas');
+            return;
+        }
+        
+        // Crear la fecha y hora en formato MySQL
+        $fechaHora = $fecha . ' ' . $hora . ':00';
+        
+        // Verificar disponibilidad
+        if ($estado !== 'cancelada') {
+            $disponibilidad = $this->reservaModel->verificarDisponibilidad($idTrabajador, $fechaHora);
+            if (!$disponibilidad) {
+                $_SESSION['error'] = 'El trabajador ya tiene una reserva en ese horario.';
+                Helper::redirect('admin/reservas');
+                return;
+            }
+        }
+        
+        // Crear la reserva
+        if ($this->reservaModel->create($idUsuario, $idServicio, $idTrabajador, $fechaHora)) {
+            // Si la reserva se creó con estado diferente a pendiente, actualizarla
+            if ($estado !== 'pendiente') {
+                $stmt = $this->db->prepare("SELECT LAST_INSERT_ID()");
+                $stmt->execute();
+                $reservaId = $stmt->fetchColumn();
+                $this->reservaModel->updateEstado($reservaId, $estado);
+            }
+            $_SESSION['success'] = 'Reserva creada correctamente.';
+        } else {
+            $_SESSION['error'] = 'Error al crear la reserva.';
+        }
+        
+        Helper::redirect('admin/reservas');
     }
 }
 

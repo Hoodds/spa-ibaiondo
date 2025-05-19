@@ -1,6 +1,10 @@
 <div class="container-fluid py-4">
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h1>Gestión de Reservas</h1>
+        <!-- Add the Nueva Reserva button -->
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#nuevaReservaModal">
+            <i class="fas fa-plus"></i> Nueva Reserva
+        </button>
     </div>
     
     <div class="card shadow-sm mb-4">
@@ -242,9 +246,94 @@
     </div>
 </div>
 
+<!-- Add the Nueva Reserva modal at the end of the file -->
+<!-- Modal Nueva Reserva -->
+<div class="modal fade" id="nuevaReservaModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Nueva Reserva</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="formNuevaReserva" action="<?= Helper::url('/trabajador/reservas/crear') ?>" method="POST">
+                    <div class="mb-3">
+                        <label for="nuevoUsuario" class="form-label">Cliente</label>
+                        <select class="form-select" id="nuevoUsuario" name="id_usuario" required>
+                            <option value="">Seleccionar cliente</option>
+                            <?php foreach ($usuarios as $usuario): ?>
+                                <option value="<?= $usuario['id'] ?>"><?= Helper::e($usuario['nombre']) ?> (<?= Helper::e($usuario['email']) ?>)</option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="nuevoServicio" class="form-label">Servicio</label>
+                        <select class="form-select" id="nuevoServicio" name="id_servicio" required>
+                            <option value="">Seleccionar servicio</option>
+                            <?php foreach ($servicios as $servicio): ?>
+                                <option value="<?= $servicio['id'] ?>"><?= Helper::e($servicio['nombre']) ?> - <?= Helper::formatPrice($servicio['precio']) ?></option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="nuevoTrabajador" class="form-label">Trabajador</label>
+                        <select class="form-select" id="nuevoTrabajador" name="id_trabajador" required>
+                            <option value="">Seleccionar trabajador</option>
+                            <?php foreach ($trabajadores as $trabajador): ?>
+                                <option value="<?= $trabajador['id'] ?>"><?= Helper::e($trabajador['nombre']) ?></option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="nuevaFecha" class="form-label">Fecha</label>
+                        <input type="date" class="form-control" id="nuevaFecha" name="fecha" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="nuevaHora" class="form-label">Hora</label>
+                        <input type="time" class="form-control" id="nuevaHora" name="hora" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="nuevoEstado" class="form-label">Estado</label>
+                        <select class="form-select" id="nuevoEstado" name="estado" required>
+                            <option value="pendiente">Pendiente</option>
+                            <option value="confirmada">Confirmada</option>
+                            <option value="cancelada">Cancelada</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="submit" form="formNuevaReserva" class="btn btn-primary">Crear Reserva</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     // Inicializar el comportamiento de los desplegables
     initAdminCollapses();
+    
+    // Add the form validation for the new reservation modal
+    const hoy = new Date().toISOString().split('T')[0];
+    document.getElementById('nuevaFecha').min = hoy;
+    
+    // Validación del formulario de nueva reserva
+    const formNuevaReserva = document.getElementById('formNuevaReserva');
+    if (formNuevaReserva) {
+        formNuevaReserva.addEventListener('submit', function(e) {
+            const servicio = document.getElementById('nuevoServicio').value;
+            const usuario = document.getElementById('nuevoUsuario').value;
+            const trabajador = document.getElementById('nuevoTrabajador').value;
+            const fecha = document.getElementById('nuevaFecha').value;
+            const hora = document.getElementById('nuevaHora').value;
+            
+            if (!servicio || !usuario || !trabajador || !fecha || !hora) {
+                e.preventDefault();
+                alert('Por favor, completa todos los campos requeridos.');
+            }
+        });
+    }
 });
 </script>
