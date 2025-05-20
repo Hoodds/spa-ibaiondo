@@ -34,9 +34,11 @@
                     <select class="form-select" id="filtroTrabajador" name="filtroTrabajador">
                         <option value="">Todos los trabajadores</option>
                         <?php foreach ($trabajadores as $trabajador): ?>
-                            <option value="<?= $trabajador['id'] ?>" <?= (isset($_GET['filtroTrabajador']) && $_GET['filtroTrabajador'] == $trabajador['id']) ? 'selected' : '' ?>>
-                                <?= Helper::e($trabajador['nombre']) ?>
-                            </option>
+                            <?php if ($trabajador['rol'] !== 'admin' && $trabajador['rol'] !== 'recepcionista'): ?>
+                                <option value="<?= $trabajador['id'] ?>" <?= (isset($_GET['filtroTrabajador']) && $_GET['filtroTrabajador'] == $trabajador['id']) ? 'selected' : '' ?>>
+                                    <?= Helper::e($trabajador['nombre']) ?>
+                                </option>
+                            <?php endif; ?>
                         <?php endforeach; ?>
                     </select>
                 </div>
