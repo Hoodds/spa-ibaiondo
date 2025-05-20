@@ -433,5 +433,42 @@ class TrabajadorController {
         
         Helper::redirect('trabajador/reservas');
     }
+
+    // Add this method to your TrabajadorController class
+
+    public function listarServicios() {
+        // Verify user is a worker
+        $this->checkTrabajador();
+        
+        // Only receptionists should access this view
+        if ($_SESSION['trabajador_rol'] !== 'recepcionista') {
+            $_SESSION['error'] = 'No tienes permisos para acceder a esta sección.';
+            Helper::redirect('trabajador/dashboard');
+            return;
+        }
+        
+        // Load the service model
+        require_once BASE_PATH . '/app/models/Servicio.php';
+        require_once BASE_PATH . '/app/models/Valoracion.php';
+        
+        $servicioModel = new Servicio();
+        $valoracionModel = new Valoracion();
+        
+        // Get all services with their ratings
+        $servicios = $servicioModel->getAll();
+        
+        // For each service, get its average rating
+        foreach ($servicios as $key => $servicio) {
+            $puntuacion = $valoracionModel->getPuntuacionMedia($servicio['id']);
+            $servicios[$key]['puntuacion_media'] = $puntuacion['media'] ? round($puntuacion['media'], 1) : 0;
+            $servicios[$key]['total_valoraciones'] = $puntuacion['total'];
+        }
+        
+        // Load the view
+        ob_start();
+        include BASE_PATH . '/app/views/trabajadores/servicios_recepcionista.php';
+        $content = ob_get_clean();
+        include BASE_PATH . '/app/views/layouts/trabajador.php';
+    }
 }
 

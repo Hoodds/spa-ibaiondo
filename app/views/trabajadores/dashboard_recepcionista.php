@@ -62,7 +62,7 @@
                     </h2>
                 </div>
                 <div class="card-footer bg-transparent border-0">
-                    <a href="#" class="text-white">Ver detalles <i class="fas fa-arrow-right ms-1"></i></a>
+                    <a href="<?= Helper::url('trabajador/servicios') ?>" class="text-white">Ver detalles <i class="fas fa-arrow-right ms-1"></i></a>
                 </div>
             </div>
         </div>

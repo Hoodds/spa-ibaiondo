@@ -37,6 +37,7 @@ $router->add('GET', '/trabajador/reservas/{id}/completar', 'TrabajadorController
 $router->add('GET', '/trabajador/reservas/{id}/cancelar', 'TrabajadorController', 'cancelarReserva');
 $router->add('GET', '/trabajador/valoraciones', 'TrabajadorController', 'misValoraciones');
 $router->add('GET', '/trabajador/logout', 'TrabajadorController', 'logout');
+$router->add('GET', '/trabajador/servicios', 'TrabajadorController', 'listarServicios');
 
 // Rutas para administradores
 $router->add('GET', '/admin', 'AdminController', 'dashboard');
