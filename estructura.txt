@@ -48,8 +48,6 @@
         📂 components
             header.php
             footer.php
-            sidebar.php
-            alerts.php
 📂 config
     database.php
     app.php
@@ -57,12 +55,7 @@
 📂 core
     Router.php
     Auth.php
-    Validator.php
-    Session.php
     Helper.php
-📂 logs
-    error.log
-    access.log
 .htaccess
 composer.json
 README.md
