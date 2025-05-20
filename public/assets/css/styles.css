@@ -3,6 +3,7 @@ body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     color: #333;
     line-height: 1.6;
+    padding-right: 0 !important;
 }
 
 /* Colores personalizados */
@@ -164,4 +165,9 @@ footer a:hover {
     .fixed-navbar-body {
         padding-top: 3.5rem !important; /* Un poco más para móviles por si el navbar colapsa */
     }
+}
+
+/* Add to your styles.css file */
+html {
+  overflow-y: scroll;
 }

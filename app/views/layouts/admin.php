@@ -9,7 +9,7 @@
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <!-- Estilos personalizados -->
-    <link rel="stylesheet" href="<?= Helper::asset('css/styles.css') ?>">
+    <link rel="stylesheet" href="<?= Helper::asset('css/styles.css') ?>?v=<?= time() ?>">
 </head>
 <body class="d-flex flex-column min-vh-100 fixed-navbar-body">
     <!-- Barra de navegación -->
@@ -73,11 +73,5 @@
         <?= $content ?? '' ?>
     </main>
     <?php include BASE_PATH . '/app/views/layouts/footer.php'; ?>
-    <script src="<?= Helper::asset('js/main.js') ?>"></script>
-    <script>
-document.addEventListener('DOMContentLoaded', function() {
-    initAdminCollapses();
-});
-</script>
 </body>
 </html>
