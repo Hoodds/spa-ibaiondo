@@ -1,6 +1,6 @@
 <div class="container py-4">
     <h1 class="mb-4">Bienvenido, <?= Helper::e($_SESSION['trabajador_nombre']) ?></h1>
-    
+
     <div class="row">
         <div class="col-md-6 mb-4">
             <div class="card shadow-sm h-100">
@@ -22,9 +22,9 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <?php 
+                                    <?php
                                     $count = 0;
-                                    foreach ($reservas as $reserva): 
+                                    foreach ($reservas as $reserva):
                                         if ($count >= 5) break; // Mostrar solo las 5 primeras
                                         $count++;
                                     ?>
@@ -55,7 +55,7 @@
                 </div>
             </div>
         </div>
-        
+
         <div class="col-md-6 mb-4">
             <div class="card shadow-sm h-100">
                 <div class="card-header bg-white">
@@ -66,9 +66,9 @@
                         <p class="text-center">No hay valoraciones para tus servicios.</p>
                     <?php else: ?>
                         <div class="valoraciones-scroll" style="max-height: 300px; overflow-y: auto;">
-                            <?php 
+                            <?php
                             $count = 0;
-                            foreach ($valoraciones as $valoracion): 
+                            foreach ($valoraciones as $valoracion):
                                 if ($count >= 5) break; // Mostrar solo las 5 primeras
                                 $count++;
                             ?>
@@ -103,7 +103,7 @@
             </div>
         </div>
     </div>
-    
+
     <div class="row">
         <div class="col-12">
             <div class="card shadow-sm">

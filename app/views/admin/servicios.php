@@ -5,7 +5,7 @@
             <i class="fas fa-plus"></i> Nuevo Servicio
         </button>
     </div>
-    
+
     <div class="card shadow-sm">
         <div class="card-body">
             <div class="table-responsive">
@@ -43,15 +43,15 @@
                                         (<?= $servicio['total_valoraciones'] ?>)
                                     </td>
                                     <td>
-                                        <button type="button" class="btn btn-sm btn-info toggle-collapse" 
-                                                data-bs-toggle="collapse" 
-                                                data-bs-target="#verServicio<?= $servicio['id'] ?>" 
+                                        <button type="button" class="btn btn-sm btn-info toggle-collapse"
+                                                data-bs-toggle="collapse"
+                                                data-bs-target="#verServicio<?= $servicio['id'] ?>"
                                                 aria-expanded="false">
                                             <i class="fas fa-eye"></i>
                                         </button>
-                                        <button type="button" class="btn btn-sm btn-warning toggle-collapse" 
-                                                data-bs-toggle="collapse" 
-                                                data-bs-target="#editarServicio<?= $servicio['id'] ?>" 
+                                        <button type="button" class="btn btn-sm btn-warning toggle-collapse"
+                                                data-bs-toggle="collapse"
+                                                data-bs-target="#editarServicio<?= $servicio['id'] ?>"
                                                 aria-expanded="false">
                                             <i class="fas fa-edit"></i>
                                         </button>
@@ -62,7 +62,7 @@
                                         </a>
                                     </td>
                                 </tr>
-                                
+
                                 <!-- Collapse Ver Servicio -->
                                 <tr class="collapse-row">
                                     <td colspan="6" class="p-0">
@@ -95,7 +95,7 @@
                                         </div>
                                     </td>
                                 </tr>
-                                
+
                                 <!-- Collapse Editar Servicio -->
                                 <tr class="collapse-row">
                                     <td colspan="6" class="p-0">
@@ -103,27 +103,27 @@
                                             <div class="card card-body m-2">
                                                 <form action="<?= Helper::url('/admin/servicios/editar') ?>" method="POST" class="row g-3">
                                                     <input type="hidden" name="id" value="<?= $servicio['id'] ?>">
-                                                    
+
                                                     <div class="col-md-6">
                                                         <label for="nombre<?= $servicio['id'] ?>" class="form-label">Nombre</label>
                                                         <input type="text" class="form-control" id="nombre<?= $servicio['id'] ?>" name="nombre" value="<?= Helper::e($servicio['nombre']) ?>" required>
                                                     </div>
-                                                    
+
                                                     <div class="col-md-3">
                                                         <label for="duracion<?= $servicio['id'] ?>" class="form-label">Duración (minutos)</label>
                                                         <input type="number" class="form-control" id="duracion<?= $servicio['id'] ?>" name="duracion" value="<?= $servicio['duracion'] ?>" required>
                                                     </div>
-                                                    
+
                                                     <div class="col-md-3">
                                                         <label for="precio<?= $servicio['id'] ?>" class="form-label">Precio (€)</label>
                                                         <input type="number" step="0.01" class="form-control" id="precio<?= $servicio['id'] ?>" name="precio" value="<?= $servicio['precio'] ?>" required>
                                                     </div>
-                                                    
+
                                                     <div class="col-12">
                                                         <label for="descripcion<?= $servicio['id'] ?>" class="form-label">Descripción</label>
                                                         <textarea class="form-control" id="descripcion<?= $servicio['id'] ?>" name="descripcion" rows="3" required><?= Helper::e($servicio['descripcion']) ?></textarea>
                                                     </div>
-                                                    
+
                                                     <div class="col-12 text-end mt-3">
                                                         <button type="submit" class="btn btn-primary">Guardar Cambios</button>
                                                     </div>

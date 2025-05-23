@@ -1,6 +1,6 @@
 <div class="container py-4">
     <h1 class="mb-4">Valoraciones de Mis Servicios</h1>
-    
+
     <?php if (empty($valoraciones)): ?>
         <div class="alert alert-info">
             <p class="mb-0">No hay valoraciones para tus servicios.</p>

@@ -4,7 +4,7 @@
             <div class="card shadow">
                 <div class="card-body">
                     <h2 class="card-title text-center mb-4">Registro de Usuario</h2>
-                    
+
                     <form action="<?= Helper::url('registro') ?>" method="post">
                         <div class="mb-3">
                             <label for="nombre" class="form-label">Nombre completo</label>
@@ -26,9 +26,9 @@
                             <button type="submit" class="btn btn-primary">Registrarse</button>
                         </div>
                     </form>
-                    
+
                     <hr>
-                    
+
                     <div class="text-center">
                         <p>¿Ya tienes una cuenta? <a href="<?= Helper::url('login') ?>">Iniciar Sesión</a></p>
                     </div>

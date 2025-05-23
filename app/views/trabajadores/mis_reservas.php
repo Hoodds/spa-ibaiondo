@@ -1,6 +1,6 @@
 <div class="container py-4">
     <h1 class="mb-4">Mis Reservas Asignadas</h1>
-    
+
     <?php if (empty($reservas)): ?>
         <div class="alert alert-info">
             <p class="mb-0">No tienes reservas asignadas.</p>
@@ -43,21 +43,21 @@
                                             <a href="<?= Helper::url('trabajador/reservas/' . $reserva['id'] . '/completar') ?>" class="btn btn-sm btn-success">
                                                 <i class="fas fa-check"></i>
                                             </a>
-                                            <a href="<?= Helper::url('trabajador/reservas/' . $reserva['id'] . '/cancelar') ?>" 
-                                               class="btn btn-sm btn-danger" 
+                                            <a href="<?= Helper::url('trabajador/reservas/' . $reserva['id'] . '/cancelar') ?>"
+                                               class="btn btn-sm btn-danger"
                                                onclick="return confirm('¿Estás seguro de que deseas cancelar esta reserva?')">
                                                 <i class="fas fa-times"></i>
                                             </a>
                                         <?php endif; ?>
-                                        <button type="button" class="btn btn-sm btn-info toggle-collapse" 
-                                                data-bs-toggle="collapse" 
-                                                data-bs-target="#verReserva<?= $reserva['id'] ?>" 
+                                        <button type="button" class="btn btn-sm btn-info toggle-collapse"
+                                                data-bs-toggle="collapse"
+                                                data-bs-target="#verReserva<?= $reserva['id'] ?>"
                                                 aria-expanded="false">
                                             <i class="fas fa-eye"></i>
                                         </button>
                                     </td>
                                 </tr>
-                                
+
                                 <!-- Desplegable de detalles -->
                                 <tr class="collapse-row">
                                     <td colspan="7" class="p-0">
@@ -74,7 +74,7 @@
                                                         <p><strong>Fecha y Hora:</strong> <?= Helper::formatDate($reserva['fecha_hora']) ?></p>
                                                         <p><strong>Duración:</strong> <?= $reserva['duracion'] ?> minutos</p>
                                                         <p><strong>Precio:</strong> <?= Helper::formatPrice($reserva['precio']) ?></p>
-                                                        <p><strong>Estado:</strong> 
+                                                        <p><strong>Estado:</strong>
                                                             <?php if ($reserva['estado'] == 'pendiente'): ?>
                                                                 <span class="badge bg-warning text-dark">Pendiente</span>
                                                             <?php elseif ($reserva['estado'] == 'confirmada'): ?>
@@ -85,15 +85,15 @@
                                                         </p>
                                                     </div>
                                                 </div>
-                                                
+
                                                 <?php if ($reserva['estado'] == 'pendiente'): ?>
                                                 <div class="row mt-3">
                                                     <div class="col-12 text-end">
-                                                        <a href="<?= Helper::url('trabajador/reservas/' . $reserva['id'] . '/completar') ?>" 
+                                                        <a href="<?= Helper::url('trabajador/reservas/' . $reserva['id'] . '/completar') ?>"
                                                            class="btn btn-success">
                                                             <i class="fas fa-check"></i> Marcar como Confirmada
                                                         </a>
-                                                        <a href="<?= Helper::url('trabajador/reservas/' . $reserva['id'] . '/cancelar') ?>" 
+                                                        <a href="<?= Helper::url('trabajador/reservas/' . $reserva['id'] . '/cancelar') ?>"
                                                            class="btn btn-danger"
                                                            onclick="return confirm('¿Estás seguro de cancelar esta reserva?')">
                                                             <i class="fas fa-times"></i> Cancelar Reserva

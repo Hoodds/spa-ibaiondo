@@ -8,7 +8,7 @@
                      onerror="this.src='<?= Helper::asset('images/servicio-default.jpg') ?>'">
                 <div class="card-body">
                     <h1 class="card-title"><?= Helper::e($servicio['nombre']) ?></h1>
-                    
+
                     <div class="d-flex justify-content-between align-items-center mb-4">
                         <div>
                             <span class="badge bg-primary me-2">
@@ -28,7 +28,7 @@
                             </a>
                         <?php endif; ?>
                     </div>
-                    
+
                     <!-- Puntuación media -->
                     <div class="mb-4">
                         <div class="d-flex align-items-center">
@@ -50,10 +50,10 @@
                             </div>
                         </div>
                     </div>
-                    
+
                     <h5 class="card-subtitle mb-3">Descripción</h5>
                     <p class="card-text"><?= nl2br(Helper::e($servicio['descripcion'])) ?></p>
-                    
+
                     <h5 class="card-subtitle mb-3 mt-4">Beneficios</h5>
                     <ul class="list-group list-group-flush mb-4">
                         <li class="list-group-item"><i class="fas fa-check text-success me-2"></i> Reduce el estrés y la ansiedad</li>
@@ -62,7 +62,7 @@
                         <li class="list-group-item"><i class="fas fa-check text-success me-2"></i> Promueve la relajación profunda</li>
                         <li class="list-group-item"><i class="fas fa-check text-success me-2"></i> Mejora la calidad del sueño</li>
                     </ul>
-                    
+
                     <div class="d-flex justify-content-between">
                         <a href="<?= Helper::url('servicios') ?>" class="btn btn-outline-secondary">
                             <i class="fas fa-arrow-left"></i> Volver a Servicios
@@ -75,7 +75,7 @@
                     </div>
                 </div>
             </div>
-            
+
             <!-- Sección de valoraciones -->
             <div class="card shadow-sm mt-4">
                 <div class="card-header bg-white">
@@ -110,7 +110,7 @@
                                             <input class="form-check-input" type="radio" name="puntuacion" id="star5" value="5">
                                             <label class="form-check-label" for="star5"><i class="far fa-star"></i></label>
                                         </div>
-                                        
+
                                     </div>
                                 </div>
                                 <div class="mb-3">
@@ -150,7 +150,7 @@
                             </p>
                         </div>
                     <?php endif; ?>
-                    
+
                     <!-- Listado de valoraciones -->
                     <?php if (empty($valoraciones)): ?>
                         <p class="text-center">No hay valoraciones para este servicio.</p>

@@ -12,7 +12,7 @@
                 </div>
             </div>
         </div>
-        
+
         <div class="col-lg-8">
             <div class="card shadow-sm mb-4">
                 <div class="card-header bg-white">
@@ -57,7 +57,7 @@
                                             </td>
                                             <td>
                                                 <?php if ($reserva['estado'] != 'cancelada'): ?>
-                                                    <a href="<?= Helper::url('reservas/' . $reserva['id'] . '/cancelar') ?>" 
+                                                    <a href="<?= Helper::url('reservas/' . $reserva['id'] . '/cancelar') ?>"
                                                        class="btn btn-sm btn-outline-danger"
                                                        onclick="return confirm('¿Estás seguro de cancelar esta reserva?')">
                                                         Cancelar
@@ -75,7 +75,7 @@
                     <?php endif; ?>
                 </div>
             </div>
-            
+
             <div class="card shadow-sm">
                 <div class="card-header bg-white">
                     <h5 class="card-title mb-0">Editar Perfil</h5>

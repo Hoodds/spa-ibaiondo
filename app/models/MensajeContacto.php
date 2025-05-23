@@ -8,7 +8,7 @@ class MensajeContacto {
 
     public function guardar($data) {
         $stmt = $this->db->prepare("
-            INSERT INTO mensajes_contacto (nombre, email, asunto, mensaje) 
+            INSERT INTO mensajes_contacto (nombre, email, asunto, mensaje)
             VALUES (?, ?, ?, ?)
         ");
         return $stmt->execute([

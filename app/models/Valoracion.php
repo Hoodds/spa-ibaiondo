@@ -1,11 +1,11 @@
 <?php
 class Valoracion {
     private $db;
-    
+
     public function __construct() {
         $this->db = Database::getInstance()->getConnection();
     }
-    
+
     /**
      * Obtener todas las valoraciones de un servicio
      */
@@ -20,7 +20,7 @@ class Valoracion {
         $stmt->execute([$idServicio]);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
-    
+
     /**
      * Obtener todas las valoraciones de un usuario
      */
@@ -35,7 +35,7 @@ class Valoracion {
         $stmt->execute([$idUsuario]);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
-    
+
     /**
      * Obtener todas las valoraciones
      */
@@ -50,7 +50,7 @@ class Valoracion {
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
-    
+
     /**
      * Obtener valoraciones por estado (para moderación)
      */
@@ -66,7 +66,7 @@ class Valoracion {
         $stmt->execute([$estado]);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
-    
+
     /**
      * Obtener valoraciones por trabajador
      */
@@ -84,19 +84,19 @@ class Valoracion {
         $stmt->execute([$idTrabajador]);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
-    
+
     /**
      * Verificar si un usuario ya ha valorado un servicio
      */
     public function existeValoracion($idUsuario, $idServicio) {
         $stmt = $this->db->prepare("
-            SELECT COUNT(*) FROM valoraciones 
+            SELECT COUNT(*) FROM valoraciones
             WHERE id_usuario = ? AND id_servicio = ?
         ");
         $stmt->execute([$idUsuario, $idServicio]);
         return (int)$stmt->fetchColumn() > 0;
     }
-    
+
     /**
      * Obtener una valoración por ID
      */
@@ -111,7 +111,7 @@ class Valoracion {
         $stmt->execute([$id]);
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
-    
+
     /**
      * Crear una nueva valoración
      */
@@ -120,26 +120,26 @@ class Valoracion {
         if ($this->existeValoracion($idUsuario, $idServicio)) {
             return $this->actualizar($idUsuario, $idServicio, $puntuacion, $comentario);
         }
-        
+
         $stmt = $this->db->prepare("
             INSERT INTO valoraciones (id_usuario, id_servicio, puntuacion, comentario, estado)
             VALUES (?, ?, ?, ?, 'pendiente')
         ");
         return $stmt->execute([$idUsuario, $idServicio, $puntuacion, $comentario]);
     }
-    
+
     /**
      * Actualizar una valoración existente
      */
     public function actualizar($idUsuario, $idServicio, $puntuacion, $comentario) {
         $stmt = $this->db->prepare("
-            UPDATE valoraciones 
+            UPDATE valoraciones
             SET puntuacion = ?, comentario = ?, fecha_creacion = CURRENT_TIMESTAMP, estado = 'pendiente'
             WHERE id_usuario = ? AND id_servicio = ?
         ");
         return $stmt->execute([$puntuacion, $comentario, $idUsuario, $idServicio]);
     }
-    
+
     /**
      * Eliminar una valoración
      */
@@ -147,7 +147,7 @@ class Valoracion {
         $stmt = $this->db->prepare("DELETE FROM valoraciones WHERE id = ?");
         return $stmt->execute([$id]);
     }
-    
+
     /**
      * Cambiar el estado de una valoración (aprobar/rechazar)
      */
@@ -155,7 +155,7 @@ class Valoracion {
         $stmt = $this->db->prepare("UPDATE valoraciones SET estado = ? WHERE id = ?");
         return $stmt->execute([$estado, $id]);
     }
-    
+
     /**
      * Obtener la puntuación media de un servicio
      */
@@ -168,7 +168,7 @@ class Valoracion {
         $stmt->execute([$idServicio]);
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
-    
+
     /**
      * Obtener las valoraciones más recientes (para la página principal)
      */
@@ -185,17 +185,17 @@ class Valoracion {
         $stmt->execute([$limite]);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
-    
+
     /**
      * Obtener estadísticas de valoraciones
      */
     public function getEstadisticas() {
         $stats = [];
-        
+
         // Total de valoraciones
         $stmt = $this->db->query("SELECT COUNT(*) FROM valoraciones");
         $stats['total'] = $stmt->fetchColumn();
-        
+
         // Valoraciones por estado
         $stmt = $this->db->query("
             SELECT estado, COUNT(*) as cantidad
@@ -203,7 +203,7 @@ class Valoracion {
             GROUP BY estado
         ");
         $stats['por_estado'] = $stmt->fetchAll(PDO::FETCH_KEY_PAIR);
-        
+
         // Puntuación media global
         $stmt = $this->db->query("
             SELECT AVG(puntuacion) as media
@@ -211,7 +211,7 @@ class Valoracion {
             WHERE estado = 'aprobada'
         ");
         $stats['media_global'] = round($stmt->fetchColumn(), 1);
-        
+
         // Servicios mejor valorados
         $stmt = $this->db->query("
             SELECT s.id, s.nombre, AVG(v.puntuacion) as media, COUNT(*) as total
@@ -223,7 +223,7 @@ class Valoracion {
             LIMIT 5
         ");
         $stats['mejores_servicios'] = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        
+
         return $stats;
     }
 }

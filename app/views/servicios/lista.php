@@ -1,6 +1,6 @@
 <div class="container py-5">
     <h1 class="text-center mb-5">Nuestros Servicios</h1>
-    
+
     <div class="row">
         <?php foreach ($servicios as $servicio): ?>
             <div class="col-md-4 mb-4">
@@ -11,7 +11,7 @@
                          onerror="if(this.src.indexOf('servicio-default.jpg') === -1) this.src='<?= Helper::asset('images/servicios/servicio-default.jpg') ?>';">
                     <div class="card-body">
                         <h5 class="card-title"><?= Helper::e($servicio['nombre']) ?></h5>
-                        
+
                         <!-- Mostrar puntuación media -->
                         <div class="mb-2">
                             <div class="d-flex align-items-center">
@@ -27,11 +27,11 @@
                                 </span>
                             </div>
                         </div>
-                        
+
                         <p class="card-text"><?= substr(Helper::e($servicio['descripcion']), 0, 100) ?>...</p>
                         <p class="card-text">
                             <small class="text-muted">
-                                <i class="far fa-clock"></i> <?= $servicio['duracion'] ?> minutos | 
+                                <i class="far fa-clock"></i> <?= $servicio['duracion'] ?> minutos |
                                 <strong><?= Helper::formatPrice($servicio['precio']) ?></strong>
                             </small>
                         </p>

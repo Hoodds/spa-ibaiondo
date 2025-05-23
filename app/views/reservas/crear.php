@@ -26,15 +26,15 @@
                             </div>
                         </div>
                     </div>
-                    
+
                     <form action="<?= Helper::url('reservas/crear') ?>" method="post" id="reservaForm">
                         <input type="hidden" name="id_servicio" value="<?= $servicio['id'] ?>">
-                        
+
                         <div class="mb-3">
                             <label for="fecha" class="form-label">Fecha</label>
                             <input type="date" class="form-control" id="fecha" name="fecha" required min="<?= date('Y-m-d') ?>">
                         </div>
-                        
+
                         <div class="mb-3">
                             <label for="id_trabajador" class="form-label">Profesional</label>
                             <select class="form-select" id="id_trabajador" name="id_trabajador" required disabled>
@@ -42,7 +42,7 @@
                             </select>
                             <div class="form-text">Primero selecciona una fecha para ver los profesionales disponibles.</div>
                         </div>
-                        
+
                         <div class="mb-3">
                             <label for="hora" class="form-label">Hora</label>
                             <select class="form-select" id="hora" name="hora" required disabled>
@@ -50,7 +50,7 @@
                             </select>
                             <div class="form-text">Primero selecciona un profesional para ver las horas disponibles.</div>
                         </div>
-                        
+
                         <div class="d-flex justify-content-between">
                             <a href="<?= Helper::url('servicios/' . $servicio['id']) ?>" class="btn btn-outline-secondary">Cancelar</a>
                             <button type="submit" class="btn btn-primary" id="btnReservar" disabled>Confirmar Reserva</button>
@@ -68,7 +68,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const trabajadorSelect = document.getElementById('id_trabajador');
     const horaSelect = document.getElementById('hora');
     const btnReservar = document.getElementById('btnReservar');
-    
+
     fechaInput.addEventListener('change', function() {
         if (this.value) {
             // Obtener disponibilidad para esta fecha y servicio
@@ -79,10 +79,10 @@ document.addEventListener('DOMContentLoaded', function() {
                         alert(data.error);
                         return;
                     }
-                    
+
                     // Limpiar y habilitar select de trabajadores
                     trabajadorSelect.innerHTML = '<option value="">Selecciona un profesional</option>';
-                    
+
                     if (data.length === 0) {
                         trabajadorSelect.disabled = true;
                         horaSelect.disabled = true;
@@ -90,7 +90,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         alert('No hay disponibilidad para esta fecha. Por favor, selecciona otra fecha.');
                         return;
                     }
-                    
+
                     // Añadir trabajadores disponibles
                     data.forEach(item => {
                         const option = document.createElement('option');
@@ -99,7 +99,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         option.dataset.horas = JSON.stringify(item.horas_disponibles);
                         trabajadorSelect.appendChild(option);
                     });
-                    
+
                     trabajadorSelect.disabled = false;
                     horaSelect.disabled = true;
                     btnReservar.disabled = true;
@@ -114,16 +114,16 @@ document.addEventListener('DOMContentLoaded', function() {
             btnReservar.disabled = true;
         }
     });
-    
+
     trabajadorSelect.addEventListener('change', function() {
         if (this.value) {
             // Obtener horas disponibles para este trabajador
             const selectedOption = this.options[this.selectedIndex];
             const horasDisponibles = JSON.parse(selectedOption.dataset.horas);
-            
+
             // Limpiar y habilitar select de horas
             horaSelect.innerHTML = '<option value="">Selecciona una hora</option>';
-            
+
             // Añadir horas disponibles
             horasDisponibles.forEach(hora => {
                 const option = document.createElement('option');
@@ -131,7 +131,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 option.textContent = hora;
                 horaSelect.appendChild(option);
             });
-            
+
             horaSelect.disabled = false;
             btnReservar.disabled = true;
         } else {
@@ -139,7 +139,7 @@ document.addEventListener('DOMContentLoaded', function() {
             btnReservar.disabled = true;
         }
     });
-    
+
     horaSelect.addEventListener('change', function() {
         btnReservar.disabled = !this.value;
     });

@@ -1,28 +1,28 @@
 <?php
 class Trabajador {
     private $db;
-    
+
     public function __construct() {
         $this->db = Database::getInstance()->getConnection();
     }
-    
+
     public function getById($id) {
         $stmt = $this->db->prepare("SELECT id, nombre, email, rol FROM trabajadores WHERE id = ?");
         $stmt->execute([$id]);
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
-    
+
     public function getAll() {
         $stmt = $this->db->query("SELECT id, nombre, email, rol FROM trabajadores ORDER BY nombre");
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
-    
+
     public function getByRol($rol) {
         $stmt = $this->db->prepare("SELECT id, nombre, email, rol FROM trabajadores WHERE rol = ? ORDER BY nombre");
         $stmt->execute([$rol]);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
-    
+
     public function login($email, $password) {
         $stmt = $this->db->prepare("SELECT id, nombre, email, contrasena, rol FROM trabajadores WHERE email = ?");
         $stmt->execute([$email]);

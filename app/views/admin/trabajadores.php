@@ -15,7 +15,7 @@
             <i class="fas fa-plus"></i> Nuevo Trabajador
         </button>
     </div>
-    
+
     <div class="card shadow-sm">
         <div class="card-body">
             <div class="table-responsive">
@@ -64,15 +64,15 @@
                                         <span class="badge <?= $badgeClass ?>"><?= ucfirst($trabajador['rol']) ?></span>
                                     </td>
                                     <td>
-                                        <button type="button" class="btn btn-sm btn-info toggle-collapse" 
-                                                data-bs-toggle="collapse" 
-                                                data-bs-target="#verTrabajador<?= $trabajador['id'] ?>" 
+                                        <button type="button" class="btn btn-sm btn-info toggle-collapse"
+                                                data-bs-toggle="collapse"
+                                                data-bs-target="#verTrabajador<?= $trabajador['id'] ?>"
                                                 aria-expanded="false">
                                             <i class="fas fa-eye"></i>
                                         </button>
-                                        <button type="button" class="btn btn-sm btn-warning toggle-collapse" 
-                                                data-bs-toggle="collapse" 
-                                                data-bs-target="#editarTrabajador<?= $trabajador['id'] ?>" 
+                                        <button type="button" class="btn btn-sm btn-warning toggle-collapse"
+                                                data-bs-toggle="collapse"
+                                                data-bs-target="#editarTrabajador<?= $trabajador['id'] ?>"
                                                 aria-expanded="false">
                                             <i class="fas fa-edit"></i>
                                         </button>
@@ -83,7 +83,7 @@
                                         </a>
                                     </td>
                                 </tr>
-                                
+
                                 <!-- Collapse Ver Trabajador -->
                                 <tr class="collapse-row">
                                     <td colspan="5" class="p-0">
@@ -103,7 +103,7 @@
                                         </div>
                                     </td>
                                 </tr>
-                                
+
                                 <!-- Collapse Editar Trabajador -->
                                 <tr class="collapse-row">
                                     <td colspan="5" class="p-0">
@@ -111,17 +111,17 @@
                                             <div class="card card-body m-2">
                                                 <form action="<?= Helper::url('/admin/trabajadores/editar') ?>" method="POST" class="row g-3">
                                                     <input type="hidden" name="id" value="<?= $trabajador['id'] ?>">
-                                                    
+
                                                     <div class="col-md-6">
                                                         <label for="nombre<?= $trabajador['id'] ?>" class="form-label">Nombre</label>
                                                         <input type="text" class="form-control" id="nombre<?= $trabajador['id'] ?>" name="nombre" value="<?= Helper::e($trabajador['nombre']) ?>" required>
                                                     </div>
-                                                    
+
                                                     <div class="col-md-6">
                                                         <label for="email<?= $trabajador['id'] ?>" class="form-label">Email</label>
                                                         <input type="email" class="form-control" id="email<?= $trabajador['id'] ?>" name="email" value="<?= Helper::e($trabajador['email']) ?>" required>
                                                     </div>
-                                                    
+
                                                     <div class="col-md-6">
                                                         <label for="rol<?= $trabajador['id'] ?>" class="form-label">Rol</label>
                                                         <select class="form-select" id="rol<?= $trabajador['id'] ?>" name="rol" required>
@@ -131,13 +131,13 @@
                                                             <option value="terapeuta" <?= $trabajador['rol'] == 'terapeuta' ? 'selected' : '' ?>>Terapeuta</option>
                                                         </select>
                                                     </div>
-                                                    
+
                                                     <div class="col-md-6">
                                                         <label for="password<?= $trabajador['id'] ?>" class="form-label">Nueva Contraseña</label>
                                                         <input type="password" class="form-control" id="password<?= $trabajador['id'] ?>" name="password">
                                                         <div class="form-text">Dejar en blanco para mantener la contraseña actual.</div>
                                                     </div>
-                                                    
+
                                                     <div class="col-12 text-end mt-3">
                                                         <button type="submit" class="btn btn-primary">Guardar Cambios</button>
                                                     </div>

@@ -5,7 +5,7 @@
             <i class="fas fa-clock"></i> Pendientes de aprobación
         </a>
     </div>
-    
+
     <?php if (empty($valoraciones)): ?>
         <div class="alert alert-info">No hay valoraciones registradas.</div>
     <?php else: ?>
@@ -56,20 +56,20 @@
                                     <td><span class="badge <?= $badgeClass ?>"><?= ucfirst($valoracion['estado']) ?></span></td>
                                     <td><?= Helper::formatDate($valoracion['fecha_creacion'], 'd/m/Y') ?></td>
                                     <td>
-                                        <button type="button" class="btn btn-sm btn-info toggle-collapse" 
-                                                data-bs-toggle="collapse" 
-                                                data-bs-target="#verValoracion<?= $valoracion['id'] ?>" 
+                                        <button type="button" class="btn btn-sm btn-info toggle-collapse"
+                                                data-bs-toggle="collapse"
+                                                data-bs-target="#verValoracion<?= $valoracion['id'] ?>"
                                                 aria-expanded="false">
                                             <i class="fas fa-eye"></i>
                                         </button>
-                                        <a href="<?= Helper::url('admin/valoraciones/' . $valoracion['id'] . '/eliminar') ?>" 
-                                           class="btn btn-sm btn-danger" 
+                                        <a href="<?= Helper::url('admin/valoraciones/' . $valoracion['id'] . '/eliminar') ?>"
+                                           class="btn btn-sm btn-danger"
                                            onclick="return confirm('¿Estás seguro de eliminar esta valoración?')">
                                             <i class="fas fa-trash"></i>
                                         </a>
                                     </td>
                                 </tr>
-                                
+
                                 <!-- Collapse Ver Valoración -->
                                 <tr class="collapse-row">
                                     <td colspan="7" class="p-0">
@@ -80,7 +80,7 @@
                                                         <p><strong>ID:</strong> <?= $valoracion['id'] ?></p>
                                                         <p><strong>Usuario:</strong> <?= Helper::e($valoracion['nombre_usuario']) ?></p>
                                                         <p><strong>Servicio:</strong> <?= Helper::e($valoracion['nombre_servicio']) ?></p>
-                                                        <p><strong>Puntuación:</strong> 
+                                                        <p><strong>Puntuación:</strong>
                                                             <?php for ($i = 1; $i <= 5; $i++): ?>
                                                                 <?php if ($i <= $valoracion['puntuacion']): ?>
                                                                     <i class="fas fa-star text-warning"></i>

@@ -1,22 +1,22 @@
 <?php
 class Usuario {
     private $db;
-    
+
     public function __construct() {
         $this->db = Database::getInstance()->getConnection();
     }
-    
+
     public function getById($id) {
         $stmt = $this->db->prepare("SELECT id, nombre, email, fecha_registro FROM usuarios WHERE id = ?");
         $stmt->execute([$id]);
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
-    
+
     public function getAll() {
         $stmt = $this->db->query("SELECT id, nombre, email, fecha_registro FROM usuarios ORDER BY nombre");
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
-    
+
     public function login($email, $password) {
         $stmt = $this->db->prepare("SELECT id, nombre, email, contrasena FROM usuarios WHERE email = ?");
         $stmt->execute([$email]);
@@ -39,15 +39,15 @@ class Usuario {
         }
         return false;
     }
-    
+
     public function register($nombre, $email, $password) {
         // Hashear la contraseña antes de guardarla
         $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-        
+
         $stmt = $this->db->prepare("INSERT INTO usuarios (nombre, email, contrasena, fecha_registro) VALUES (?, ?, ?, NOW())");
         return $stmt->execute([$nombre, $email, $hashedPassword]);
     }
-    
+
     public function emailExists($email) {
         $stmt = $this->db->prepare("SELECT COUNT(*) FROM usuarios WHERE email = ?");
         $stmt->execute([$email]);

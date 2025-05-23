@@ -1,6 +1,6 @@
 <div class="container-fluid py-4">
     <h1 class="mb-4">Panel de Administración</h1>
-    
+
     <div class="row">
         <div class="col-md-3 mb-4">
             <div class="card bg-primary text-white h-100">
@@ -18,7 +18,7 @@
                 </div>
             </div>
         </div>
-        
+
         <div class="col-md-3 mb-4">
             <div class="card bg-success text-white h-100">
                 <div class="card-body">
@@ -35,7 +35,7 @@
                 </div>
             </div>
         </div>
-        
+
         <div class="col-md-3 mb-4">
             <div class="card bg-info text-white h-100">
                 <div class="card-body">
@@ -52,7 +52,7 @@
                 </div>
             </div>
         </div>
-        
+
         <div class="col-md-3 mb-4">
             <div class="card bg-warning text-white h-100">
                 <div class="card-body">
@@ -70,7 +70,7 @@
             </div>
         </div>
     </div>
-    
+
     <div class="row">
         <div class="col-md-6 mb-4">
             <div class="card shadow-sm h-100">
@@ -98,7 +98,7 @@
                             </div>
                         </div>
                     </div>
-                    
+
                     <?php if (!empty($stats['valoraciones']['mejores_servicios'])): ?>
                         <h6 class="mt-4">Servicios Mejor Valorados</h6>
                         <div class="table-responsive">
@@ -136,7 +136,7 @@
                     <div class="d-flex justify-content-between">
                         <a href="<?= Helper::url('admin/valoraciones') ?>" class="btn btn-sm btn-outline-primary">Ver Todas</a>
                         <a href="<?= Helper::url('admin/valoraciones/pendientes') ?>" class="btn btn-sm btn-warning">
-                            Pendientes 
+                            Pendientes
                             <?php if (isset($stats['valoraciones']['por_estado']['pendiente']) && $stats['valoraciones']['por_estado']['pendiente'] > 0): ?>
                                 <span class="badge bg-danger"><?= $stats['valoraciones']['por_estado']['pendiente'] ?></span>
                             <?php endif; ?>
@@ -145,7 +145,7 @@
                 </div>
             </div>
         </div>
-        
+
         <div class="col-md-6 mb-4">
             <div class="card shadow-sm h-100">
                 <div class="card-header bg-white">

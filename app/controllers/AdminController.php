@@ -5,24 +5,24 @@ class AdminController {
     private $servicioModel;
     private $reservaModel;
     private $valoracionModel;
-    
+
     public function __construct() {
         require_once BASE_PATH . '/app/models/Usuario.php';
         require_once BASE_PATH . '/app/models/Trabajador.php';
         require_once BASE_PATH . '/app/models/Servicio.php';
         require_once BASE_PATH . '/app/models/Reserva.php';
         require_once BASE_PATH . '/app/models/Valoracion.php';
-        
+
         $this->usuarioModel = new Usuario();
         $this->trabajadorModel = new Trabajador();
         $this->servicioModel = new Servicio();
         $this->reservaModel = new Reserva();
         $this->valoracionModel = new Valoracion();
-        
+
         // Verificar si es administrador
         Auth::checkAdmin();
     }
-    
+
     public function dashboard() {
         $stats = [
             'usuarios' => count($this->usuarioModel->getAll()),
@@ -37,7 +37,7 @@ class AdminController {
         $content = ob_get_clean();
         include BASE_PATH . '/app/views/layouts/admin.php';
     }
-    
+
     public function listarUsuarios() {
         $usuarios = $this->usuarioModel->getAll();
 
@@ -46,7 +46,7 @@ class AdminController {
         $content = ob_get_clean();
         include BASE_PATH . '/app/views/layouts/admin.php';
     }
-    
+
     public function listarTrabajadores() {
         $trabajadores = $this->trabajadorModel->getAll();
 
@@ -55,10 +55,10 @@ class AdminController {
         $content = ob_get_clean();
         include BASE_PATH . '/app/views/layouts/admin.php';
     }
-    
+
     public function listarServicios() {
         $servicios = $this->servicioModel->getAll();
-        
+
         // Para cada servicio, obtener su puntuación media
         foreach ($servicios as $key => $servicio) {
             $puntuacion = $this->valoracionModel->getPuntuacionMedia($servicio['id']);
@@ -71,11 +71,11 @@ class AdminController {
         $content = ob_get_clean();
         include BASE_PATH . '/app/views/layouts/admin.php';
     }
-    
+
     public function listarReservas() {
         $servicios = $this->servicioModel->getAll();
         $trabajadores = $this->trabajadorModel->getAll();
-        $usuarios = $this->usuarioModel->getAll(); // Add this line to load users
+        $usuarios = $this->usuarioModel->getAll();
 
         $filtros = [
             'fecha' => $_GET['filtroFecha'] ?? null,
@@ -90,7 +90,7 @@ class AdminController {
         $content = ob_get_clean();
         include BASE_PATH . '/app/views/layouts/admin.php';
     }
-    
+
     public function listarValoraciones() {
         $valoraciones = $this->valoracionModel->getAll();
 
@@ -99,7 +99,7 @@ class AdminController {
         $content = ob_get_clean();
         include BASE_PATH . '/app/views/layouts/admin.php';
     }
-    
+
     public function valoracionesPendientes() {
         $valoraciones = $this->valoracionModel->getByEstado('pendiente');
 
@@ -108,58 +108,58 @@ class AdminController {
         $content = ob_get_clean();
         include BASE_PATH . '/app/views/layouts/admin.php';
     }
-    
+
     public function aprobarValoracion($id) {
         $valoracion = $this->valoracionModel->getById($id);
-        
+
         if (!$valoracion) {
             $_SESSION['error'] = 'La valoración no existe';
             Helper::redirect('admin/valoraciones');
             return;
         }
-        
+
         if ($this->valoracionModel->cambiarEstado($id, 'aprobada')) {
             $_SESSION['success'] = 'Valoración aprobada correctamente';
         } else {
             $_SESSION['error'] = 'Error al aprobar la valoración';
         }
-        
+
         Helper::redirect('admin/valoraciones/pendientes');
     }
-    
+
     public function rechazarValoracion($id) {
         $valoracion = $this->valoracionModel->getById($id);
-        
+
         if (!$valoracion) {
             $_SESSION['error'] = 'La valoración no existe';
             Helper::redirect('admin/valoraciones');
             return;
         }
-        
+
         if ($this->valoracionModel->cambiarEstado($id, 'rechazada')) {
             $_SESSION['success'] = 'Valoración rechazada correctamente';
         } else {
             $_SESSION['error'] = 'Error al rechazar la valoración';
         }
-        
+
         Helper::redirect('admin/valoraciones/pendientes');
     }
-    
+
     public function eliminarValoracion($id) {
         $valoracion = $this->valoracionModel->getById($id);
-        
+
         if (!$valoracion) {
             $_SESSION['error'] = 'La valoración no existe';
             Helper::redirect('admin/valoraciones');
             return;
         }
-        
+
         if ($this->valoracionModel->eliminar($id)) {
             $_SESSION['success'] = 'Valoración eliminada correctamente';
         } else {
             $_SESSION['error'] = 'Error al eliminar la valoración';
         }
-        
+
         Helper::redirect('admin/valoraciones');
     }
 
@@ -289,47 +289,47 @@ class AdminController {
         $fecha = $_POST['fecha'] ?? '';
         $hora = $_POST['hora'] ?? '';
         $estado = $_POST['estado'] ?? 'pendiente';
-        
+
         if (empty($idUsuario) || empty($idServicio) || empty($idTrabajador) || empty($fecha) || empty($hora)) {
             $_SESSION['error'] = 'Todos los campos son obligatorios.';
             Helper::redirect('admin/reservas');
             return;
         }
-        
+
         // Crear la fecha y hora en formato MySQL
         $fechaHora = $fecha . ' ' . $hora . ':00';
-        
+
         // Verificar disponibilidad del trabajador
         if ($estado !== 'cancelada') {
             // Primero verificar que el trabajador esté disponible en general
             $disponibilidad = $this->reservaModel->getDisponibilidad($idServicio, $fecha);
             $trabajadorDisponible = false;
             $horaDisponible = false;
-            
+
             foreach ($disponibilidad as $disp) {
                 if ($disp['id_trabajador'] == $idTrabajador) {
                     $trabajadorDisponible = true;
-                    // Verificar si la hora solicitada está en las disponibles
+                    // Verificar si la hora solicitada esta en las disponibles
                     if (in_array($hora, $disp['horas_disponibles'])) {
                         $horaDisponible = true;
                     }
                     break;
                 }
             }
-            
+
             if (!$trabajadorDisponible) {
                 $_SESSION['error'] = 'El trabajador seleccionado no está disponible en esta fecha.';
                 Helper::redirect('admin/reservas');
                 return;
             }
-            
+
             if (!$horaDisponible) {
                 $_SESSION['error'] = 'La hora seleccionada no está disponible para este trabajador.';
                 Helper::redirect('admin/reservas');
                 return;
             }
         }
-        
+
         // Crear la reserva
         if ($this->reservaModel->create($idUsuario, $idServicio, $idTrabajador, $fechaHora)) {
             // Si la reserva se creó con estado diferente a pendiente, actualizarla
@@ -342,7 +342,7 @@ class AdminController {
         } else {
             $_SESSION['error'] = 'Error al crear la reserva.';
         }
-        
+
         Helper::redirect('admin/reservas');
     }
 }

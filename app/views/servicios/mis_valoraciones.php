@@ -1,6 +1,6 @@
 <div class="container py-5">
     <h1 class="mb-4">Mis Valoraciones</h1>
-    
+
     <?php if (empty($valoraciones)): ?>
         <div class="alert alert-info">
             <p class="mb-0">No has realizado ninguna valoración.</p>
@@ -40,7 +40,7 @@
                                     <a href="<?= Helper::url('servicios/' . $valoracion['id_servicio'] . '/valorar') ?>" class="btn btn-sm btn-outline-secondary">
                                         Editar
                                     </a>
-                                    <a href="<?= Helper::url('servicios/valoracion/' . $valoracion['id'] . '/eliminar') ?>" 
+                                    <a href="<?= Helper::url('servicios/valoracion/' . $valoracion['id'] . '/eliminar') ?>"
                                        class="btn btn-sm btn-outline-danger"
                                        onclick="return confirm('¿Estás seguro de eliminar esta valoración?')">
                                         Eliminar

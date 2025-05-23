@@ -15,7 +15,7 @@
             <i class="fas fa-plus"></i> Nuevo Usuario
         </button>
     </div>
-    
+
     <div class="card shadow-sm">
         <div class="card-body">
             <div class="table-responsive">
@@ -42,15 +42,15 @@
                                     <td><?= Helper::e($usuario['email']) ?></td>
                                     <td><?= Helper::formatDate($usuario['fecha_registro'], 'd/m/Y') ?></td>
                                     <td>
-                                        <button type="button" class="btn btn-sm btn-info toggle-collapse" 
-                                                data-bs-toggle="collapse" 
-                                                data-bs-target="#verUsuario<?= $usuario['id'] ?>" 
+                                        <button type="button" class="btn btn-sm btn-info toggle-collapse"
+                                                data-bs-toggle="collapse"
+                                                data-bs-target="#verUsuario<?= $usuario['id'] ?>"
                                                 aria-expanded="false">
                                             <i class="fas fa-eye"></i>
                                         </button>
-                                        <button type="button" class="btn btn-sm btn-warning toggle-collapse" 
-                                                data-bs-toggle="collapse" 
-                                                data-bs-target="#editarUsuario<?= $usuario['id'] ?>" 
+                                        <button type="button" class="btn btn-sm btn-warning toggle-collapse"
+                                                data-bs-toggle="collapse"
+                                                data-bs-target="#editarUsuario<?= $usuario['id'] ?>"
                                                 aria-expanded="false">
                                             <i class="fas fa-edit"></i>
                                         </button>
@@ -61,7 +61,7 @@
                                         </a>
                                     </td>
                                 </tr>
-                                
+
                                 <!-- Collapse Ver Usuario -->
                                 <tr class="collapse-row">
                                     <td colspan="5" class="p-0">
@@ -81,7 +81,7 @@
                                         </div>
                                     </td>
                                 </tr>
-                                
+
                                 <!-- Collapse Editar Usuario -->
                                 <tr class="collapse-row">
                                     <td colspan="5" class="p-0">
@@ -89,23 +89,23 @@
                                             <div class="card card-body m-2">
                                                 <form action="<?= Helper::url('/admin/usuarios/editar') ?>" method="POST" class="row g-3">
                                                     <input type="hidden" name="id" value="<?= $usuario['id'] ?>">
-                                                    
+
                                                     <div class="col-md-6">
                                                         <label for="nombre<?= $usuario['id'] ?>" class="form-label">Nombre</label>
                                                         <input type="text" class="form-control" id="nombre<?= $usuario['id'] ?>" name="nombre" value="<?= Helper::e($usuario['nombre']) ?>" required>
                                                     </div>
-                                                    
+
                                                     <div class="col-md-6">
                                                         <label for="email<?= $usuario['id'] ?>" class="form-label">Email</label>
                                                         <input type="email" class="form-control" id="email<?= $usuario['id'] ?>" name="email" value="<?= Helper::e($usuario['email']) ?>" required>
                                                     </div>
-                                                    
+
                                                     <div class="col-12">
                                                         <label for="password<?= $usuario['id'] ?>" class="form-label">Nueva Contraseña</label>
                                                         <input type="password" class="form-control" id="password<?= $usuario['id'] ?>" name="password">
                                                         <div class="form-text">Dejar en blanco para mantener la contraseña actual.</div>
                                                     </div>
-                                                    
+
                                                     <div class="col-12 text-end mt-3">
                                                         <button type="submit" class="btn btn-primary">Guardar Cambios</button>
                                                     </div>

@@ -4,7 +4,7 @@
             <div class="card shadow">
                 <div class="card-body">
                     <h2 class="card-title text-center mb-4">Acceso para Trabajadores</h2>
-                    
+
                     <form action="<?= Helper::url('trabajador/login') ?>" method="post">
                         <div class="mb-3">
                             <label for="email" class="form-label">Email</label>
@@ -18,9 +18,9 @@
                             <button type="submit" class="btn btn-success">Iniciar Sesión</button>
                         </div>
                     </form>
-                    
+
                     <hr>
-                    
+
                     <div class="text-center">
                         <p>¿Eres cliente? <a href="<?= Helper::url('login') ?>">Iniciar sesión como cliente</a></p>
                     </div>

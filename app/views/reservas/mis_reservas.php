@@ -1,6 +1,6 @@
 <div class="container py-5">
     <h1 class="mb-4">Mis Reservas</h1>
-    
+
     <?php if (empty($reservas)): ?>
         <div class="alert alert-info">
             <p class="mb-0">No tienes reservas activas.</p>
@@ -57,7 +57,7 @@
                 </div>
             </div>
         </div>
-        
+
         <div class="text-end mt-4">
             <a href="<?= Helper::url('servicios') ?>" class="btn btn-primary">Reservar Nuevo Servicio</a>
         </div>

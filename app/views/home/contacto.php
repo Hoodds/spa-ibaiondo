@@ -2,7 +2,7 @@
     <div class="row">
         <div class="col-lg-8 mx-auto">
             <h1 class="text-center mb-5">Contacto</h1>
-            
+
             <div class="row mb-5">
                 <div class="col-md-4 text-center mb-4 mb-md-0">
                     <div class="bg-light p-4 rounded h-100">
@@ -36,11 +36,11 @@
                     </div>
                 </div>
             </div>
-            
+
             <div class="card shadow-sm">
                 <div class="card-body">
                     <h4 class="card-title mb-4">Envíanos un mensaje</h4>
-                    
+
                     <form action="<?= Helper::url('contacto/enviar') ?>" method="POST" id="contactForm">
                         <div class="row">
                             <div class="col-md-6 mb-3">

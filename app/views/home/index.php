@@ -18,7 +18,7 @@
 
 <div class="container py-5">
     <h2 class="text-center mb-5">Nuestros Servicios Destacados</h2>
-    
+
     <div class="row">
         <?php foreach (array_slice($serviciosDestacados, 0, 3) as $servicio): ?>
             <div class="col-md-4 mb-4">
@@ -32,7 +32,7 @@
                         <p class="card-text"><?= substr(Helper::e($servicio['descripcion']), 0, 100) ?>...</p>
                         <p class="card-text">
                             <small class="text-muted">
-                                <i class="far fa-clock"></i> <?= $servicio['duracion'] ?> minutos | 
+                                <i class="far fa-clock"></i> <?= $servicio['duracion'] ?> minutos |
                                 <strong><?= Helper::formatPrice($servicio['precio']) ?></strong>
                             </small>
                         </p>
@@ -44,7 +44,7 @@
             </div>
         <?php endforeach; ?>
     </div>
-    
+
     <div class="text-center mt-4">
         <a href="<?= Helper::url('servicios') ?>" class="btn btn-primary">Ver Todos los Servicios</a>
     </div>
@@ -69,7 +69,7 @@
 
 <div class="container py-5">
     <h2 class="text-center mb-5">¿Por qué elegirnos?</h2>
-    
+
     <div class="row text-center">
         <div class="col-md-4 mb-4">
             <div class="p-4 bg-white rounded shadow-sm h-100">

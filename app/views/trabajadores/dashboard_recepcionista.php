@@ -24,7 +24,7 @@
                 </div>
             </div>
         </div>
-        
+
         <div class="col-lg-3 col-md-6 mb-4">
             <div class="card bg-success text-white shadow-sm h-100">
                 <div class="card-body">
@@ -38,7 +38,7 @@
                 </div>
             </div>
         </div>
-        
+
         <div class="col-lg-3 col-md-6 mb-4">
             <div class="card bg-warning shadow-sm h-100">
                 <div class="card-body">
@@ -52,7 +52,7 @@
                 </div>
             </div>
         </div>
-        
+
         <div class="col-lg-3 col-md-6 mb-4">
             <div class="card bg-info text-white shadow-sm h-100">
                 <div class="card-body">
@@ -90,7 +90,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php 
+                                <?php
                                 // Filtrar reservas pendientes y ordenar por fecha
                                 $proximasReservas = array_filter($reservas, function($r) {
                                     return $r['estado'] === 'pendiente' && strtotime($r['fecha_hora']) > time();
@@ -100,7 +100,7 @@
                                 });
                                 $proximasReservas = array_slice($proximasReservas, 0, 5);
                                 ?>
-                                
+
                                 <?php if (empty($proximasReservas)): ?>
                                     <tr>
                                         <td colspan="5" class="text-center">No hay reservas próximas</td>
@@ -124,7 +124,7 @@
                 </div>
             </div>
         </div>
-        
+
         <div class="col-lg-5 mb-4">
             <div class="card shadow-sm">
                 <div class="card-header bg-white">
@@ -134,14 +134,14 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    <?php 
+                    <?php
                     // Ordenar valoraciones por fecha y mostrar las 2 más recientes (en lugar de 5)
                     usort($valoraciones, function($a, $b) {
                         return strtotime($b['fecha_creacion']) - strtotime($a['fecha_creacion']);
                     });
                     $valoracionesRecientes = array_slice($valoraciones, 0, 2); // Cambiamos 5 por 2
                     ?>
-                    
+
                     <?php if (empty($valoracionesRecientes)): ?>
                         <p class="text-center">No hay valoraciones recientes</p>
                     <?php else: ?>
@@ -154,7 +154,7 @@
                                         </h6>
                                         <span class="text-muted small"><?= Helper::formatDate($valoracion['fecha_creacion']) ?></span>
                                     </div>
-                                    
+
                                     <div class="mb-2">
                                         <?php for ($i = 1; $i <= 5; $i++): ?>
                                             <?php if ($i <= $valoracion['puntuacion']): ?>
@@ -164,9 +164,9 @@
                                             <?php endif; ?>
                                         <?php endfor; ?>
                                     </div>
-                                    
+
                                     <p class="card-text"><?= Helper::e($valoracion['comentario']) ?></p>
-                                    
+
                                     <?php if ($valoracion['estado'] == 'pendiente'): ?>
                                         <span class="badge bg-warning text-dark">Pendiente</span>
                                     <?php elseif ($valoracion['estado'] == 'aprobada'): ?>
