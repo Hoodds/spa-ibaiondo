@@ -26,7 +26,8 @@ CREATE TABLE servicios (
 	nombre VARCHAR(100) NOT NULL,
 	descripcion TEXT NOT NULL,
 	duracion INT NOT NULL,
-	precio DECIMAL(10,2) NOT NULL
+	precio DECIMAL(10,2) NOT NULL,
+	imagen VARCHAR(255) NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 
 -- Tabla de reservas
@@ -44,12 +45,26 @@ CREATE TABLE reservas (
 
 -- Tabla de mensajes
 CREATE TABLE mensajes_contacto (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    nombre VARCHAR(255) NOT NULL,
-    email VARCHAR(255) NOT NULL,
-    asunto VARCHAR(255) NOT NULL,
-    mensaje TEXT NOT NULL,
-    fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+	id INT AUTO_INCREMENT PRIMARY KEY,
+	nombre VARCHAR(255) NOT NULL,
+	email VARCHAR(255) NOT NULL,
+	asunto VARCHAR(255) NOT NULL,
+	mensaje TEXT NOT NULL,
+	fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
+
+-- Tabla de valoraciones
+CREATE TABLE valoraciones (
+	id INT AUTO_INCREMENT PRIMARY KEY,
+	id_usuario INT NOT NULL,
+	id_servicio INT NOT NULL,
+	puntuacion INT NOT NULL CHECK (puntuacion BETWEEN 1 AND 5),
+	comentario TEXT,
+	fecha_creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	estado ENUM('pendiente', 'aprobada', 'rechazada') NOT NULL DEFAULT 'pendiente',
+	FOREIGN KEY (id_usuario) REFERENCES usuarios(id) ON DELETE CASCADE,
+	FOREIGN KEY (id_servicio) REFERENCES servicios(id) ON DELETE CASCADE,
+	UNIQUE KEY (id_usuario, id_servicio)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 
 -- Insertar datos en usuarios
@@ -89,17 +104,17 @@ INSERT INTO trabajadores (nombre, email, contrasena, rol) VALUES
 ('Beatriz Recepcionista', 'beatriz@spa.com', '123', 'recepcionista');
 
 -- Insertar datos en servicios
-INSERT INTO servicios (nombre, descripcion, duracion, precio) VALUES
-('Masaje relajante', 'Masaje con aceites esenciales.', 60, 50.00),
-('Masaje terapéutico', 'Masaje profundo para aliviar tensiones.', 45, 55.00),
-('Facial hidratante', 'Tratamiento facial con productos naturales.', 30, 40.00),
-('Exfoliación corporal', 'Elimina células muertas con sales marinas.', 50, 65.00),
-('Terapia con piedras calientes', 'Relajación con piedras volcánicas.', 75, 70.00),
-('Drenaje linfático', 'Masaje suave para eliminar toxinas.', 40, 45.00),
-('Reflexología podal', 'Terapia en puntos estratégicos del pie.', 35, 35.00),
-('Aromaterapia', 'Masaje con aceites esenciales personalizados.', 60, 60.00),
-('Envoltura de chocolate', 'Tratamiento corporal hidratante.', 55, 75.00),
-('Circuito Spa', 'Acceso a sauna, jacuzzi y piscina climatizada.', 90, 85.00);
+INSERT INTO servicios (nombre, descripcion, duracion, precio, imagen) VALUES
+('Masaje relajante', 'Masaje con aceites esenciales.', 60, 50.00, NULL),
+('Masaje terapéutico', 'Masaje profundo para aliviar tensiones.', 45, 55.00, NULL),
+('Facial hidratante', 'Tratamiento facial con productos naturales.', 30, 40.00, NULL),
+('Exfoliación corporal', 'Elimina células muertas con sales marinas.', 50, 65.00, NULL),
+('Terapia con piedras calientes', 'Relajación con piedras volcánicas.', 75, 70.00, NULL),
+('Drenaje linfático', 'Masaje suave para eliminar toxinas.', 40, 45.00, NULL),
+('Reflexología podal', 'Terapia en puntos estratégicos del pie.', 35, 35.00, NULL),
+('Aromaterapia', 'Masaje con aceites esenciales personalizados.', 60, 60.00, NULL),
+('Envoltura de chocolate', 'Tratamiento corporal hidratante.', 55, 75.00, NULL),
+('Circuito Spa', 'Acceso a sauna, jacuzzi y piscina climatizada.', 90, 85.00, NULL);
 
 -- Insertar datos en reservas
 INSERT INTO reservas (id_usuario, id_servicio, id_trabajador, fecha_hora, estado) VALUES
@@ -113,3 +128,16 @@ INSERT INTO reservas (id_usuario, id_servicio, id_trabajador, fecha_hora, estado
 (8, 4, 4, '2024-06-14 13:15:00', 'pendiente'),
 (9, 10, 4, '2024-07-01 17:00:00', 'confirmada'),
 (10, 9, 5, '2024-08-19 18:30:00', 'pendiente');
+
+-- Insertar datos en valoraciones
+INSERT INTO valoraciones (id_usuario, id_servicio, puntuacion, comentario) VALUES
+(1, 1, 5, 'Excelente masaje, muy relajante. La terapeuta fue muy profesional.'),
+(2, 1, 4, 'Muy buen servicio, aunque el ambiente podría ser más tranquilo.'),
+(3, 2, 5, 'El masaje terapéutico alivió mi dolor de espalda. ¡Increíble!'),
+(4, 3, 4, 'El facial dejó mi piel radiante. Recomendado.'),
+(5, 5, 5, 'La terapia con piedras calientes es lo mejor que he probado.'),
+(6, 4, 3, 'La exfoliación fue buena, pero esperaba más del tratamiento.'),
+(7, 6, 5, 'El drenaje linfático me ayudó mucho con la retención de líquidos.'),
+(8, 8, 4, 'La aromaterapia fue muy relajante, volveré pronto.'),
+(9, 10, 5, 'El circuito spa es completo y las instalaciones están impecables.'),
+(10, 9, 4, 'La envoltura de chocolate dejó mi piel suave e hidratada.');
