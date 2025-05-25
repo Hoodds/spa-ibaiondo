@@ -13,7 +13,7 @@ class HomeController {
 
         // Cargar la vista
         ob_start();
-        include BASE_PATH . '/app/views/home/index.php';
+        include BASE_PATH . '/app/views/home/home.php';
         $content = ob_get_clean();
         include BASE_PATH . '/app/views/layouts/main.php';
     }
