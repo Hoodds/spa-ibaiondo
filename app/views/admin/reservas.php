@@ -340,6 +340,137 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     }
+
+    // Solución específica para el modal de nueva reserva
+    const nuevaFechaModal = document.getElementById('nuevaFecha');
+    const nuevoServicioModal = document.getElementById('nuevoServicio');
+    const nuevoTrabajadorModal = document.getElementById('nuevoTrabajador');
+    const nuevaHoraModal = document.getElementById('nuevaHora');
+
+    // Cuando se abre el modal, resetear los campos
+    const nuevaReservaModal = document.getElementById('nuevaReservaModal');
+    if (nuevaReservaModal) {
+        nuevaReservaModal.addEventListener('show.bs.modal', function() {
+            // Reset form fields
+            if (document.getElementById('formNuevaReserva')) {
+                document.getElementById('formNuevaReserva').reset();
+            }
+            
+            // Reset hora dropdown
+            if (nuevaHoraModal) {
+                nuevaHoraModal.innerHTML = '<option value="">Seleccione fecha y trabajador primero</option>';
+                nuevaHoraModal.disabled = true;
+            }
+        });
+    }
+
+    // Manejar cambio de fecha y servicio en el modal
+    if (nuevaFechaModal && nuevoServicioModal) {
+        const actualizarDisponibilidadModal = function() {
+            if (!nuevaFechaModal.value || !nuevoServicioModal.value) {
+                return;
+            }
+
+            // Mostrar indicador de carga
+            if (nuevaHoraModal) {
+                nuevaHoraModal.innerHTML = '<option value="">Cargando disponibilidad...</option>';
+                nuevaHoraModal.disabled = true;
+            }
+            
+            if (nuevoTrabajadorModal) {
+                nuevoTrabajadorModal.disabled = true;
+                nuevoTrabajadorModal.innerHTML = '<option value="">Cargando...</option>';
+            }
+
+            // Obtener disponibilidad para esta fecha y servicio
+            fetch(`${window.location.origin}/spa-ibaiondo/public/index.php/reservas/disponibilidad?id_servicio=${nuevoServicioModal.value}&fecha=${nuevaFechaModal.value}`)
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Datos recibidos en modal:', data);
+                    
+                    // Resetear y habilitar select de trabajadores
+                    if (nuevoTrabajadorModal) {
+                        nuevoTrabajadorModal.innerHTML = '<option value="">Seleccionar trabajador</option>';
+
+                        if (data.length === 0) {
+                            nuevoTrabajadorModal.disabled = true;
+                            if (nuevaHoraModal) {
+                                nuevaHoraModal.disabled = true;
+                                nuevaHoraModal.innerHTML = '<option value="">No hay disponibilidad</option>';
+                            }
+                            return;
+                        }
+
+                        // Añadir trabajadores disponibles
+                        data.forEach(item => {
+                            const option = document.createElement('option');
+                            option.value = item.id_trabajador;
+                            option.textContent = item.nombre_trabajador;
+                            option.dataset.horas = JSON.stringify(item.horas_disponibles);
+                            nuevoTrabajadorModal.appendChild(option);
+                        });
+
+                        nuevoTrabajadorModal.disabled = false;
+                    }
+                })
+                .catch(error => {
+                    console.error('Error al obtener disponibilidad:', error);
+                    alert('Error al obtener disponibilidad. Por favor, inténtalo de nuevo.');
+                });
+        };
+
+        // Manejar eventos de cambio
+        nuevaFechaModal.addEventListener('change', actualizarDisponibilidadModal);
+        nuevoServicioModal.addEventListener('change', actualizarDisponibilidadModal);
+    }
+
+    // Manejar selección de trabajador en el modal
+    if (nuevoTrabajadorModal) {
+        nuevoTrabajadorModal.addEventListener('change', function() {
+            if (!nuevaHoraModal) return;
+
+            if (!this.value) {
+                nuevaHoraModal.disabled = true;
+                nuevaHoraModal.innerHTML = '<option value="">Seleccione un trabajador</option>';
+                return;
+            }
+
+            const selectedOption = this.options[this.selectedIndex];
+            console.log('Opción seleccionada:', selectedOption);
+            console.log('Dataset horas:', selectedOption.dataset.horas);
+
+            if (selectedOption.dataset.horas) {
+                const horasDisponibles = JSON.parse(selectedOption.dataset.horas);
+                console.log('Horas disponibles:', horasDisponibles);
+
+                // Resetear select de horas
+                nuevaHoraModal.innerHTML = '<option value="">Seleccionar hora</option>';
+
+                if (horasDisponibles.length === 0) {
+                    nuevaHoraModal.innerHTML = '<option value="">No hay horas disponibles</option>';
+                    nuevaHoraModal.disabled = true;
+                    return;
+                }
+
+                // Añadir horas disponibles
+                horasDisponibles.forEach(hora => {
+                    const option = document.createElement('option');
+                    option.value = hora;
+                    option.textContent = hora;
+                    nuevaHoraModal.appendChild(option);
+                });
+
+                // Asegurarse de que el select de horas esté habilitado
+                nuevaHoraModal.disabled = false;
+            } else {
+                console.error('No se encontraron horas disponibles para el trabajador seleccionado');
+                nuevaHoraModal.disabled = true;
+                nuevaHoraModal.innerHTML = '<option value="">No hay horas disponibles</option>';
+            }
+        });
+    }
+
+    // Resto del código existente...
 });
 </script>
 
