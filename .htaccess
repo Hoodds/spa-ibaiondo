@@ -1,7 +1,7 @@
 RewriteEngine On
 RewriteBase /spa-ibaiondo/
 
-# Si el archivo o directorio existe, úsalo directamente
+# Si el archivo o directorio existe, usalo directamente
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 
